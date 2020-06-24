@@ -15,7 +15,7 @@
 #include <iostream>
 using namespace std;
 
-void PrintArray(int *arr, int n)
+void PrintArray(int * arr, int n)
 {
     for (int i = 0; i < n; i++)
     {
@@ -24,14 +24,14 @@ void PrintArray(int *arr, int n)
     cout << endl;
 }
 
-void Swap(int *a, int *b)
+void Swap(int * a, int * b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void SelectionSort(int *arr, int n)
+void SelectionSort(int * arr, int n)
 {
     int minIndex = 0;
     for (int i = 0; i < n; i++)

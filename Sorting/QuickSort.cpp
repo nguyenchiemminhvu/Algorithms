@@ -35,7 +35,20 @@ void Swap(int * a, int * b)
 
 int Partition(int * arr, int left, int right)
 {
-    return 0;
+    int pivot = right;
+
+    int curIndex = left;
+    for (int i = left; i < right; i++)
+    {
+        if (arr[i] < arr[pivot])
+        {
+            Swap(&arr[curIndex], &arr[i]);
+            curIndex++;
+        }
+    }
+
+    Swap(&arr[curIndex], &arr[pivot]);
+    return curIndex;
 }
 
 void QuickSort(int * arr, int left, int right)

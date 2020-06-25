@@ -42,24 +42,60 @@ using namespace std;
 
 #define N 8
 
-void SolveKnightTourProblem(std::vector<std::vector<int>> &board)
-{
+int xMove[8] = { 2, 1, -1, -2, -2, -1, 1, 2 }; 
+int yMove[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
 
+void PrintBoard(const std::vector<std::vector<int>> &board)
+{
+    std::cout << "" << std::endl;
+    for (std::vector<int> row : board)
+    {
+        for (int i = 0; i < row.size(); i++)
+        {
+            std::cout << row[i] << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "" << std::endl;
+}
+
+bool IsSafeMove(const std::vector<std::vector<int>> &board, int x, int y)
+{
+    return x >= 0 && x < N && y >= 0 && y < N;
+}
+
+bool SolveKnightTourProblem(std::vector<std::vector<int>> &board, int fromX, int fromY, int total = 1)
+{
+    if (total == N * N)
+    {
+        std::cout << "DONE!" << endl;
+        return true;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        int nextX = fromX + xMove[i];
+        int nextY = fromY + yMove[i];
+
+        if (IsSafeMove(board, nextX, nextY) && board[nextX][nextY] == -1)
+        {
+            board[nextX][nextY] = total;
+            if (SolveKnightTourProblem(board, nextX, nextY, total + 1))
+                return true;
+            board[nextX][nextY] = -1;
+        }
+    }
+
+    return false;
 }
 
 int main()
 {
     std::vector<std::vector<int>> board(N, std::vector<int>(N, -1));
-    SolveKnightTourProblem(board);
+    board[0][0] = 0;
 
-    for (std::vector<int> row : board)
-    {
-        for (int value : row)
-        {
-            cout << value << " ";
-        }
-        cout << endl;
-    }
+    if (SolveKnightTourProblem(board, 0, 0))
+        PrintBoard(board);
 
     return 0;
 }

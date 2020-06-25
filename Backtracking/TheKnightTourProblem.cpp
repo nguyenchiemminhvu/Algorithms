@@ -59,7 +59,7 @@ void PrintBoard(const std::vector<std::vector<int>> &board)
     std::cout << "" << std::endl;
 }
 
-bool IsSafeMove(const std::vector<std::vector<int>> &board, int x, int y)
+bool IsSafeMove(int x, int y)
 {
     return x >= 0 && x < N && y >= 0 && y < N;
 }
@@ -77,7 +77,7 @@ bool SolveKnightTourProblem(std::vector<std::vector<int>> &board, int fromX, int
         int nextX = fromX + xMove[i];
         int nextY = fromY + yMove[i];
 
-        if (IsSafeMove(board, nextX, nextY) && board[nextX][nextY] == -1)
+        if (IsSafeMove(nextX, nextY) && board[nextX][nextY] == -1)
         {
             board[nextX][nextY] = total;
             if (SolveKnightTourProblem(board, nextX, nextY, total + 1))

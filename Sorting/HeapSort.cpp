@@ -64,15 +64,20 @@ void Heapify(int * arr, int n, int i)
     int leftIndex = 2 * i + 1;
     int rightIndex = 2 * i + 2;
 
+    // if left child is larger than root
     if (leftIndex < n && arr[leftIndex] > arr[rootIndex])
         rootIndex = leftIndex;
     
+    // if right child is larger than root so far
     if (rightIndex < n && arr[rightIndex] > arr[rootIndex])
         rootIndex = rightIndex;
     
+    // if larger is not root
     if (rootIndex != i)
     {
         Swap(&arr[i], &arr[rootIndex]);
+
+        // recursively heapify the affected sub-tree
         Heapify(arr, n, rootIndex);
     }
 }

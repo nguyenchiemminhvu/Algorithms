@@ -50,7 +50,7 @@ void QuickSort(int * arr, int left, int right)
 
 void QuickSort(int * arr, int n)
 {
-
+    QuickSort(arr, 0, n - 1);
 }
 
 int main()

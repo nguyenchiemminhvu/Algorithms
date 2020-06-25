@@ -27,16 +27,63 @@ void PrintArray(int * arr, int n)
     cout << endl;
 }
 
-void Swap(int * a, int * b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 void Merge(int * arr, int left, int mid, int right)
 {
+    int * arrLeft = new int[mid - left + 1];
+    int * arrRight = new int[right - mid];
+    if (!arrLeft || !arrRight)
+    {
+        if (arrLeft)
+            delete [] arrLeft;
+        if (arrRight)
+            delete [] arrRight;
+        
+        return;
+    }
 
+    int arrIndex = left;
+    for (int i = 0; i < mid - left + 1; i++)
+        arrLeft[i] = arr[arrIndex++];
+    for (int i = 0; i < right - mid; i++)
+        arrRight[i] = arr[arrIndex++];
+    
+    arrIndex = left;
+    int leftIndex = 0;
+    int rightIndex = 0;
+
+    while (leftIndex < mid - left + 1 && rightIndex < right - mid)
+    {
+        if (arrLeft[leftIndex] <= arrRight[rightIndex])
+        {
+            arr[arrIndex] = arrLeft[leftIndex];
+            leftIndex++;
+        }
+        else
+        {
+            arr[arrIndex] = arrRight[rightIndex];
+            rightIndex++;
+        }
+        arrIndex++;
+    }
+
+    while (leftIndex < mid - left + 1)
+    {
+        arr[arrIndex] = arrLeft[leftIndex];
+        leftIndex++;
+        arrIndex++;
+    }
+
+    while (rightIndex < right - mid)
+    {
+        arr[arrIndex] = arrRight[rightIndex];
+        rightIndex++;
+        arrIndex++;
+    }
+
+    if (arrLeft)
+        delete [] arrLeft;
+    if (arrRight)
+        delete [] arrRight;
 }
 
 void MergeSort(int * arr, int left, int right)
@@ -52,7 +99,7 @@ void MergeSort(int * arr, int left, int right)
 
 void MergeSort(int * arr, int n)
 {
-    
+    MergeSort(arr, 0, n - 1);
 }
 
 int main()

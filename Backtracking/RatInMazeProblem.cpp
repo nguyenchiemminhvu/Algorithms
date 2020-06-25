@@ -24,9 +24,6 @@ Algorithm:
 #include <vector>
 using namespace std;
 
-int xMove[2] = { 0, 1 }; 
-int yMove[2] = { 1, 0 };
-
 void PrintBoard(const std::vector<std::vector<int>> &board)
 {
     std::cout << "" << std::endl;

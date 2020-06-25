@@ -24,8 +24,8 @@ Algorithm:
 #include <vector>
 using namespace std;
 
-int xMove[8] = { 0, 1 }; 
-int yMove[8] = { 1, 0 };
+int xMove[2] = { 0, 1 }; 
+int yMove[2] = { 1, 0 };
 
 void PrintBoard(const std::vector<std::vector<int>> &board)
 {
@@ -52,22 +52,22 @@ bool SolveRatInMazeProblem(
     int x,
     int y)
 {
-    PrintBoard(solution);
     if (x == board.size() - 1 && y == board[x].size() - 1)
-        return true;
-    
-    for (int i = 0; i < 2; i++)
     {
-        int nextX = x + xMove[i];
-        int nextY = y + xMove[i];
+        return true;
+    }
 
-        if (IsSafeMove(board, nextX, nextY) && board[nextX][nextY] == 1 && solution[nextX][nextY] == 0)
-        {
-            solution[nextX][nextY] = 1;
-            if (SolveRatInMazeProblem(board, solution, nextX, nextY))
-                return true;
-            solution[nextX][nextY] = 0;
-        }
+    if (IsSafeMove(board, x, y) && board[x][y] == 1)
+    {
+        solution[x][y] = 1;
+
+        if (SolveRatInMazeProblem(board, solution, x + 1, y))
+            return true;
+        
+        if (SolveRatInMazeProblem(board, solution, x, y + 1))
+            return true;
+        
+        solution[x][y] = 0;
     }
 
     return false;
@@ -78,16 +78,18 @@ int main()
     std::vector<std::vector<int>> board =
     {
         { 1, 0, 0, 0 },
-        { 1, 1, 0, 1 },
+        { 1, 1, 1, 1 },
         { 0, 1, 0, 0 },
         { 1, 1, 1, 1 },
     };
 
     std::vector<std::vector<int>> solution(board.size(), std::vector<int>(board[0].size(), 0));
-    solution[0][0] = 1;
 
     if (SolveRatInMazeProblem(board, solution, 0, 0))
+    {
+        solution[board.size() - 1][board[board.size() - 1].size() - 1] = 1;
         PrintBoard(solution);
+    }
 
     return 0;
 }

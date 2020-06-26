@@ -24,14 +24,33 @@ void PrintSolution(const std::vector<std::string> &res)
     std::cout << std::endl;
 }
 
-void SolveStringPermutationsProblem(const std::string &input, int left, int right, std::vector<std::string> &res)
+void Swap(char *a, char *b)
 {
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
+void SolveStringPermutationsProblem(std::string input, int left, int right, std::vector<std::string> &res)
+{
+    if (left == right)
+    {
+        res.push_back(input);
+    }
+    else
+    {
+        for (int i = left; i <= right; i++)
+        {
+            Swap(&input[left], &input[i]);
+            SolveStringPermutationsProblem(input, left + 1, right, res);
+            Swap(&input[left], &input[i]);
+        }
+    }
 }
 
 int main()
 {
-    std::string input = "ABC";
+    std::string input = "ABCD";
 
     std::vector<std::string> res;
     SolveStringPermutationsProblem(input, 0, input.length() - 1, res);

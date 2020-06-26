@@ -3,3 +3,17 @@ Divide and Conquer is an algorithmic paradigm. A typical Divide and Conquer algo
 Divide: Break the given problem into subproblems of same type.
 Conquer: Recursively solve these subproblems
 Combine: Appropriately combine the answers
+
+Divide And Conquer algorithm :
+
+DAC(a, i, j)
+{
+    if(small(a, i, j))
+      return(Solution(a, i, j))
+    else 
+      m = divide(a, i, j)               // f1(n)
+      b = DAC(a, i, mid)                 // T(n/2)
+      c = DAC(a, mid+1, j)            // T(n/2)
+      d = combine(b, c)                 // f2(n)
+   return(d)
+}

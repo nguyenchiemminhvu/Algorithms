@@ -46,13 +46,6 @@ Now size is 2, so median = (max(ar1[0], ar2[0]) + min(ar1[1], ar2[1]))/2
 #include <vector>
 using namespace std;
 
-void PrintArray(std::vector<int> v)
-{
-    for (int i = 0; i < v.size(); i++)
-        cout << v[i] << " ";
-    cout << endl;
-}
-
 int GetMedian(std::vector<int> v)
 {
     if (v.size() & 1)
@@ -94,7 +87,7 @@ int FindMedianTwoSortedArray(std::vector<int> a, std::vector<int> b)
         a = std::vector<int>(a.begin() + a.size() / 2, a.end());
         b = std::vector<int>(b.begin(), b.begin() + b.size() / 2);
     }
-    
+
     return FindMedianTwoSortedArray(a, b);
 }
 
@@ -102,9 +95,6 @@ int main()
 {
     std::vector<int> a = { 1, 2, 3, 6 };
     std::vector<int> b = { 4, 6, 8, 10 };
-    
-    PrintArray(a);
-    PrintArray(b);
 
     if (a.size() != b.size())
     {

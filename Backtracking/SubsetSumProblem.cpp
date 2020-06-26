@@ -22,7 +22,12 @@ void PrintSubsets(const std::vector<std::vector<int>> &subsets)
     std::cout << "" << std::endl;
 }
 
-void SolveSubsetSumProblem(int * arr, int n, int sum, int curIdx, std::vector<std::vector<int>> &res, std::vector<int> &test)
+void SolveSubsetSumProblem(
+    const std::vector<int> &arr, 
+    int sum, 
+    int curIdx, 
+    std::vector<std::vector<int>> &res, 
+    std::vector<int> &test)
 {
     if (sum == 0)
     {
@@ -30,12 +35,12 @@ void SolveSubsetSumProblem(int * arr, int n, int sum, int curIdx, std::vector<st
         return;
     }
 
-    for (int i = curIdx; i < n; i++)
+    for (int i = curIdx; i < arr.size(); i++)
     {
         if (arr[i] <= sum)
         {
             test.push_back(arr[i]);
-            SolveSubsetSumProblem(arr, n, sum - arr[i], i + 1, res, test);
+            SolveSubsetSumProblem(arr, sum - arr[i], i + 1, res, test);
             test.pop_back();
         }
     }
@@ -43,13 +48,12 @@ void SolveSubsetSumProblem(int * arr, int n, int sum, int curIdx, std::vector<st
 
 int main()
 {
-    int arr[] = { 10, 7, 5, 18, 12, 20, 15 };
-    int n = sizeof(arr) / sizeof(int);
+    std::vector<int> arr = { 10, 7, 5, 18, 12, 20, 15 };
     int sum = 35;
 
     std::vector<std::vector<int>> res;
     std::vector<int> subset;
-    SolveSubsetSumProblem(arr, n, sum, 0, res, subset);
+    SolveSubsetSumProblem(arr, sum, 0, res, subset);
     PrintSubsets(res);
 
     return 0;

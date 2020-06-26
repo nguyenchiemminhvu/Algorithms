@@ -71,11 +71,7 @@ int FindMedianTwoSortedArray(std::vector<int> a, std::vector<int> b)
     
     // Keep array a always smaller than b
     if (medianA > medianB)
-    {
-        std::vector<int> temp = a;
-        a = b;
-        b = temp;
-    }
+        a.swap(b);
     
     if (a.size() & 1)
     {

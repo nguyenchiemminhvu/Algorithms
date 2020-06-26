@@ -168,6 +168,7 @@ bool SolveSudokuProblem(std::vector<std::vector<int>> &board, int row, int col)
     
     if (board[row][col] == 0)
     {
+        // if value at current position is 0, try to replace by [1 - 9]
         for (int value = 1; value <= 9; value++)
         {
             board[row][col] = value;
@@ -189,6 +190,7 @@ bool SolveSudokuProblem(std::vector<std::vector<int>> &board, int row, int col)
     }
     else
     {
+        // keep moving on
         int nextRow = row;
         int nextCol = col + 1;
         if (nextCol == N)

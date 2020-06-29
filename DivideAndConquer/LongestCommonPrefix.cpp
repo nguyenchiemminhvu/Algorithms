@@ -21,16 +21,29 @@ Now after that, we will start conquering by returning the common prefix of the l
 #include <vector>
 using namespace std;
 
-std::string SolveLongestCommonPrefix(std::vector<std::string> arr, int left, int right)
+std::string SolveLongestCommonPrefix(std::string s1, std::string s2)
 {
     return "";
+}
+
+std::string LongestCommonPrefix(std::vector<std::string> arr, int left, int right)
+{
+    if (left == right)
+        return arr[left];
+    
+    int mid = (left + right) / 2;
+
+    std::string s1 = LongestCommonPrefix(arr, left, mid);
+    std::string s2 = LongestCommonPrefix(arr, mid + 1, right);
+
+    return SolveLongestCommonPrefix(s1, s2);
 }
 
 int main()
 {
     std::vector<std::string> arr = {"geeksforgeeks", "geeks", "geek", "geezer"};
     
-    std::string res = SolveLongestCommonPrefix(arr, 0, arr.size() - 1);
+    std::string res = LongestCommonPrefix(arr, 0, arr.size() - 1);
     if (res.length())
     {
         std::cout << res << std::endl;

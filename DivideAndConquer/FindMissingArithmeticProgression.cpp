@@ -28,8 +28,21 @@ int FindMissingUtility(int * arr, int left, int right, int diff)
 {
     if (left >= right)
         return INT_MAX;
+
+    int mid = (left + right) / 2;
     
-    return 0;
+    if (arr[mid + 1] - arr[mid] != diff)
+        return arr[mid] + diff;
+
+    if (arr[mid] - arr[mid - 1] != diff)
+        return arr[mid - 1] + diff;
+
+    // If the elements till mid follow AP, then recur for right half 
+    if (arr[mid] == arr[0] + mid * diff)
+        return FindMissingUtility(arr, mid + 1, right, diff);
+    
+    // Else recur for left half 
+    return FindMissingUtility(arr, left, mid - 1, diff);
 }
 
 int FindMissing(int * arr, int n)
@@ -40,7 +53,7 @@ int FindMissing(int * arr, int n)
 
 int main()
 {
-    int arr[] = {2, 4, 8, 10, 12, 14}; 
+    int arr[] = {2, 4, 6, 8, 10, 14}; 
     int n = sizeof(arr) / sizeof(arr[0]);
     
     int missing = FindMissing(arr, n);

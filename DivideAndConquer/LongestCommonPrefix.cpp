@@ -23,7 +23,17 @@ using namespace std;
 
 std::string SolveLongestCommonPrefix(std::string s1, std::string s2)
 {
-    return "";
+    std::string res;
+    
+    int i1 = 0, i2 = 0;
+    while (i1 < s1.length() && i2 < s2.length() && s1[i1] == s2[i2])
+    {
+        res.push_back(s1[i1]);
+        i1++;
+        i2++;
+    }
+
+    return res;
 }
 
 std::string LongestCommonPrefix(std::vector<std::string> arr, int left, int right)

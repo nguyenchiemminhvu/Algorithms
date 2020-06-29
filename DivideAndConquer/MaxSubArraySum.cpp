@@ -1,4 +1,6 @@
 /*
+https://www.geeksforgeeks.org/maximum-subarray-sum-using-divide-and-conquer-algorithm/
+
 You are given a one dimensional array that may contain both positive and negative integers, 
 find the sum of contiguous subarray of numbers which has the largest sum.
 For example, if the given array is {-2, -5, 6, -2, -3, 1, 5, -6}, 
@@ -14,24 +16,59 @@ Using Divide and Conquer approach, we can find the maximum subarray sum in O(nLo
 */
 
 #include <iostream>
+#include <algorithm>
+#include <climits>
 using namespace std;
 
-int MaxSubArraySumUtility(int * arr, int left, int right)
+int Max(int a, int b, int c)
 {
-    return 0;
+    return std::max(a, std::max(b, c));
 }
 
-int MaxSubArraySum(int * arr, int n)
+int MaxSubArrayCrossingSum(int * arr, int left, int mid, int right)
 {
-    return MaxSubArraySumUtility(arr, 0, n - 1);
+    int sum;
+
+    sum = 0;
+    int leftSum = INT16_MIN;
+    for (int i = mid; i >= left; i--)
+    {
+        sum += arr[i];
+        if (sum > leftSum)
+            leftSum = sum;
+    }
+
+    sum = 0;
+    int rightSum = INT16_MIN;
+    for (int i = mid + 1; i <= right; i++)
+    {
+        sum += arr[i];
+        if (sum > rightSum)
+            rightSum = sum;
+    }
+
+    return Max(leftSum + rightSum, leftSum, rightSum);
+}
+
+int MaxSubArraySum(int * arr, int left, int right)
+{
+    if (left == right)
+        return arr[left];
+    
+    int mid = (left + right) / 2;
+    return Max(
+        MaxSubArraySum(arr, left, mid), 
+        MaxSubArraySum(arr, mid + 1, right), 
+        MaxSubArrayCrossingSum(arr, left, mid, right)
+    );
 }
 
 int main()
 {
-    int arr[] = {2, 3, 4, 5, 7};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int arr[] = { -2, -5, 6, -2, -3, 1, 5, -6 };
+    int n = sizeof(arr) / sizeof(int);
 
-    std::cout << MaxSubArraySum(arr, n) << std::endl;
+    std::cout << MaxSubArraySum(arr, 0, n - 1) << std::endl;
 
     return 0;
 }

@@ -40,3 +40,109 @@ we only need to check at most 7 points after it (note that strip is sorted accor
 7) Finally return the minimum of d and distance calculated in the above step (step 6)
 */
 
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+#include <cfloat>
+using namespace std;
+
+struct Point
+{
+    int _x;
+    int _y;
+
+    Point()
+        : _x(0), _y(0)
+    {
+
+    }
+
+    Point(int x, int y)
+        : _x(x), _y(y)
+    {
+
+    }
+
+    float Distance(const Point &p)
+    {
+        return sqrt((_x - p._x) * (_x - p._x) + (_y - p._y) * (_y - p._y));
+    }
+};
+
+int CompareX(const Point &p1, const Point &p2)
+{
+    return p1._x < p2._x;
+}
+
+int CompareY(const Point &p1, const Point &p2)
+{
+    return p1._y < p2._y;
+}
+
+float BruteForce(const std::vector<Point> &points, Point check)
+{
+    float M = FLT_MAX;
+
+    for (Point p : points)
+    {
+        M = std::min(M, check.Distance(p));
+    }
+    
+    return M;
+}
+
+float FindClosetPointUtility(std::vector<Point> Px, std::vector<Point> Py, Point check)
+{
+    if (Px.size() <= 3)
+        return BruteForce(Px, check);
+    
+    int mid = Px.size() / 2;
+
+    std::vector<Point> PxLeft(mid);
+    std::vector<Point> PxRight(Px.size() - mid);
+    std::vector<Point> PyLeft(mid);
+    std::vector<Point> PyRight(Py.size() - mid);
+    int iLeft = 0;
+    int iRight = 0;
+    
+    for (Point p : Py)
+    {
+        if (p._x <= Py[mid]._x && iLeft < mid)
+        {
+            PxLeft[iLeft] = p;
+            PyLeft[iLeft++] = p;
+        }
+        else
+        {
+            PxRight[iRight] = p;
+            PyRight[iRight++] = p;
+        }
+    }
+
+    float dLeft = FindClosetPointUtility(PxLeft, PyLeft, check);
+    float dRight = FindClosetPointUtility(PxRight, PyRight, check);
+
+    float d = std::min(dLeft, dRight);
+    return d;
+}
+
+float FindClosetPoint(std::vector<Point> points, Point check)
+{
+    std::vector<Point> Px(points.begin(), points.end());
+    std::vector<Point> Py(points.begin(), points.end());
+    std::sort(Px.begin(), Px.end(), CompareX);
+    std::sort(Py.begin(), Py.end(), CompareY);
+
+    return FindClosetPointUtility(Px, Py, check);
+}
+
+int main()
+{
+    std::vector<Point> points = {{2, 3}, {12, 30}, {40, 50}, {5, 1}, {12, 10}, {3, 4}};
+    Point check = Point(0, 0);
+
+    std::cout << FindClosetPoint(points, check) << std::endl;
+
+    return 0;
+}

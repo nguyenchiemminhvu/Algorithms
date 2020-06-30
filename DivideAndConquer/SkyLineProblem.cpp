@@ -86,31 +86,24 @@ previous strip in result has same height.
 */
 
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-class Building
+struct Building
 {
-public:
-
-    int _left;
-    int _right;
-    int _height;
-
-    Building(int l = 0, int r = 0, int h = 0)
-        : _left(l), _right(r), _height(h)
-    {
-
-    }
+    float _left;
+    float _height;
+    float _right;
 };
 
 class Strip
 {
 public:
 
-    int _left;
-    int _height;
+    float _left;
+    float _height;
 
-    Strip(int l = 0, int h = 0)
+    Strip(float l = 0, float h = 0)
         : _left(l), _height(h)
     {
 
@@ -140,12 +133,60 @@ public:
 
     void Append(Strip *st)
     {
+        if (_num_of_strip > 0 && _arr[_num_of_strip - 1]._height == st->_height)
+            return;
         
+        if (_num_of_strip > 0 && _arr[_num_of_strip - 1]._left == st->_left)
+        {
+            _arr[_num_of_strip - 1]._height = std::max(_arr[_num_of_strip - 1]._height, st->_height);
+            return;
+        }
+
+        _arr[_num_of_strip] = *st;
+        _num_of_strip++;
     }
 
     SkyLine * Merge(SkyLine * other)
     {
-        return NULL;
+        SkyLine * res = new SkyLine(this->_num_of_strip + other->_num_of_strip);
+        
+        int height1 = 0, height2 = 0;
+        int index1 = 0, index2 = 0;
+        while (index1 < this->_num_of_strip && index2 < other->_num_of_strip)
+        {
+            if (this->_arr[index1]._left <= other->_arr[index2]._left)
+            {
+                height1 = this->_arr[index1]._height;
+                float maxHeight = std::max(height1, height2);
+                float curLeft = this->_arr[index1]._left;
+
+                res->Append(new Strip(curLeft, maxHeight));
+                index1++;
+            }
+            else
+            {
+                height2 = other->_arr[index2]._height;
+                float maxHeight = std::max(height1, height2);
+                float curLeft = other->_arr[index2]._left;
+
+                res->Append(new Strip(curLeft, maxHeight));
+                index2++;
+            }
+        }
+
+        while (index1 < this->_num_of_strip)
+        {
+            res->Append(&_arr[index1]);
+            index1++;
+        }
+
+        while (index2 < other->_num_of_strip)
+        {
+            res->Append(&other->_arr[index2]);
+            index2++;
+        }
+        
+        return res;
     }
 
     void Print() 
@@ -160,28 +201,48 @@ public:
 
 SkyLine * SolveSkyLineProblem(Building * arr, int left, int right)
 {
-    return NULL;
+    if (left == right)
+    {
+        SkyLine * res = new SkyLine(2);
+
+        res->Append(new Strip(arr[left]._left, arr[left]._height));
+        res->Append(new Strip(arr[left]._right, 0));
+
+        return res;
+    }
+
+    int mid = (left + right) / 2;
+
+    SkyLine * skyLeft = SolveSkyLineProblem(arr, left, mid);
+    SkyLine * skyRight = SolveSkyLineProblem(arr, mid + 1, right);
+    SkyLine * res = skyLeft->Merge(skyRight);
+
+    if (skyLeft)
+        delete skyLeft;
+    if (skyRight)
+        delete skyRight;
+    
+    return res;
 }
 
 int main()
 {
     Building arr[] =
-    { 
-        { 1, 11, 5 }, 
-        { 2, 6, 7 }, 
-        { 3, 13, 9 }, 
-        { 12, 7, 16 }, 
-        { 14, 3, 25 }, 
-        { 19, 18, 22 }, 
-        { 23, 13, 29 }, 
-        { 24, 4, 28 } 
-    }; 
+    {
+        {1,4,5},
+        {2,3,7},
+        {3,6,6},
+        {5.5,5,8.5},
+        {10,2,12},
+        {11,3,13}
+    };
     int n = sizeof(arr) / sizeof(arr[0]); 
 
     SkyLine * res = SolveSkyLineProblem(arr, 0, n - 1);
     if (res)
     {
         res->Print();
+        delete res;
     }
 
     return 0;

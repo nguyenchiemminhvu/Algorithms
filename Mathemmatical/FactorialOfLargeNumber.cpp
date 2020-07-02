@@ -18,15 +18,44 @@ Output : 3041409320171337804361260816606476884-
 */
 
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
-std::string Factorial(int n)
+std::vector<int> Factorial(int n)
 {
-    return "";
+    std::vector<int> res;
+    res.push_back(1);
+    
+    int carry = 0;
+    for (int i = 2; i <= n; i++)
+    {
+        for (int j = 0; j < res.size(); j++)
+        {
+            int tmp = res[j] * i;
+            res[j] = (tmp + carry) % 10;
+            carry = (tmp + carry) / 10;
+        }
+
+        while (carry != 0)
+        {
+            res.push_back(carry % 10);
+            carry = carry / 10;
+        }
+
+    }
+    
+    return res;
 }
 
 int main()
 {
-    std::cout << Factorial(100) << std::endl;
+    std::vector<int> F = Factorial(400);
+    for (int i = F.size() - 1; i >= 0; i--)
+    {
+        std::cout << F[i];
+    }
+    std::cout << std::endl;
+
     return 0;
 }

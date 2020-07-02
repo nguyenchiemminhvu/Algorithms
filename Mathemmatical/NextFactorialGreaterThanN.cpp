@@ -19,13 +19,31 @@ As 5! = 120. So the next number which factorial and greater than 150 is 6!, whic
 #include <iostream>
 using namespace std;
 
-int NextFactorialGreaterThan(int n)
+long long int fact[21];
+
+void PreComputeFactorialUpTo20()
 {
-    
+    fact[0] = 1;
+    for (int i = 1; i <= 20; i++)
+    {
+        fact[i] = (fact[i - 1] * i);
+    }
+}
+
+long long int NextFactorialGreaterThan(long long int n)
+{
+    for (int i = 0; i <= 20; i++)
+    {
+        if (fact[i] > n)
+            return fact[i];
+    }
+
+    return -1;
 }
 
 int main()
 {
-    std::cout << NextFactorialGreaterThan(100) << std::endl;
+    PreComputeFactorialUpTo20();
+    std::cout << NextFactorialGreaterThan(121645100408832000) << std::endl;
     return 0;
 }

@@ -58,7 +58,6 @@ std::string Factorial(int n)
             res.push_back('0' + (carry % 10));
             carry = carry / 10;
         }
-
     }
     
     return std::string(res.rbegin(), res.rend());

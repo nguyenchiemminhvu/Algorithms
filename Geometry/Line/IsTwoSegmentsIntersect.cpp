@@ -19,13 +19,29 @@ struct Point
     }
 };
 
+int Orientation(Point a, Point b, Point c)
+{
+    int val = (b._y - a._y) * (c._x - b._x) - (c._y - b._y) * (b._x - a._x);
+    if (val == 0)
+        return 0;
+    return (val > 0) ? 1 : -1;
+}
+
 bool IsIntersecting(Point& p1, Point& p2, Point& q1, Point& q2) 
 {
-    return (((q1._x - p1._x) * (p2._y - p1._y) - (q1._y - p1._y) * (p2._x - p1._x))
-            * ((q2._x - p1._x) * (p2._y - p1._y) - (q2._y - p1._y) * (p2._x - p1._x)) < 0)
-            &&
-           (((p1._x - q1._x) * (q2._y - q1._y) - (p1._y - q1._y) * (q2._x - q1._x))
-            * ((p2._x - q1._x) * (q2._y - q1._y) - (p2._y - q1._y) * (q2._x - q1._x)) < 0);
+    int o1, o2, o3, o4;
+    o1 = Orientation(p1, p2, q1);
+    o2 = Orientation(p1, p2, q2);
+    o3 = Orientation(q1, q2, p1);
+    o4 = Orientation(q1, q2, p2);
+
+    return o1 * o2 < 0 && o3 * o4 < 0;
+
+    // return (((q1._x - p1._x) * (p2._y - p1._y) - (q1._y - p1._y) * (p2._x - p1._x))
+    //         * ((q2._x - p1._x) * (p2._y - p1._y) - (q2._y - p1._y) * (p2._x - p1._x)) < 0)
+    //         &&
+    //        (((p1._x - q1._x) * (q2._y - q1._y) - (p1._y - q1._y) * (q2._x - q1._x))
+    //         * ((p2._x - q1._x) * (q2._y - q1._y) - (p2._y - q1._y) * (q2._x - q1._x)) < 0);
 }
 
 int main()

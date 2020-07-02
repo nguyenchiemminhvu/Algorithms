@@ -49,7 +49,7 @@ std::string Factorial(int n)
 
 int main()
 {
-    std::string F = Factorial(400);
+    std::string F = Factorial(100);
     std::cout << F << std::endl;
 
     return 0;

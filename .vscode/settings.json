@@ -42,6 +42,10 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "cctype": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "chrono": "cpp",
+        "numeric": "cpp",
+        "ratio": "cpp",
+        "thread": "cpp"
     }
 }

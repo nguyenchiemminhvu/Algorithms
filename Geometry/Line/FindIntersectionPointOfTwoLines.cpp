@@ -32,8 +32,6 @@ Subtracting these we get,
 (b1a2 - a1b2) y = c1a2 - a1c2
 
 This gives us the value of x. Similarly, we can find the value of y. (x, y) gives us the point of intersection.
-
-
 */
 
 #include <iostream>
@@ -113,8 +111,6 @@ int main()
     {
         std::cout << "The lines are parallel, no intersecting point" << std::endl;
     }
-    
-    
 
     return 0;
 }

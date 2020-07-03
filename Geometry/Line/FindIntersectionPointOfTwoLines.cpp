@@ -30,6 +30,26 @@ struct Point
     }
 };
 
+struct Line
+{
+    float _a;
+    float _b;
+    float _c;
+
+    Line(float a = 0, float b = 0, float c = 0)
+        : _a(a), _b(b), _c(c)
+    {
+
+    }
+
+    Line(Point A, Point B)
+    {
+        this->_a = B._y - A._y;
+        this->_b = A._x - B._x;
+        this->_c = this->_a * A._x + this->_b * A._y;
+    }
+};
+
 int main()
 {
     return 0;

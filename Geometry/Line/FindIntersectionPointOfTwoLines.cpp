@@ -28,6 +28,11 @@ struct Point
     {
 
     }
+
+    void Print()
+    {
+        std::cout << "(" << _x << ", " << _y << ")" << std::endl;
+    }
 };
 
 struct Line
@@ -48,9 +53,24 @@ struct Line
         this->_b = A._x - B._x;
         this->_c = this->_a * A._x + this->_b * A._y;
     }
+
+    void Print()
+    {
+        std::cout << _a << "x + " << _b << "y = " << _c << std::endl;
+    }
 };
 
 int main()
 {
+    Point A(1, 1); 
+    Point B(4, 4); 
+    Point C(1, 8); 
+    Point D(2, 4);
+
+    Line L1(A, B);
+    Line L2(C, D);
+
+    
+
     return 0;
 }

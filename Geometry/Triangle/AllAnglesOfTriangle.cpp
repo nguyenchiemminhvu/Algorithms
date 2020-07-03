@@ -1,21 +1,34 @@
 /*
-https://www.geeksforgeeks.org/program-to-find-the-type-of-triangle-from-the-given-coordinates/
+https://www.geeksforgeeks.org/find-angles-given-triangle/
 
-We are given coordinates of a triangle. The task is to classify this triangle on the basis of sides and angle.
+Given coordinates of all three vertices of the triangle in the 2D plane, the task is to find all three angles.
 
-Examples:
+Example:
 
-Input: p1 = (3, 0), p2 = (0, 4), p3 = (4, 7)
-Output: Right Angle triangle and Isosceles
+Input : A = (0, 0), 
+        B = (0, 1), 
+        C = (1, 0)
+Output : 90, 45, 45
 
-Input: p1 = (0, 0), p2 = (1, 1), p3 = (1, 2);
-Output: Triangle is obtuse and Scalene
+To solve this problem we use below Law of cosines.
+https://en.wikipedia.org/wiki/Law_of_cosines
+
+c^2 = a^2 + b^2 - 2(a)(b)(cos beta)
+=>
+beta = acos( ( a^2 + b^2 - c^2 ) / (2ab) )
+
+First, calculate the length of all the sides. 
+Then apply above formula to get all angles in 
+radian. Then convert angles from radian into 
+degrees.
 */
 
 #include <iostream>
 #include <cmath>
 #include <algorithm>
 using namespace std;
+
+#define PI 3.1415926535
 
 struct Point
 {
@@ -137,16 +150,37 @@ struct Triangle
 
         std::cout << "triangle" << std::endl;
     }
+
+    void PrintAllAngles()
+    {
+        float AB2 = (_B._x - _A._x) * (_B._x - _A._x) + (_B._y - _A._y) * (_B._y - _A._y);
+        float BC2 = (_C._x - _B._x) * (_C._x - _B._x) + (_C._y - _B._y) * (_C._y - _B._y);
+        float AC2 = (_C._x - _A._x) * (_C._x - _A._x) + (_C._y - _A._y) * (_C._y - _A._y);
+
+        float AB = sqrt(AB2);
+        float BC = sqrt(BC2);
+        float AC = sqrt(AC2);
+
+        float alpha =  acos( (BC2 + AC2 - AB2) / (2 * BC * AC) );
+        float beta =  acos( (AB2 + AC2 - BC2) / (2 * AB * AC) );
+        float gamma =  acos( (AB2 + BC2 - AC2) / (2 * AB * BC) );
+
+        alpha = alpha * 180 / PI;
+        beta = beta * 180 / PI;
+        gamma = gamma * 180 / PI;
+
+        std::cout << alpha << " " << beta << " " << gamma << std::endl;
+    }
 };
 
 int main()
 {
-    Point A(3, 0);
-    Point B(0, 4);
-    Point C(4, 7);
+    Point A(0, 0);
+    Point B(0, 1);
+    Point C(1, 0);
 
     Triangle T(A, B, C);
-    T.Classify();
+    T.PrintAllAngles();
 
     return 0;
 }

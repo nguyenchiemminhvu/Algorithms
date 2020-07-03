@@ -54,13 +54,18 @@ using namespace std;
 
 struct Point
 {
-    int _x;
-    int _y;
+    float _x;
+    float _y;
 
-    Point(int x = 0, int y = 0)
+    Point(float x = 0, float y = 0)
         : _x(x), _y(y)
     {
 
+    }
+
+    void Print()
+    {
+        std::cout << "(" << _x << ", " << _y << ")" << std::endl;
     }
 };
 

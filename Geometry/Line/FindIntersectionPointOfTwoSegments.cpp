@@ -32,7 +32,24 @@ Subtracting these we get,
 
 This gives us the value of x. Similarly, we can find the value of y. (x, y) gives us the point of intersection.
 
+Note: This gives the point of intersection of two lines, but if we are given line segments instead of lines, we have to also recheck that the point so computed actually lies on both the line segments.
+If the line segment is specified by points (x1, y1) and (x2, y2), then to check if (x, y) is on the segment we have to just check that
 
+min (x1, x2) <= x <= max (x1, x2)
+min (y1, y2) <= y <= max (y1, y2)
+The pseudo code for the above implementation:
+
+determinant = a1 b2 - a2 b1
+if (determinant == 0)
+{
+    // Lines are parallel
+}
+else
+{
+    x = (c1b2 - c2b1)/determinant
+    y = (a1c2 - a2c1)/determinant
+}
+These can be derived by first getting the slope directly and then finding the intercept of the line.
 */
 
 #include <iostream>
@@ -54,7 +71,6 @@ struct Point
         std::cout << "(" << _x << ", " << _y << ")" << std::endl;
     }
 };
-
 struct Line
 {
     float _a;
@@ -74,12 +90,6 @@ struct Line
         this->_c = this->_a * A._x + this->_b * A._y;
     }
 
-    bool FindIntersectingPoint(Line L, Point &I)
-    {
-
-        return false;
-    }
-
     void Print()
     {
         std::cout << _a << "x + " << _b << "y = " << _c << std::endl;
@@ -96,16 +106,6 @@ int main()
     Line L1(A, B);
     Line L2(C, D);
 
-    Point I;
-    if (L1.FindIntersectingPoint(L2, I))
-    {
-        I.Print();
-    }
-    else
-    {
-        std::cout << "The lines are parallel, no intersecting point" << std::endl;
-    }
-    
     
 
     return 0;

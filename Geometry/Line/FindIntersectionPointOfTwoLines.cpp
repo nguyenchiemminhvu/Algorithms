@@ -29,6 +29,7 @@ a2b1x + b2b1y = c2b1
 
 Subtracting these we get,
 (a1b2 – a2b1) x = c1b2 – c2b1
+(b1a2 - a1b2) y = c1a2 - a1c2
 
 This gives us the value of x. Similarly, we can find the value of y. (x, y) gives us the point of intersection.
 
@@ -76,8 +77,15 @@ struct Line
 
     bool FindIntersectingPoint(Line L, Point &I)
     {
+        float determinant = _a * L._a - _b * L._b;
+        if (determinant == 0) // parallel case
+        {
+            return false;
+        }
 
-        return false;
+        I._x = (_c * L._b - L._c * _b) / (_a * L._b - L._a * _b);
+        I._y = (_c * L._a - _a * L._c) / (_b * L._a - _a * L._b);
+        return true;
     }
 
     void Print()

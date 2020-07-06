@@ -76,7 +76,7 @@ struct Line
 
     float PerpendicularDistance(Point P)
     {
-        return 0.0;
+        return abs(_a * P._x + _b * P._y + _c) / sqrt(_a * _a + _b * _b);
     }
 };
 
@@ -102,12 +102,44 @@ struct Circle
         float dy = abs(_O._y - P._y);
         return dx * dx + dy * dy <= _r * _r;
     }
+
+    enum RelativePositionWithLine
+    {
+        OUTSIDE,
+        TOUCH,
+        INTERSECT
+    };
+
+    RelativePositionWithLine GetRelativePosition(Line L)
+    {
+        float dist = L.PerpendicularDistance(_O);
+        if (dist == _r)
+            return RelativePositionWithLine::TOUCH;
+        if (dist < _r)
+            return RelativePositionWithLine::INTERSECT;
+        
+        return RelativePositionWithLine::OUTSIDE;
+    }
 };
 
 int main()
 {
     Circle C(Point(0, 0), 5);
-    
+    Line L(5, 0, 0);
+
+    Circle::RelativePositionWithLine pos = C.GetRelativePosition(L);
+    switch (pos)
+    {
+    case Circle::RelativePositionWithLine::INTERSECT:
+        std::cout << "Intersect" << std::endl;
+        break;
+    case Circle::RelativePositionWithLine::TOUCH:
+        std::cout << "Touch" << std::endl;
+        break;
+    case Circle::RelativePositionWithLine::OUTSIDE:
+        std::cout << "Outside" << std::endl;
+        break;
+    }   
     
     return 0;
 }

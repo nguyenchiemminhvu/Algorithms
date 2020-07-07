@@ -177,7 +177,24 @@ struct Polygon
             }
         }
 
+        int cur = left;
+        do
+        {
+            hull.push_back(_pol[cur]);
 
+            int next = (cur + 1) % _pol.size();
+            for (int i = 0; i < _pol.size(); i++)
+            {
+                if (Point::Orientation(_pol[cur], _pol[i], _pol[next]) == -1)
+                {
+                    next = i;
+                }
+            }
+
+            cur = next;
+
+        } while (cur != left);
+        
     }
 
     void Print()

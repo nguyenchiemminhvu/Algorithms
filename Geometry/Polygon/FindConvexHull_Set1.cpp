@@ -177,20 +177,27 @@ struct Polygon
             }
         }
 
+        // Start from leftmost point, keep moving counterclockwise 
+        // until reach the start point again.  This loop runs O(n) 
+        // times where n is number of points in result or output.
         int cur = left;
         do
         {
+            // Add current point to result
             hull.push_back(_pol[cur]);
 
             int next = (cur + 1) % _pol.size();
             for (int i = 0; i < _pol.size(); i++)
             {
+                // If points[i] is more counterclockwise than points[next]
+                // then update next
                 if (Point::Orientation(_pol[cur], _pol[i], _pol[next]) == -1)
                 {
                     next = i;
                 }
             }
 
+            // Now next point is the most counterclockwise
             cur = next;
 
         } while (cur != left);

@@ -40,13 +40,10 @@ bool IsIntersecting(Point& p1, Point& p2, Point& q1, Point& q2)
     o3 = Orientation(q1, q2, p1);
     o4 = Orientation(q1, q2, p2);
 
-    return o1 * o2 < 0 && o3 * o4 < 0;
+    if (o1 != o2 && o3 != o4)
+        return true;
 
-    // return (((q1._x - p1._x) * (p2._y - p1._y) - (q1._y - p1._y) * (p2._x - p1._x))
-    //         * ((q2._x - p1._x) * (p2._y - p1._y) - (q2._y - p1._y) * (p2._x - p1._x)) < 0)
-    //         &&
-    //        (((p1._x - q1._x) * (q2._y - q1._y) - (p1._y - q1._y) * (q2._x - q1._x))
-    //         * ((p2._x - q1._x) * (q2._y - q1._y) - (p2._y - q1._y) * (q2._x - q1._x)) < 0);
+    return o1 * o2 < 0 && o3 * o4 < 0;
 }
 
 int main()

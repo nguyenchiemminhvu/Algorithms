@@ -1,48 +1,16 @@
 /*
-https://www.geeksforgeeks.org/check-line-touches-intersects-circle/
+https://www.geeksforgeeks.org/check-two-given-circles-touch-intersect/
 
-Given coordinate of the center and radius > 1 of a circle and the equation of a line. The task is to check if the given line collide with the circle or not. There are three possibilities :
 
-Line intersect the circle.
-Line touches the circle.
-Line is outside the circle.
-
-Note: General equation of a line is a*x + b*y + c = 0,
-so only constant a, b, c are given in the input.
-
-Examples :
-
-Input : radius = 5, center = (0, 0), 
-        a = 1, b = -1, c = 0.
-Output : Intersect
-
-Input :  radius = 5, center = (0, 0), 
-         a = 5, b = 0, c = 0.
-Output : Touch
-
-Input : radius = 5, center = (0, 0),
-         a = 1, b = 1, c = -16.
-Output : Outside
-
-The idea is to compare the perpendicular distance 
-between center of circle and line with the radius of the circle.
-
-Algorithm:
-1. Find the perpendicular (say p) between center of circle and given line.
-2. Compare this distance p with radius r.
-……a) If p > r, then line lie outside the circle.
-……b) If p = r, then line touches the circle.
-……c) If p < r, then line intersect the circle.
-
-How to find the perpendicular distance ?
-https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
 */
 
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <vector>
 using namespace std;
 
+#define EPS 1e-6
 #define PI 3.14159265358979323846
 
 struct Point
@@ -154,10 +122,10 @@ struct Circle
 
 int main()
 {
-    Circle C(Point(0, 0), 5);
-    Line L(5, 0, 0);
+    Circle C1(Point(-10, 8), 30);
+    Circle C2(Point(14, -24), 10);
 
-    Circle::RelativePosition pos = C.GetRelativePosition(L);
+    Circle::RelativePosition pos = C1.GetRelativePosition(C2);
     switch (pos)
     {
     case Circle::RelativePosition::INTERSECT:
@@ -169,7 +137,7 @@ int main()
     case Circle::RelativePosition::OUTSIDE:
         std::cout << "Outside" << std::endl;
         break;
-    }   
-    
+    }
+
     return 0;
 }

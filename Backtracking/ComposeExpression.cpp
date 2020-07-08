@@ -45,7 +45,35 @@ void ComposeExpression(
     std::string curExp,
     std::vector<std::string> &allExp)
 {
+    if (pos == digits.length())
+    {
+        if (curValue == target)
+            allExp.push_back(curExp);
+        
+        return;
+    }
 
+    for (int i = pos; i < digits.length(); i++)
+    {
+        if (i == pos && digits[pos] == '0')
+            break;
+        
+        std::string sub = digits.substr(pos, i - pos + 1);
+        int subValue = std::stoi(sub);
+
+        // If pos is 0, just send the subValue to next recursion
+        if (pos == 0)
+        {
+            ComposeExpression(digits, target, i + 1, subValue, subValue, curExp + sub, allExp);
+        }
+        // Try all given binary operators for evaluation
+        else
+        {
+            ComposeExpression(digits, target, i + 1, curValue + subValue, curValue, curExp + "+" + sub, allExp);
+            ComposeExpression(digits, target, i + 1, curValue - subValue, -curValue, curExp + "-" + sub, allExp);
+            ComposeExpression(digits, target, i + 1, curValue * subValue, curValue - lastValue + lastValue * curValue, curExp + "*" + sub, allExp);
+        }    
+    }
 }
 
 int main()

@@ -33,9 +33,38 @@ struct Fraction
 
     }
 
+    void GenerateEgyptianFractionUtil(int n, int d, std::vector<Fraction> &res)
+    {
+        if (n == 0 || d == 0)
+            return;
+        
+        if (d % n == 0)
+        {
+            res.push_back(Fraction(1, d / n));
+            return;
+        }
+
+        if (n % d == 0)
+        {
+            res.push_back(Fraction(n / d, 1));
+            return;
+        }
+
+        if (n > d)
+        {
+            res.push_back(Fraction(n / d, 1));
+            GenerateEgyptianFractionUtil(n % d, d, res);
+            return;
+        }
+
+        int r = d / n + 1;
+        res.push_back(Fraction(1, r));
+        GenerateEgyptianFractionUtil(n * r - d, d * r, res);
+    }
+
     void GenerateEgyptianFraction(std::vector<Fraction> &res)
     {
-        
+        GenerateEgyptianFractionUtil(_numerator, _denominator, res);
     }
 
     std::string Str()
@@ -51,6 +80,7 @@ int main()
     std::vector<Fraction> egyptianFraction;
     F.GenerateEgyptianFraction(egyptianFraction);
 
+    std::cout << F.Str() << " = ";
     for (int i = 0; i < egyptianFraction.size(); i++)
     {
         std::cout << egyptianFraction[i].Str();

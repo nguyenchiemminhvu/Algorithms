@@ -55,11 +55,10 @@ void ComposeExpression(
 
     for (int i = pos; i < digits.length(); i++)
     {
-        if (i == pos && digits[pos] == '0')
-            break;
-        
         std::string sub = digits.substr(pos, i - pos + 1);
-        int subValue = std::stoi(sub);
+        while (sub.length() > 1 && sub.front() == '0')
+            sub.erase(sub.begin());
+        int subValue = std::atoi(sub.c_str());
 
         // If pos is 0, just send the subValue to next recursion
         if (pos == 0)

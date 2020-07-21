@@ -42,33 +42,33 @@ using namespace std;
 
 struct Job
 {
-    int _id;
-    int _deadline;
-    int _profit;
-
-    Job(int id = 0, int d = 0, int p = 0)
-        : _id(id), _deadline(d), _profit(p)
-    {
-
-    }
+	int _id;
+	int _deadline;
+	int _profit;
+	
+	Job(int id = 0, int d = 0, int p = 0)
+		: _id(id), _deadline(d), _profit(p)
+	{
+	
+	}
 };
 
 void SolveJobSequenceProblem(std::vector<Job> jobs, std::vector<Job> &scheme)
 {
-
+	
 }
 
 int main()
 {
-    std::vector<Job> jobs = {{1, 2, 100}, {2, 1, 19}, {3, 2, 27}, {4, 1, 25}, {5, 3, 15}};
-
-    std::vector<Job> scheme;
-    SolveJobSequenceProblem(jobs, scheme);
-
-    for (Job j : scheme)
-    {
-        std::cout << j._id << " " << j._deadline << " " << j._profit << std::endl;
-    }
-
-    return 0;
+	std::vector<Job> jobs = {{1, 2, 100}, {2, 1, 19}, {3, 2, 27}, {4, 1, 25}, {5, 3, 15}};
+	
+	std::vector<Job> scheme;
+	SolveJobSequenceProblem(jobs, scheme);
+	
+	for (Job j : scheme)
+	{
+		std::cout << j._id << " " << j._deadline << " " << j._profit << std::endl;
+	}
+	
+	return 0;
 }

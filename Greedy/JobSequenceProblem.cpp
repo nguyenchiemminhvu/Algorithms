@@ -1,5 +1,6 @@
 /*
 https://www.geeksforgeeks.org/job-sequencing-problem/
+https://dyclassroom.com/greedy-algorithm/job-sequencing-problem-with-deadline
 
 Given an array of jobs where every job has a deadline and associated profit if the job is finished before the deadline. It is also given that every job takes single unit of time, so the minimum possible deadline for any job is 1. How to maximize total profit if only one job can be scheduled at a time.
 
@@ -37,6 +38,7 @@ b)If no such i exists, then ignore the job.
 */
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -51,24 +53,70 @@ struct Job
 	{
 	
 	}
+
+	void Print()
+	{
+		std::cout << "(" << _id << " " << _deadline << " " << _profit << ")" << std::endl;
+	}
 };
 
-void SolveJobSequenceProblem(std::vector<Job> jobs, std::vector<Job> &scheme)
+void SolveJobSequenceProblem(std::vector<Job> jobs, std::vector<int> &scheme)
 {
+	std::sort
+	(
+		jobs.begin(), 
+		jobs.end(), 
+		[](const Job &j1, const Job &j2)
+		{
+			return j1._profit > j2._profit;
+		}
+	);
+
+	int dMax = 0;
+	for (Job j : jobs)
+		dMax = std::max(dMax, j._deadline);
 	
+	std::vector<int> slots(dMax + 1, -1);
+	for (Job j : jobs)
+	{
+		int k = std::min(dMax, j._deadline);
+		if (k >= 1)
+		{
+			if (slots[k] == -1)
+			{
+				slots[k] = j._id;
+			}
+			else
+			{
+				while (k >= 1 && slots[k] != -1)
+				{
+					k--;
+				}
+
+				if (k >= 1 && slots[k] == -1)
+					slots[k] = j._id;
+			}
+		}
+	}
+
+	for (int i = 1; i <= dMax; i++)
+		scheme.push_back(slots[i]);
 }
 
 int main()
 {
 	std::vector<Job> jobs = {{1, 2, 100}, {2, 1, 19}, {3, 2, 27}, {4, 1, 25}, {5, 3, 15}};
 	
-	std::vector<Job> scheme;
+	std::vector<int> scheme;
 	SolveJobSequenceProblem(jobs, scheme);
 	
-	for (Job j : scheme)
+	int totalProfit = 0;
+	for (int id : scheme)
 	{
-		std::cout << j._id << " " << j._deadline << " " << j._profit << std::endl;
+		totalProfit += jobs[id - 1]._profit;
+		std::cout << id << std::endl;
 	}
+	std::cout << "Maximum profit: " << totalProfit << std::endl;
 	
 	return 0;
 }

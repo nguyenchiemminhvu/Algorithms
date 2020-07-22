@@ -1,5 +1,6 @@
 /*
 https://www.geeksforgeeks.org/minimum-swaps-bracket-balancing/
+https://iq.opengenus.org/minimum-swaps-required-for-bracket-balancing/
 
 You are given a string of 2N characters consisting of N ‘[‘ brackets and N ‘]’ brackets. A string is considered balanced if it can be represented in the for S2[S1] where S1 and S2 are balanced strings. We can make an unbalanced string balanced by swapping adjacent characters. Calculate the minimum number of swaps necessary to make a string balanced.
 
@@ -28,18 +29,22 @@ int MinimumSwapForBracketBalancing(std::string s)
     int res = 0;
 
     int level = 0;
-    for (char c : s)
+    int curIdx = 0;
+    for ( ; curIdx < s.length(); curIdx++)
     {
-        if (c == '(')
+        if (s[curIdx] == '(')
             level++;
-        else
+        else if (s[curIdx] == ')')
             level--;
 
         if (level < 0)
-        {
-            
-        }
+            break;
     }
+
+    if (level == 0)
+        return 0;
+
+    
 
     return res;
 }

@@ -113,6 +113,35 @@ Node * FindMax(Node * root)
     return root;
 }
 
+bool HasPathWithGivenSum(Node * root, int sum)
+{
+    if (sum == 0 && root->left == NULL && root->right == NULL)
+        return true;
+    
+    bool res = false;
+    if (root->left)
+    {
+        res |= HasPathWithGivenSum(root->left, sum - root->data);
+    }
+
+    if (root->right)
+    {
+        res |= HasPathWithGivenSum(root->right, sum - root->data);
+    }
+
+    return res;
+}
+
+int NumberOfLevel(Node * root)
+{
+    
+}
+
+Node * DeleteNode(Node * root, int key)
+{
+    
+}
+
 void Release(Node * root)
 {
     std::queue<Node *> Q;
@@ -168,6 +197,11 @@ int main()
 
     if (maxNode)
         std::cout << "Max: " << maxNode->data << std::endl;
+
+    if (HasPathWithGivenSum(root, 100))
+    {
+        std::cout << "Found Path" << std::endl;
+    }
     
     Release(root);
     return 0;

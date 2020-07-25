@@ -19,34 +19,25 @@ Node * NewNode(int data)
     return n;
 }
 
-void InOrderTraversal(Node * root)
+Node * AddNode(Node * root, int data)
 {
-    if (root != NULL)
+    if (root == NULL)
     {
-        InOrderTraversal(root->left);
-        std::cout << root->data << " ";
-        InOrderTraversal(root->right);
+        root = NewNode(data);
     }
-}
-
-void PreOrderTraversal(Node * root)
-{
-    if (root != NULL)
+    else
     {
-        std::cout << root->data << " ";
-        PreOrderTraversal(root->left);
-        PreOrderTraversal(root->right);
+        if (data < root->data)
+        {
+            root->left = AddNode(root->left, data);
+        }
+        else
+        {
+            root->right = AddNode(root->right, data);
+        }
     }
-}
-
-void PostOrderTraversal(Node * root)
-{
-    if (root != NULL)
-    {
-        PostOrderTraversal(root->left);
-        PostOrderTraversal(root->right);
-        std::cout << root->data << " ";
-    }
+    
+    return root;
 }
 
 void LevelOrderTraversal(Node * root)
@@ -101,8 +92,6 @@ void Release(Node * root)
 
         if (n != NULL)
         {
-            cout << n->data << " ";
-            
             if (n->left != NULL)
             {
                 Q.push(n->left);
@@ -122,25 +111,18 @@ void Release(Node * root)
 
 int main()
 {
-    Node * root = NewNode(1);
-    root->left = NewNode(2);
-    root->right = NewNode(3);
-    root->left->left = NewNode(4);
-    root->right->left = NewNode(5);
-    root->right->right = NewNode(6);
-
-    InOrderTraversal(root);
-    std::cout << std::endl;
-
-    PreOrderTraversal(root);
-    std::cout << std::endl;
-
-    PostOrderTraversal(root);
-    std::cout << std::endl;
+    Node * root = NULL;
+    root = AddNode(root, 50);
+    root = AddNode(root, 30);
+    root = AddNode(root, 20);
+    root = AddNode(root, 70);
+    root = AddNode(root, 60);
+    root = AddNode(root, 100);
+    root = AddNode(root, 10);
 
     LevelOrderTraversal(root);
-    std::cout << std::endl;
 
+    
     Release(root);
     return 0;
 }

@@ -46,6 +46,8 @@
         "chrono": "cpp",
         "numeric": "cpp",
         "ratio": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "deque": "cpp",
+        "queue": "cpp"
     }
 }

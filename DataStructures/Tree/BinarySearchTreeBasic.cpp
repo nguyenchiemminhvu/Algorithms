@@ -91,6 +91,28 @@ Node * Search(Node * root, int key)
         return Search(root->right, key);
 }
 
+Node * FindMin(Node * root)
+{
+    if (root == NULL)
+        return NULL;
+    
+    while (root->left != NULL)
+        root = root->left;
+    
+    return root;
+}
+
+Node * FindMax(Node * root)
+{
+    if (root == NULL)
+        return NULL;
+    
+    while (root->right != NULL)
+        root = root->right;
+    
+    return root;
+}
+
 void Release(Node * root)
 {
     std::queue<Node *> Q;
@@ -135,8 +157,17 @@ int main()
     
     if (Search(root, 20))
     {
-        std::cout << "Found" << std::endl;
+        std::cout << "Found 20" << std::endl;
     }
+
+    Node * minNode = FindMin(root);
+    Node * maxNode = FindMax(root);
+
+    if (minNode)
+        std::cout << "Min: " << minNode->data << std::endl;
+
+    if (maxNode)
+        std::cout << "Max: " << maxNode->data << std::endl;
     
     Release(root);
     return 0;

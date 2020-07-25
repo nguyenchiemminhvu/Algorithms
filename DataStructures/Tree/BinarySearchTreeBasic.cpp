@@ -80,6 +80,17 @@ void LevelOrderTraversal(Node * root)
     }
 }
 
+Node * Search(Node * root, int key)
+{
+    if (root != NULL && root->data == key)
+        return root;
+
+    if (root->left && key < root->data)
+        return Search(root->left, key);
+    else
+        return Search(root->right, key);
+}
+
 void Release(Node * root)
 {
     std::queue<Node *> Q;
@@ -121,7 +132,11 @@ int main()
     root = AddNode(root, 10);
 
     LevelOrderTraversal(root);
-
+    
+    if (Search(root, 20))
+    {
+        std::cout << "Found" << std::endl;
+    }
     
     Release(root);
     return 0;

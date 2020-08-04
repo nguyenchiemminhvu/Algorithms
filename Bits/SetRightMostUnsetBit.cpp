@@ -20,9 +20,36 @@ Output : 15
 #include <iostream>
 using namespace std;
 
+int GetPosRightMostSetBit(int n)
+{
+    int pos = 0;
+
+    int m = 1;
+    while (!(n & m))
+    {
+        m <<= 1;
+        pos++;
+    }
+
+    return pos;
+}
+
 void SetRightMostUnsetBit(int &n)
 {
+    if (n == 0)
+    {
+        n = 1;
+        return;
+    }
+    if (n == 0xFFFFFFFF)
+    {
+        return;
+    }
     
+    int temp = ~n;
+    int pos = GetPosRightMostSetBit(temp);
+
+    n = n | (1 << pos);
 }
 
 int main()

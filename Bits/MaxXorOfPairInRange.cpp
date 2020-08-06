@@ -41,7 +41,14 @@ using namespace std;
 
 int MaxXorInRange(int left, int right)
 {
-    return 0;
+    int res = left ^ right;
+    res |= (res >> 1);
+    res |= (res >> 2);
+    res |= (res >> 4);
+    res |= (res >> 8);
+    res |= (res >> 16);
+
+    return res;
 }
 
 int main()

@@ -42,18 +42,39 @@ so Total bits count : 4
 */
 
 #include <iostream>
+#include <vector>
 using namespace std;
+
+#define BIT(n) n, n + 1, n + 1, n + 2, n + 1, n + 2, n + 2, n + 3, n + 1, n + 2, n + 2, n + 3, n + 2, n + 3, n + 3, n + 4
+#define BITS BIT(0), BIT(1), BIT(1), BIT(2), BIT(1), BIT(2), BIT(2), BIT(3), BIT(1), BIT(2), BIT(2), BIT(3), BIT(2), BIT(3), BIT(3), BIT(4)
+
+static unsigned char SetBitsInUChar[] =
+{
+    BITS
+};
 
 int CountSetBits(int n)
 {
-    return 0;
+    return SetBitsInUChar[n & 0xFF]
+         + SetBitsInUChar[(n >> 8) & 0xFF]
+         + SetBitsInUChar[(n >> 16) & 0xFF]
+         + SetBitsInUChar[(n >> 24) & 0xFF];
 }
 
 int main()
 {
-    int n = 354;
+    std::vector<int> test = { 333, 352, 777, 177, 102, 35, 32, 31 };
+    std::vector<int> v;
 
-    std::cout << CountSetBits(n) << std::endl;
+    for (int n : test)
+    {
+        v.push_back(CountSetBits(n));
+    }
+
+    for (int i = 0; i < v.size(); i++)
+    {
+        std::cout << v[i] << " ";
+    }
     
     return 0;
 }

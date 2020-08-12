@@ -17,5 +17,18 @@ int main()
 
     L.Print();
 
+    L.DeleteNode(7);
+    L.Print();
+
+    L.DeleteNodeAt(1);
+    L.Print();
+
+    L.PushFront(1);
+    L.PushBack(1);
+    L.Print();
+
+    L.DeleteNodes(1);
+    L.Print();
+
     return 0;
 }

@@ -117,17 +117,106 @@ public:
 
     bool DeleteNode(const T &v)
     {
+        if (!L)
+            return false;
+
+        if (L->value == v)
+        {
+            ListNode<T> * p = L;
+            L = L->next;
+            delete p;
+
+            return true;
+        }
+
+        ListNode<T> * curNode = L;
+        ListNode<T> * prevNode = NULL;
+        while (curNode && curNode->value != v)
+        {
+            prevNode = curNode;
+            curNode = curNode->next;
+        }
+
+        if (!curNode)
+            return false;
         
+        prevNode->next = curNode->next;
+        delete curNode;
+
+        return true;
     }
 
     bool DeleteNodes(const T &v)
     {
+        if (!L)
+            return false;
+        
+        if (!L->next && L->value == v)
+        {
+            delete L;
+            L = NULL;
+            return true;
+        }
 
+        ListNode<T> * curNode = L;
+        ListNode<T> * prevNode = NULL;
+        while (curNode)
+        {
+            if (curNode->value == v)
+            {
+                if (!prevNode)
+                {
+                    L = L->next;
+                    delete curNode;
+                    curNode = L;
+                    continue;
+                }
+
+                prevNode->next = curNode->next;
+                delete curNode;
+                curNode = prevNode->next;
+                continue;
+            }
+
+            prevNode = curNode;
+            curNode = curNode->next;
+        }
+        
+        return true;
     }
 
-    bool DeleteNodeAt(const int &pos)
+    bool DeleteNodeAt(int pos)
     {
+        if (!L)
+            return false;
+        
+        int count = Count();
+        if (pos < 0 || pos >= count)
+            return false;
 
+        ListNode<T> * curNode = L;
+        ListNode<T> * prevNode = NULL;
+        while (pos)
+        {
+            prevNode = curNode;
+            curNode = curNode->next;
+            pos--;
+        }
+
+        if (!prevNode) // delete head node
+        {
+            L = L->next;
+            delete curNode;
+            return true;
+        }
+        else
+        {
+            prevNode->next = curNode->next;
+            delete curNode;
+            return true;
+        }
+
+        return false;
     }
 
 public:

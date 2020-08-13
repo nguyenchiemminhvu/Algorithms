@@ -43,6 +43,20 @@ public:
         Clear();
     }
 
+    LinkedList<T> Clone()
+    {
+        LinkedList<T> CL;
+        
+        ListNode<T> * p = L;
+        while (p)
+        {
+            CL.PushBack(p->value);
+            p = p->next;
+        }
+
+        return CL;
+    }
+
     void Print()
     {
         ListNode<T> * p = L;
@@ -266,6 +280,16 @@ public:
         }
 
         return false;
+    }
+
+    void RemoveDuplicates()
+    {
+
+    }
+
+    void RemoveAllOccurrencesOfDuplicates()
+    {
+        
     }
 
     void Reverse()

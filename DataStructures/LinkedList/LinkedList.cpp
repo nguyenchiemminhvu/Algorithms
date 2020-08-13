@@ -37,6 +37,12 @@ int main()
     L.Reverse();
     L.Print();
 
+    L.RemoveDuplicates();
+    L.Print();
+
+    L.RemoveAllOccurrencesOfDuplicates();
+    L.Print();
+
     ListNode<int> * pFind = L.Find(9);
     if (pFind)
     {
@@ -63,7 +69,7 @@ int main()
     {
         std::cout << "Not loop" << std::endl;
     }
-    
+
     if (L.IsPalindrome())
     {
         std::cout << "Palindrome" << std::endl;
@@ -72,6 +78,9 @@ int main()
     {
         std::cout << "Not palindrome" << std::endl;
     }
+
+    LinkedList<int> clone = L.Clone();
+    clone.Print();
 
     return 0;
 }

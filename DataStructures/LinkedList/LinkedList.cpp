@@ -37,10 +37,30 @@ int main()
     L.Reverse();
     L.Print();
 
+    L.PushBack(4);
+    L.PushBack(2);
     L.RemoveDuplicates();
     L.Print();
 
+    L.PushBack(3);
+    L.PushBack(3);
+    L.PushBack(9);
     L.RemoveAllOccurrencesOfDuplicates();
+    L.Print();
+
+    LinkedList<int> clone = L.Clone();
+    clone.Print();
+
+    L.Clear();
+    L.InsertSortedOrder(4);
+    L.InsertSortedOrder(3);
+    L.InsertSortedOrder(6);
+    L.InsertSortedOrder(8);
+    L.InsertSortedOrder(1);
+    L.InsertSortedOrder(9);
+    L.InsertSortedOrder(2);
+    L.InsertSortedOrder(5);
+    L.InsertSortedOrder(7);
     L.Print();
 
     ListNode<int> * pFind = L.Find(9);
@@ -78,9 +98,6 @@ int main()
     {
         std::cout << "Not palindrome" << std::endl;
     }
-
-    LinkedList<int> clone = L.Clone();
-    clone.Print();
 
     return 0;
 }

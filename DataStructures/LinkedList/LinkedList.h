@@ -124,6 +124,41 @@ public:
         return true;
     }
 
+    bool InsertSortedOrder(const T &v)
+    {
+        ListNode<T> * NewNode = CreateNode(v);
+        if (!NewNode)
+            return false;
+        
+        if (L == NULL)
+        {
+            L = NewNode;
+        }
+        else
+        {
+            ListNode<T> * curNode = L;
+            ListNode<T> * prevNode = NULL;
+            while (curNode && curNode->value < v)
+            {
+                prevNode = curNode;
+                curNode = curNode->next;
+            }
+
+            if (!prevNode)
+            {
+                NewNode->next = L;
+                L = NewNode;
+            }
+            else
+            {
+                prevNode->next = NewNode;
+                NewNode->next = curNode;
+            }
+        }
+
+        return true;
+    }
+
     void Clear()
     {
         while (L)
@@ -290,6 +325,16 @@ public:
     void RemoveAllOccurrencesOfDuplicates()
     {
         
+    }
+
+    void MergeSort()
+    {
+
+    }
+
+    void QuickSort()
+    {
+
     }
 
     void Reverse()

@@ -319,12 +319,33 @@ public:
 
     void RemoveDuplicates()
     {
+        ListNode<T> * curNode = L;
+        ListNode<T> * prevNode = NULL;
 
-    }
+        while (curNode && curNode->next)
+        {
+            if (curNode->value == curNode->next->value)
+            {
+                if (!prevNode)
+                {
+                    prevNode = curNode;
+                    curNode = curNode->next;
+                    delete prevNode;
+                    prevNode = NULL;
+                    continue;
+                }
+                else
+                {
+                    prevNode->next = curNode->next;
+                    delete curNode;
+                    curNode = prevNode->next;
+                    continue;
+                }
+            }
 
-    void RemoveAllOccurrencesOfDuplicates()
-    {
-        
+            prevNode = curNode;
+            curNode = curNode->next;
+        }
     }
 
     void MergeSort()

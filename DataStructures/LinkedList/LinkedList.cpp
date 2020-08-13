@@ -37,15 +37,12 @@ int main()
     L.Reverse();
     L.Print();
 
-    L.PushBack(4);
     L.PushBack(2);
-    L.RemoveDuplicates();
-    L.Print();
-
+    L.PushBack(2);
     L.PushBack(3);
     L.PushBack(3);
     L.PushBack(9);
-    L.RemoveAllOccurrencesOfDuplicates();
+    L.RemoveDuplicates();
     L.Print();
 
     LinkedList<int> clone = L.Clone();

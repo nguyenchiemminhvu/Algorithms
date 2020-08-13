@@ -31,6 +31,12 @@ int main()
     L.DeleteNodes(1);
     L.Print();
 
+    L.Reverse();
+    L.Print();
+
+    L.Reverse();
+    L.Print();
+
     ListNode<int> * pFind = L.Find(9);
     if (pFind)
     {
@@ -47,6 +53,24 @@ int main()
     if (pGetFromLast)
     {
         std::cout << "Get node at index 1 (from last): " << pGetFromLast->value << std::endl;
+    }
+
+    if (L.IsLoop())
+    {
+        std::cout << "Loop" << std::endl;
+    }
+    else
+    {
+        std::cout << "Not loop" << std::endl;
+    }
+    
+    if (L.IsPalindrome())
+    {
+        std::cout << "Palindrome" << std::endl;
+    }
+    else
+    {
+        std::cout << "Not palindrome" << std::endl;
     }
 
     return 0;

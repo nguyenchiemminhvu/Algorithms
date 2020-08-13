@@ -6,6 +6,8 @@
 #include <string>
 #include <math.h>
 #include <algorithm>
+#include <stack>
+#include <queue>
 using namespace std;
 
 template <typename T>
@@ -38,14 +40,7 @@ public:
 
     ~LinkedList() 
     {
-        while (L)
-        {
-            ListNode<T> * p = L;
-            L = L->next;
-            delete p;
-        }
-
-        L = NULL;
+        Clear();
     }
 
     void Print()
@@ -113,6 +108,18 @@ public:
         }
 
         return true;
+    }
+
+    void Clear()
+    {
+        while (L)
+        {
+            ListNode<T> * p = L;
+            L = L->next;
+            delete p;
+        }
+
+        L = NULL;
     }
 
     ListNode<T> * Find(const int &v)
@@ -259,6 +266,63 @@ public:
         }
 
         return false;
+    }
+
+    void Reverse()
+    {
+        ListNode<T> * prev = NULL;
+        ListNode<T> * cur = L;
+        ListNode<T> * next = NULL;
+
+        while (cur)
+        {
+            next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+
+        L = prev;
+    }
+
+    bool IsLoop()
+    {
+        ListNode<T> * pFast = L;
+        ListNode<T> * pSlow = L;
+
+        while (pSlow && pFast && pFast->next)
+        {
+            pSlow = pSlow->next;
+            pFast = pFast->next->next;
+
+            if (pSlow == pFast)
+                return true;
+        }
+
+        return false;
+    }
+
+    bool IsPalindrome()
+    {
+        std::stack<T> S;
+        ListNode<T> * p = L;
+        while (p)
+        {
+            S.push(p->value);
+            p = p->next;
+        }
+
+        p = L;
+        while (p)
+        {
+            if (p->value != S.top())
+                return false;
+
+            p = p->next;
+            S.pop();
+        }
+
+        return true;
     }
 
 public:

@@ -115,6 +115,48 @@ public:
         return true;
     }
 
+    ListNode<T> * Find(const int &v)
+    {
+        ListNode<T> * p = L;
+        while (p && p->value != v)
+        {
+            p = p->next;
+        }
+        return p;
+    }
+
+    ListNode<T> * GetNodeAt(int pos)
+    {
+        if (pos < 0)
+            return NULL;
+        
+        ListNode<T> * p = L;
+        while (p && pos)
+        {
+            p = p->next;
+            pos--;
+        }
+        return p;
+    }
+
+    ListNode<T> * GetNodeFromLast(int pos)
+    {
+        if (pos < 0)
+            return NULL;
+        
+        int count = Count();
+        if (pos >= count)
+            return NULL;
+        
+        ListNode<T> * p = L;
+        for (int i = 1; i < count - pos; i++)
+        {
+            p = p->next;
+        }
+
+        return p;
+    }
+
     bool DeleteNode(const T &v)
     {
         if (!L)

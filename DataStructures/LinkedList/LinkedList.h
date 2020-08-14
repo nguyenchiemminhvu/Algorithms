@@ -395,11 +395,6 @@ public:
         MergeSortUtil(L);
     }
 
-    void QuickSort()
-    {
-        QuickSortUtil(L);
-    }
-
     void Reverse()
     {
         ListNode<T> * prev = NULL;
@@ -472,11 +467,6 @@ private:
     {
         ListNode<T> * node = new ListNode<T>(v);
         return node;
-    }
-
-    void QuickSortUtil(ListNode<T> *&LL)
-    {
-
     }
 
     void MergeSortUtil(ListNode<T> *&LL)

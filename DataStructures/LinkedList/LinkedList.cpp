@@ -73,16 +73,6 @@ int main()
     L.MergeSort();
     L.Print();
 
-    L.Clear();
-    L.PushBack(1);
-    L.PushBack(3);
-    L.PushBack(2);
-    L.PushBack(5);
-    L.PushBack(6);
-    L.PushBack(4);
-    L.QuickSort();
-    L.Print();
-
     ListNode<int> * pFind = L.Find(9);
     if (pFind)
     {

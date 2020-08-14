@@ -56,13 +56,7 @@ int main()
     L.InsertSortedOrder(5);
     L.InsertSortedOrder(7);
     L.Print();
-
-    LinkedList<int> clone1 = L.Clone();
-    clone1.Print();
-
-    LinkedList<int> clone2 = L.Clone();
-    clone2.Print();
-
+    
     L.Clear();
     L.PushBack(1);
     L.PushBack(3);

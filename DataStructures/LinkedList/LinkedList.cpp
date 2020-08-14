@@ -45,9 +45,6 @@ int main()
     L.RemoveDuplicates();
     L.Print();
 
-    LinkedList<int> clone = L.Clone();
-    clone.Print();
-
     L.Clear();
     L.InsertSortedOrder(4);
     L.InsertSortedOrder(3);
@@ -58,6 +55,29 @@ int main()
     L.InsertSortedOrder(2);
     L.InsertSortedOrder(5);
     L.InsertSortedOrder(7);
+    L.Print();
+
+    LinkedList<int> clone = L.Clone();
+    clone.Print();
+
+    L.Clear();
+    L.PushBack(1);
+    L.PushBack(3);
+    L.PushBack(2);
+    L.PushBack(5);
+    L.PushBack(6);
+    L.Print();
+    L.MergeSort();
+    L.Print();
+
+    L.Clear();
+    L.PushBack(1);
+    L.PushBack(3);
+    L.PushBack(2);
+    L.PushBack(5);
+    L.PushBack(6);
+    L.Print();
+    L.QuickSort();
     L.Print();
 
     ListNode<int> * pFind = L.Find(9);

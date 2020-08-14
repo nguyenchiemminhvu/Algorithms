@@ -38,6 +38,48 @@ public:
 
     }
 
+    LinkedList(const LinkedList<T> &other)
+    {
+        Clear();
+
+        ListNode<T> * p = other.L;
+        while (p)
+        {
+            PushFront(p->value);
+            p = p->next;
+        }
+
+        Reverse();
+    }
+
+    LinkedList(ListNode<T> * LL)
+    {
+        Clear();
+
+        ListNode<T> * p = LL;
+        while (p)
+        {
+            PushFront(p->value);
+            p = p->next;
+        }
+
+        Reverse();
+    }
+
+    LinkedList<T> operator = (const LinkedList<T> &other)
+    {
+        Clear();
+
+        ListNode<T> * p = other.L;
+        while (p)
+        {
+            PushFront(p->value);
+            p = p->next;
+        }
+
+        Reverse();
+    }
+
     ~LinkedList() 
     {
         Clear();
@@ -350,6 +392,9 @@ public:
 
     void MergeSort()
     {
+        if (!L || !L->next)
+            return;
+        
 
     }
 
@@ -373,6 +418,11 @@ public:
         }
 
         L = prev;
+    }
+
+    bool IsEmpty()
+    {
+        return L == NULL;
     }
 
     bool IsLoop()
@@ -414,8 +464,9 @@ public:
 
         return true;
     }
-
+    
 public:
+
     ListNode<T> * L;
 
 private:

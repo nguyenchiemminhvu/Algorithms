@@ -102,6 +102,13 @@ int main()
         std::cout << "Not loop" << std::endl;
     }
 
+    L.Clear();
+    L.PushBack(1);
+    L.PushBack(2);
+    L.PushBack(3);
+    L.PushBack(3);
+    L.PushBack(2);
+    L.PushBack(1);
     if (L.IsPalindrome())
     {
         std::cout << "Palindrome" << std::endl;
@@ -110,6 +117,8 @@ int main()
     {
         std::cout << "Not palindrome" << std::endl;
     }
+
+    L.Print();
 
     return 0;
 }

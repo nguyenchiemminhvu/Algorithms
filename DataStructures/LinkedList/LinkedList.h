@@ -6,8 +6,6 @@
 #include <string>
 #include <math.h>
 #include <algorithm>
-#include <stack>
-#include <queue>
 using namespace std;
 
 template <typename T>
@@ -497,22 +495,57 @@ public:
 
     bool IsPalindrome()
     {
-        std::stack<T> S;
-        ListNode<T> * p = L;
-        while (p)
+        if (!L || !L->next)
+            return true;
+
+        bool res = true;
+
+        ListNode<T> * LA = NULL;
+        ListNode<T> * LB = NULL;
+        FrontBackSplit(L, LA, LB);
+
+        ListNode<T> * pa = LA;
+        Reverse(LB);
+        ListNode<T> * pb = LB;
+
+        while (pa && pb)
         {
-            S.push(p->value);
-            p = p->next;
+            if (pa->value != pb->value)
+            {
+                res = false;
+                break;
+            }
+            
+            pa = pa->next;
+            pb = pb->next;
         }
 
-        p = L;
+        ListNode<T> * pLastA = LA;
+        Reverse(LB);
+        while (pLastA->next)
+        {
+            pLastA = pLastA->next;
+        }
+        pLastA->next = LB;
+
+        return res;
+    }
+
+    bool IsSorted()
+    {
+        if (!L || !L->next)
+            return true;
+        
+        ListNode<T> * p = L->next;
+        ListNode<T> * prev = L;
+
         while (p)
         {
-            if (p->value != S.top())
+            if (prev->value > p->value)
                 return false;
-
+            
+            prev = p;
             p = p->next;
-            S.pop();
         }
 
         return true;
@@ -582,6 +615,23 @@ private:
         LB = pSlow;
         if (prevSlow)
             prevSlow->next = NULL;
+    }
+
+    void Reverse(ListNode<T> *&LL)
+    {
+        ListNode<T> * prev = NULL;
+        ListNode<T> * cur = LL;
+        ListNode<T> * next = NULL;
+
+        while (cur)
+        {
+            next = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = next;
+        }
+
+        LL = prev;
     }
 };
 

@@ -397,7 +397,7 @@ public:
 
     void QuickSort()
     {
-
+        QuickSortUtil(L);
     }
 
     void Reverse()
@@ -472,6 +472,11 @@ private:
     {
         ListNode<T> * node = new ListNode<T>(v);
         return node;
+    }
+
+    void QuickSortUtil(ListNode<T> *&LL)
+    {
+
     }
 
     void MergeSortUtil(ListNode<T> *&LL)

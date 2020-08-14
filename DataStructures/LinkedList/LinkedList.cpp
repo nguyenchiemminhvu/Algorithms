@@ -67,6 +67,14 @@ int main()
     L.MergeSort();
     L.Print();
 
+    ListNode<int> * pFront = L.Front();
+    if (pFront)
+        std::cout << "Front: " << pFront->value << std::endl;
+    
+    ListNode<int> * pBack = L.Back();
+    if (pBack)
+        std::cout << "Front: " << pBack->value << std::endl;
+    
     ListNode<int> * pFind = L.Find(9);
     if (pFind)
     {

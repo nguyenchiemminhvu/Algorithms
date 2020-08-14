@@ -147,6 +147,42 @@ public:
         return true;
     }
 
+    bool PopBack()
+    {
+        if (!L)
+            return false;
+        
+        if (!L->next)
+        {
+            delete L;
+            L = NULL;
+        }
+        else
+        {
+            ListNode<T> * p = L;
+            ListNode<T> * prev = NULL;
+            while (p && p->next)
+            {
+                prev = p;
+                p = p->next;
+            }
+            delete p;
+            prev->next = NULL;
+        }
+
+        return true;
+    }
+
+    ListNode<T> * Back()
+    {
+        ListNode<T> * p = L;
+        while (p && p->next)
+        {
+            p = p->next;
+        }
+        return p;
+    }
+
     bool PushFront(const T &v)
     {
         ListNode<T> * NewNode = CreateNode(v);
@@ -164,6 +200,31 @@ public:
         }
 
         return true;
+    }
+
+    bool PopFront()
+    {
+        if (!L)
+            return false;
+        
+        if (!L->next)
+        {
+            delete L;
+            L = NULL;
+        }
+        else
+        {
+            ListNode<T> * p = L;
+            L = L->next;
+            delete p;
+        }
+        
+        return true;
+    }
+
+    ListNode<T> * Front()
+    {
+        return L;
     }
 
     bool InsertSortedOrder(const T &v)

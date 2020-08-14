@@ -392,10 +392,7 @@ public:
 
     void MergeSort()
     {
-        if (!L || !L->next)
-            return;
-        
-
+        MergeSortUtil(L);
     }
 
     void QuickSort()
@@ -464,7 +461,7 @@ public:
 
         return true;
     }
-    
+
 public:
 
     ListNode<T> * L;
@@ -475,6 +472,60 @@ private:
     {
         ListNode<T> * node = new ListNode<T>(v);
         return node;
+    }
+
+    void MergeSortUtil(ListNode<T> *&LL)
+    {
+        if (!LL || !LL->next)
+            return;
+        
+        ListNode<T> * pLeft = NULL;
+        ListNode<T> * pRight = NULL;
+        FrontBackSplit(LL, pLeft, pRight);
+        MergeSortUtil(pLeft);
+        MergeSortUtil(pRight);
+        LL = SortedMerge(pLeft, pRight);
+    }
+
+    ListNode<T> * SortedMerge(ListNode<T> * LA, ListNode<T> * LB)
+    {
+        if (!LA)
+            return LB;
+        if (!LB)
+            return LA;
+
+        ListNode<T> * res = NULL;
+
+        if (LA->value <= LB->value)
+        {
+            res = LA;
+            res->next = SortedMerge(LA->next, LB);
+        }
+        else
+        {
+            res = LB;
+            res->next = SortedMerge(LA, LB->next);
+        }
+
+        return res;
+    }
+
+    void FrontBackSplit(ListNode<T> * LL, ListNode<T> *&LA, ListNode<T> *&LB)
+    {
+        ListNode<T> * prevSlow = NULL;
+        ListNode<T> * pSlow = LL;
+        ListNode<T> * pFast = LL;
+        while (pFast && pFast->next)
+        {
+            prevSlow = pSlow;
+            pSlow = pSlow->next;
+            pFast = pFast->next->next;
+        }
+
+        LA = LL;
+        LB = pSlow;
+        if (prevSlow)
+            prevSlow->next = NULL;
     }
 };
 

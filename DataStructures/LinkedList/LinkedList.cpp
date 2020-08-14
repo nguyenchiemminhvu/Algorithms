@@ -57,8 +57,11 @@ int main()
     L.InsertSortedOrder(7);
     L.Print();
 
-    LinkedList<int> clone = L.Clone();
-    clone.Print();
+    LinkedList<int> clone1 = L.Clone();
+    clone1.Print();
+
+    LinkedList<int> clone2 = L.Clone();
+    clone2.Print();
 
     L.Clear();
     L.PushBack(1);
@@ -66,7 +69,7 @@ int main()
     L.PushBack(2);
     L.PushBack(5);
     L.PushBack(6);
-    L.Print();
+    L.PushBack(4);
     L.MergeSort();
     L.Print();
 
@@ -76,7 +79,7 @@ int main()
     L.PushBack(2);
     L.PushBack(5);
     L.PushBack(6);
-    L.Print();
+    L.PushBack(4);
     L.QuickSort();
     L.Print();
 

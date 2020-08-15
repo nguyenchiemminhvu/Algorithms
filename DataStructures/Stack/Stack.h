@@ -32,6 +32,16 @@ public:
         
     }
 
+    bool IsEmpty()
+    {
+        return L.IsEmpty();
+    }
+
+    int Size()
+    {
+        return L.Count();
+    }
+
 private:
 
     LinkedList<T> L;

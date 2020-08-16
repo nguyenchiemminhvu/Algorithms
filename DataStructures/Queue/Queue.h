@@ -2,6 +2,7 @@
 #define __QUEUE_H__
 
 #include "LinkedList.h"
+#include <assert.h>
 
 template <typename T>
 class Queue
@@ -19,17 +20,18 @@ public:
 
     bool Push(const T &v)
     {
-        return true;
+        return L.PushBack(v);
     }
 
     void Pop()
     {
-
+        L.PopFront();
     }
 
     T Front()
     {
-        
+        assert(!IsEmpty());
+        return L.Front();
     }
 
     bool IsEmpty()

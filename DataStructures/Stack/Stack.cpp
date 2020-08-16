@@ -2,6 +2,8 @@
 
 int main()
 {
+    Stack<int> S;
 
+    
     return 0;
 }

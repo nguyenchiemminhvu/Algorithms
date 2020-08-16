@@ -2,6 +2,7 @@
 #define __STACK_H__
 
 #include "LinkedList.h"
+#include <assert.h>
 
 template <typename T>
 class Stack
@@ -19,17 +20,18 @@ public:
 
     bool Push(const T &v)
     {
-        return true;
+        return L.PushFront(v);
     }
 
     void Pop()
     {
-
+        L.PopFront();
     }
 
     T Top()
     {
-        
+        assert(!IsEmpty());
+        return L.Front()->value;
     }
 
     bool IsEmpty()

@@ -31,11 +31,60 @@ Algorithm
 
 #include "Stack.h"
 #include <iostream>
+#include <string>
 using namespace std;
+
+int OperatorLevel(char c)
+{
+    if (c == '^')
+        return 3;
+    if (c == '*' || c == '/')
+        return 2;
+    if (c == '+' || c == '-')
+        return 1;
+    return 0;
+}
+
+std::string InfixToPostfix(std::string ex)
+{
+    std::string res;
+
+    Stack<char> S;
+    S.Push('#');
+
+    for (char c : ex)
+    {
+        if (c >= 'a' && c <= 'z')
+        {
+            res += c;
+        }
+        else if (c == '(')
+        {
+            S.Push(c);
+        }
+        else if (c == ')')
+        {
+
+        }
+        else // + - * / ^
+        {
+
+        }
+    }
+
+    while (!S.IsEmpty() && S.Top() != '#')
+    {
+        res += S.Top();
+        S.Pop();
+    }
+
+    return res;
+}
 
 int main()
 {
-    
+    std::string ex = "a+b*(c*d-e)*(f+g*h)-i";
+    std::cout << InfixToPostfix(ex) << std::endl;
 
     return 0;
 }

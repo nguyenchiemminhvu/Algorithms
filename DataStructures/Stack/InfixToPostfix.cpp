@@ -64,11 +64,24 @@ std::string InfixToPostfix(std::string ex)
         }
         else if (c == ')')
         {
-
+            while (!S.IsEmpty() && S.Top() != '#' && S.Top() != '(')
+            {
+                res += S.Top();
+                S.Pop();
+            }
+            if (!S.IsEmpty() && S.Top() == '(')
+            {
+                S.Pop();
+            }
         }
         else // + - * / ^
         {
-
+            while (!S.IsEmpty() && S.Top() != '#' && (OperatorLevel(c) <= OperatorLevel(S.Top())))
+            {
+                res += S.Top();
+                S.Pop();
+            }
+            S.Push(c);
         }
     }
 

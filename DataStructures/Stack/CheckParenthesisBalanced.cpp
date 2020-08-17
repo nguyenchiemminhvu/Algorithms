@@ -22,6 +22,7 @@ After complete traversal, if there is some starting bracket left in stack then â
 
 #include "Stack.h"
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 bool IsParenthesisBalanced(std::string ex)

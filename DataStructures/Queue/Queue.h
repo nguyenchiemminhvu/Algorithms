@@ -31,7 +31,7 @@ public:
     T Front()
     {
         assert(!IsEmpty());
-        return L.Front();
+        return L.Front()->value;
     }
 
     bool IsEmpty()

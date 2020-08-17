@@ -31,7 +31,7 @@ class LinkedList
 {
 public:
     LinkedList() 
-        : L(NULL)
+        : L(NULL), LEnd(NULL)
     {
 
     }
@@ -131,15 +131,13 @@ public:
         if (L == NULL)
         {
             L = NewNode;
+            LEnd = NewNode;
         }
         else
         {
-            ListNode<T> * p = L;
-            while (p->next)
-            {
-                p = p->next;
-            }
+            ListNode<T> * p = LEnd;
             p->next = NewNode;
+            LEnd = NewNode;
         }
 
         return true;
@@ -154,18 +152,20 @@ public:
         {
             delete L;
             L = NULL;
+            LEnd = NULL;
         }
         else
         {
             ListNode<T> * p = L;
             ListNode<T> * prev = NULL;
-            while (p && p->next)
+            while (p != LEnd)
             {
                 prev = p;
                 p = p->next;
             }
             delete p;
             prev->next = NULL;
+            LEnd = prev;
         }
 
         return true;
@@ -173,12 +173,7 @@ public:
 
     ListNode<T> * Back()
     {
-        ListNode<T> * p = L;
-        while (p && p->next)
-        {
-            p = p->next;
-        }
-        return p;
+        return LEnd;
     }
 
     bool PushFront(const T &v)
@@ -190,6 +185,7 @@ public:
         if (L == NULL)
         {
             L = NewNode;
+            LEnd = NewNode;
         }
         else
         {
@@ -209,6 +205,7 @@ public:
         {
             delete L;
             L = NULL;
+            LEnd = NULL;
         }
         else
         {
@@ -234,6 +231,7 @@ public:
         if (L == NULL)
         {
             L = NewNode;
+            LEnd = NewNode;
         }
         else
         {
@@ -254,6 +252,10 @@ public:
             {
                 prevNode->next = NewNode;
                 NewNode->next = curNode;
+                if (!curNode)
+                {
+                    LEnd = NewNode;
+                }
             }
         }
 
@@ -270,6 +272,7 @@ public:
         }
 
         L = NULL;
+        LEnd = NULL;
     }
 
     ListNode<T> * Find(const int &v)
@@ -342,6 +345,11 @@ public:
         prevNode->next = curNode->next;
         delete curNode;
 
+        if (!prevNode->next)
+        {
+            LEnd = prevNode;
+        }
+
         return true;
     }
 
@@ -380,6 +388,8 @@ public:
             prevNode = curNode;
             curNode = curNode->next;
         }
+
+        RefreshLEnd();
         
         return true;
     }
@@ -406,12 +416,16 @@ public:
         {
             L = L->next;
             delete curNode;
+            if (!L)
+                LEnd = NULL;
             return true;
         }
         else
         {
             prevNode->next = curNode->next;
             delete curNode;
+            if (!prevNode->next)
+                LEnd = prevNode;
             return true;
         }
 
@@ -447,15 +461,20 @@ public:
             prevNode = curNode;
             curNode = curNode->next;
         }
+
+        RefreshLEnd();
     }
 
     void MergeSort()
     {
         MergeSortUtil(L);
+        RefreshLEnd();
     }
 
     void Reverse()
     {
+        LEnd = L;
+
         ListNode<T> * prev = NULL;
         ListNode<T> * cur = L;
         ListNode<T> * next = NULL;
@@ -554,6 +573,7 @@ public:
 public:
 
     ListNode<T> * L;
+    ListNode<T> * LEnd;
 
 private:
 
@@ -561,6 +581,23 @@ private:
     {
         ListNode<T> * node = new ListNode<T>(v);
         return node;
+    }
+
+    void RefreshLEnd()
+    {
+        if (!L)
+        {
+            LEnd = NULL;
+        }
+        else
+        {
+            ListNode<T> * p = L;
+            while (p->next)
+            {
+                p = p->next;
+            }
+            LEnd = p;
+        }
     }
 
     void MergeSortUtil(ListNode<T> *&LL)

@@ -96,7 +96,7 @@ std::string InfixToPostfix(std::string ex)
 
 int main()
 {
-    std::string ex = "a+b*(c*d-e)*(f+g*h)-i";
+    std::string ex = "((a+((b*((c*d)-e))*(f+(g*h))))-i)";
     std::cout << InfixToPostfix(ex) << std::endl;
 
     return 0;

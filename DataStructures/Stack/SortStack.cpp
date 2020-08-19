@@ -46,7 +46,27 @@ void SortStackRecursive(Stack<int> &S)
 
 void SortStackUsingStack(Stack<int> &S)
 {
+    Stack<int> SS;
 
+    while (!S.IsEmpty())
+    {
+        int temp = S.Top();
+        S.Pop();
+
+        while (!SS.IsEmpty() && temp < SS.Top())
+        {
+            S.Push(SS.Top());
+            SS.Pop();
+        }
+
+        SS.Push(temp);
+    }
+
+    while (!SS.IsEmpty())
+    {
+        S.Push(SS.Top());
+        SS.Pop();
+    }
 }
 
 int main()

@@ -16,20 +16,43 @@ Output : [1, 2, 3, 4, 5, 8]
 #include <iostream>
 using namespace std;
 
+void SortedInsert(Stack<int> &S, int value)
+{
+    if (S.IsEmpty() || value < S.Top())
+    {
+        S.Push(value);
+    }
+    else
+    {
+        int temp = S.Top();
+        S.Pop();
+        SortedInsert(S, value);
+        S.Push(temp);
+    }
+}
+
+void SortStackRecursive(Stack<int> &S)
+{
+    if (S.IsEmpty())
+        return;
+    
+    int temp = S.Top();
+    S.Pop();
+
+    SortStackRecursive(S);
+
+    SortedInsert(S, temp);
+}
+
 void SortStackUsingStack(Stack<int> &S)
 {
 
 }
 
-void SortStackRecursive(Stack<int> &S)
-{
-    
-}
-
 int main()
 {
     Stack<int> S;
-    
+
     S.Push(1);
     S.Push(5);
     S.Push(2);

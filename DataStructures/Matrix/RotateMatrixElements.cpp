@@ -41,10 +41,60 @@ using namespace std;
 
 void RotateMatrix(std::vector<std::vector<int>> &m)
 {
-    int m = m.size();
-    int n = m[0].size();
+    if (!m.size() || !m[0].size())
+        return;
 
-    
+    int row = m.size();
+    int col = m[0].size();
+
+    int r = 0, c = 0;
+    int prev, cur;
+
+    while (r < row && c < col)
+    {
+        if (r == row || c == col)
+            break;
+        
+        prev = m[r + 1][c];
+
+        for (int i = c; i < col; i++)
+        {
+            cur = m[r][i];
+            m[r][i] = prev;
+            prev = cur;
+        }
+        r++;
+
+        for (int i = r; i < row; i++)
+        {
+            cur = m[i][col - 1];
+            m[i][col - 1] = prev;
+            prev = cur;
+        }
+        col--;
+
+        if (r < row)
+        {
+            for (int i = col - 1; i >= c; i--)
+            {
+                cur = m[row - 1][i];
+                m[row - 1][i] = prev;
+                prev = cur;
+            }
+        }
+        row--;
+
+        if (c < col)
+        {
+            for (int i = row - 1; i >= r; i--)
+            {
+                cur = m[i][c];
+                m[i][c] = prev;
+                prev = cur;
+            }
+        }
+        c++;
+    }
 }
 
 int main()

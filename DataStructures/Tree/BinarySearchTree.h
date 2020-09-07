@@ -44,17 +44,17 @@ public:
 };
 
 template <typename T>
-class BinarySearchTree
+class BSTree
 {
 public:
-    BinarySearchTree()
+    BSTree()
     {
 
     }
 
-    ~BinarySearchTree()
+    ~BSTree()
     {
-
+        Clear();
     }
 
     bool Insert(T value)
@@ -89,10 +89,16 @@ public:
 
     int Size()
     {
+        return 0;
+    }
+
+    void Clear()
+    {
 
     }
 
 private:
+
     TreeNode<T> * root;
 };
 

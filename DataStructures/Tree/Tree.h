@@ -89,9 +89,9 @@ public:
         return p;
     }
 
-    virtual bool Delete(T value)
+    virtual void Delete(T value)
     {
-        return false;
+        root = DeleteUtil(root, value);
     }
 
     void PrintPreOrder()
@@ -131,47 +131,17 @@ public:
 
     void Clear()
     {
-        std::queue<TreeNode<T> *> Q;
-        Q.push(root);
-
-        while (!Q.empty())
-        {
-            TreeNode<T> * node = Q.front();
-            Q.pop();
-
-            if (node->left)
-            {
-                Q.push(node->left);
-            }
-            if (node->right)
-            {
-                Q.push(node->right);
-            }
-
-            delete node;
-        }
+        ClearUtil(root);
     }
 
     TreeNode<T> * Min()
     {
-        TreeNode<T> * p = root;
-        while (p && p->left)
-        {
-            p = p->left;
-        }
-
-        return p;
+        return GetMinUtil(root);
     }
 
     TreeNode<T> * Max()
     {
-        TreeNode<T> * p = root;
-        while (p && p->right)
-        {
-            p = p->right;
-        }
-
-        return p;
+        return GetMaxUtil(root);
     }
 
 protected:
@@ -201,6 +171,44 @@ protected:
         else if (root->data < node->data)
         {
             root->right = InsertUtil(root->right, node);
+        }
+
+        return root;
+    }
+
+    virtual TreeNode<T> * DeleteUtil(TreeNode<T> * root, T value)
+    {
+        if (!root)
+            return root;
+        
+        if (root->data > value)
+        {
+            root->left = DeleteUtil(root->left, value);
+        }
+        else if (root->data < value)
+        {
+            root->right = DeleteUtil(root->right, value);
+        }
+        else
+        {
+            if (!root->left)
+            {
+                TreeNode<T> * temp = root->right;
+                delete root;
+                return temp;
+            }
+            else if (!root->right)
+            {
+                TreeNode<T> * temp = root->left;
+                delete root;
+                return temp;
+            }
+            else
+            {
+                TreeNode<T> * temp = GetMinUtil(root->right);
+                root->data = temp->data;
+                root->right = DeleteUtil(root->right, temp->data);
+            }
         }
 
         return root;
@@ -269,6 +277,39 @@ protected:
                 std::cout << std::endl;
             }
         }
+    }
+
+    TreeNode<T> * GetMinUtil(TreeNode<T> * root)
+    {
+        TreeNode<T> * p = root;
+        while (p && p->left)
+        {
+            p = p->left;
+        }
+
+        return p;
+    }
+
+    TreeNode<T> * GetMaxUtil(TreeNode<T> * root)
+    {
+        TreeNode<T> * p = root;
+        while (p && p->right)
+        {
+            p = p->right;
+        }
+
+        return p;
+    }
+
+    void ClearUtil(TreeNode<T> *&root)
+    {
+        if (!root)
+            return;
+        
+        ClearUtil(root->left);
+        ClearUtil(root->right);
+        delete root;
+        root = NULL;
     }
 
 protected:

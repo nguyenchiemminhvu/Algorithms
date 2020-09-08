@@ -108,6 +108,16 @@ public:
 
     }
 
+    TreeNode<T> * Min()
+    {
+        return NULL;
+    }
+
+    TreeNode<T> * Max()
+    {
+        return NULL;
+    }
+
 protected:
 
     TreeNode<T> * root;

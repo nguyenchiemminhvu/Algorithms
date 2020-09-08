@@ -2,7 +2,7 @@
 
 int main()
 {
-    BSTree<int> tree;
+    AVLTree<int> tree;
 
     return 0;
 }

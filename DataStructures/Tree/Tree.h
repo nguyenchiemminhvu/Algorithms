@@ -4,6 +4,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <iostream>
 using namespace std;
 
 template <typename T>
@@ -11,12 +12,12 @@ class TreeNode
 {
 public:
     TreeNode()
-        : left(NULL), right(NULL)
+        : height(1), left(NULL), right(NULL)
     {
     }
 
     TreeNode(T d)
-        : data(d), left(NULL), right(NULL)
+        : data(d), height(1), left(NULL), right(NULL)
     {
     }
 
@@ -40,7 +41,7 @@ public:
     T data;
     TreeNode<T> * left;
     TreeNode<T> * right;
-    
+    int height;
 };
 
 template <typename T>
@@ -52,12 +53,12 @@ public:
 
     }
 
-    ~BSTree()
+    virtual ~BSTree()
     {
         Clear();
     }
 
-    bool Insert(T value)
+    virtual bool Insert(T value)
     {
         return false;
     }
@@ -67,7 +68,7 @@ public:
         return NULL;
     }
 
-    bool Delete(T value)
+    virtual bool Delete(T value)
     {
         return false;
     }
@@ -87,7 +88,17 @@ public:
 
     }
 
+    void PrintLevelOrder()
+    {
+
+    }
+
     int Size()
+    {
+        return 0;
+    }
+
+    int Height()
     {
         return 0;
     }
@@ -97,9 +108,27 @@ public:
 
     }
 
-private:
+protected:
 
     TreeNode<T> * root;
+};
+
+template <typename T>
+class AVLTree : public BSTree<T>
+{
+public:
+    AVLTree()
+    {
+        
+    }
+
+    virtual ~AVLTree()
+    {
+        
+    }
+
+protected:
+
 };
 
 #endif // __BINARY_SEARCH_TREE_H__

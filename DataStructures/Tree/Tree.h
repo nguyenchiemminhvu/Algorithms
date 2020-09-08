@@ -325,6 +325,11 @@ public:
         
     }
 
+    AVLTree(const std::vector<T> &v)
+    {
+
+    }
+
     virtual ~AVLTree()
     {
         

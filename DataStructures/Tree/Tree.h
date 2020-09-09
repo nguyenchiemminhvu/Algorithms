@@ -103,6 +103,23 @@ public:
         return NULL;
     }
 
+    int MinDistance(T value1, T value2)
+    {
+        TreeNode<T> * p1 = Find(value1);
+        TreeNode<T> * p2 = Find(value2);
+
+        if (!p1 || !p2)
+            return -1;
+        
+        if (value1 == value2)
+            return 0;
+        
+        if (value2 < value1)
+            std::swap(value1, value2);
+        
+        return MinDistanceUtil(root, value1, value2);
+    }
+
     virtual void Delete(T value)
     {
         root = DeleteUtil(root, value);
@@ -326,6 +343,37 @@ protected:
         }
 
         return p;
+    }
+
+    int MinDistanceUtil(TreeNode<T> * root, T value1, T value2)
+    {
+        if (!root)
+            return 0;
+        
+        if (root->data > value1 && root->data > value2)
+        {
+            return MinDistanceUtil(root->left, value1, value2);
+        }
+        
+        if (root->data < value1 && root->data < value2)
+        {
+            return MinDistanceUtil(root->right, value1, value2);
+        }
+
+        if (root->data >= value1 && root->data <= value2)
+        {
+            return DistanceFromRoot(root, value1) + DistanceFromRoot(root, value2);
+        }
+    }
+
+    int DistanceFromRoot(TreeNode<T> * root, int value)
+    {
+        if (root->data == value)
+            return 0;
+        else if (root->data > value)
+            return 1 + DistanceFromRoot(root->left, value);
+        else
+            return 1 + DistanceFromRoot(root->right, value);
     }
 
     void ClearUtil(TreeNode<T> *&root)

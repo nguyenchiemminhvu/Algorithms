@@ -34,6 +34,8 @@ int main()
         std::cout << "Min: " << tree.Min()->data << std::endl;
     }
 
+    std::cout << "Min distance between two nodes (3, 19): " << tree.MinDistance(3, 19) << std::endl;
+
     TreeNode<int> * pFind = tree.Find(3);
     if (pFind)
     {

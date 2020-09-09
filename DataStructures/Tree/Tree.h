@@ -4,6 +4,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <algorithm>
 #include <iostream>
 using namespace std;
 
@@ -51,6 +52,13 @@ public:
     BSTree()
         : root(NULL)
     {
+    }
+
+    BSTree(std::vector<T> v)
+        : root(NULL)
+    {
+        std::sort(v.begin(), v.end());
+        root = BuildTreeFromSortedArray(v, 0, v.size() - 1);
     }
 
     virtual ~BSTree()
@@ -149,6 +157,19 @@ protected:
     TreeNode<T> * CreateNode(T v)
     {
         TreeNode<T> * node = new TreeNode<T>(v);
+        return node;
+    }
+
+    TreeNode<T> * BuildTreeFromSortedArray(const std::vector<T> &v, int start, int end)
+    {
+        if (start > end)
+            return NULL;
+        
+        int mid = (start + end) / 2;
+        TreeNode<T> * node = CreateNode(v[mid]);
+        node->left = BuildTreeFromSortedArray(v, start, mid - 1);
+        node->right = BuildTreeFromSortedArray(v, mid + 1, end);
+
         return node;
     }
 

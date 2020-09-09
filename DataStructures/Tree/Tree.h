@@ -5,6 +5,7 @@
 #include <set>
 #include <stack>
 #include <queue>
+#include <limits.h>
 #include <algorithm>
 #include <iostream>
 using namespace std;
@@ -100,7 +101,12 @@ public:
 
     TreeNode<T> * GetCloset(T value)
     {
-        return NULL;
+        int minDiff = INT_MAX;
+        TreeNode<T> * closet = NULL;
+        
+        GetClosetUtil(root, value, minDiff, closet);
+
+        return closet;
     }
 
     int MinDistance(T value1, T value2)
@@ -345,6 +351,34 @@ protected:
         return p;
     }
 
+    void GetClosetUtil(TreeNode<T> * root, T value, int &minDiff, TreeNode<T> *&closet)
+    {
+        if (!root)
+            return;
+        
+        if (root->data == value)
+        {
+            closet = root;
+            return;
+        }
+
+        int curDiff = abs(root->data - value);
+        if (minDiff > curDiff)
+        {
+            minDiff = curDiff;
+            closet = root;
+        }
+
+        if (value < root->data)
+        {
+            GetClosetUtil(root->left, value, minDiff, closet);
+        }
+        else
+        {
+            GetClosetUtil(root->right, value, minDiff, closet);
+        }
+    }
+
     int MinDistanceUtil(TreeNode<T> * root, T value1, T value2)
     {
         if (!root)
@@ -364,6 +398,8 @@ protected:
         {
             return DistanceFromRoot(root, value1) + DistanceFromRoot(root, value2);
         }
+
+        return 0;
     }
 
     int DistanceFromRoot(TreeNode<T> * root, int value)

@@ -2,6 +2,7 @@
 #define __BINARY_SEARCH_TREE_H__
 
 #include <vector>
+#include <set>
 #include <stack>
 #include <queue>
 #include <algorithm>
@@ -95,6 +96,11 @@ public:
         }
 
         return p;
+    }
+
+    TreeNode<T> * GetCloset(T value)
+    {
+        return NULL;
     }
 
     virtual void Delete(T value)

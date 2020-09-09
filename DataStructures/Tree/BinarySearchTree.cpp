@@ -40,6 +40,12 @@ int main()
         std::cout << "Found " << pFind->data << std::endl;
     }
 
+    TreeNode<int> * pCloset = tree.GetCloset(16);
+    if (pCloset)
+    {
+        std::cout << "Closet: " << pCloset->data << std::endl;
+    }
+
     tree.Delete(3);
     tree.PrintLevelOrder();
     std::cout << std::endl;

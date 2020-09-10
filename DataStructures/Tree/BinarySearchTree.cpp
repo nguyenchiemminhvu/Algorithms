@@ -53,7 +53,12 @@ int main()
     std::cout << std::endl;
 
     std::vector<int> v = { 4, 3, 1, 7, 5, 2, 6, 8, 9 };
+    
     BSTree<int> bTree(v);
+    bTree.PrintLevelOrder();
+    std::cout << std::endl;
+
+    bTree.RemoveAllLeaf();
     bTree.PrintLevelOrder();
     std::cout << std::endl;
 

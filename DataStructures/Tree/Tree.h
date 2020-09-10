@@ -131,6 +131,11 @@ public:
         root = DeleteUtil(root, value);
     }
 
+    void RemoveAllLeaf()
+    {
+        root = RemoveAllLeafUtil(root);
+    }
+
     void PrintPreOrder()
     {
         PrintPreOrderUtil(root);
@@ -260,6 +265,23 @@ protected:
                 root->right = DeleteUtil(root->right, temp->data);
             }
         }
+
+        return root;
+    }
+
+    TreeNode<T> * RemoveAllLeafUtil(TreeNode<T> * root)
+    {
+        if (!root)
+            return NULL;
+        
+        if (!root->left && !root->right)
+        {
+            delete root;
+            return NULL;
+        }
+
+        root->left = RemoveAllLeafUtil(root->left);
+        root->right = RemoveAllLeafUtil(root->right);
 
         return root;
     }

@@ -15,12 +15,12 @@ class TreeNode
 {
 public:
     TreeNode()
-        : height(1), left(NULL), right(NULL)
+        : height(1), count(1), left(NULL), right(NULL)
     {
     }
 
     TreeNode(T d)
-        : data(d), height(1), left(NULL), right(NULL)
+        : data(d), height(1), count(1), left(NULL), right(NULL)
     {
     }
 
@@ -45,6 +45,7 @@ public:
     TreeNode<T> * left;
     TreeNode<T> * right;
     int height;
+    int count;
 };
 
 template <typename T>
@@ -156,6 +157,11 @@ public:
         PrintLevelOrderUtil(root);
     }
 
+    void PrintHeightLevelOrder()
+    {
+        PrintHeightLevelOrderUtil(root);
+    }
+
     int Size()
     {
         return 0;
@@ -188,7 +194,7 @@ public:
 
 protected:
 
-    TreeNode<T> * CreateNode(T v)
+    virtual TreeNode<T> * CreateNode(T v)
     {
         TreeNode<T> * node = new TreeNode<T>(v);
         return node;
@@ -351,6 +357,41 @@ protected:
         }
     }
 
+    void PrintHeightLevelOrderUtil(TreeNode<T> * root)
+    {
+        std::queue<TreeNode<T> *> Q;
+        int curLevel = 1, nextLevel = 0;
+        Q.push(root);
+
+        while (!Q.empty())
+        {
+            TreeNode<T> * node = Q.front();
+            Q.pop();
+            curLevel--;
+
+            std::cout << node->data << "(" << node->height <<") ";
+
+            if (node->left)
+            {
+                Q.push(node->left);
+                nextLevel++;
+            }
+            if (node->right)
+            {
+                Q.push(node->right);
+                nextLevel++;
+            }
+
+            if (curLevel == 0)
+            {
+                curLevel = nextLevel;
+                nextLevel = 0;
+
+                std::cout << std::endl;
+            }
+        }
+    }
+
     TreeNode<T> * GetMinUtil(TreeNode<T> * root)
     {
         TreeNode<T> * p = root;
@@ -454,13 +495,9 @@ class AVLTree : public BSTree<T>
 {
 public:
     AVLTree()
+        : root(NULL)
     {
         
-    }
-
-    AVLTree(const std::vector<T> &v)
-    {
-
     }
 
     virtual ~AVLTree()
@@ -468,7 +505,38 @@ public:
         
     }
 
+    virtual bool Insert(T value)
+    {
+        TreeNode<T> * node = CreateNode(value);
+        if (!node)
+            return false;
+        
+        root = InsertUtil(root, node);
+        return true;
+    }
+
+    virtual void Delete(T value)
+    {
+        root = DeleteUtil(root, value);
+    }
+
 protected:
+
+    virtual TreeNode<T> * CreateNode(T v)
+    {
+        TreeNode<T> * node = new TreeNode<T>(v);
+        return node;
+    }
+
+    virtual TreeNode<T> * InsertUtil(TreeNode<T> * root, TreeNode<T> * node)
+    {
+        return NULL;
+    }
+
+    virtual TreeNode<T> * DeleteUtil(TreeNode<T> * root, T value)
+    {
+        
+    }
 
 };
 

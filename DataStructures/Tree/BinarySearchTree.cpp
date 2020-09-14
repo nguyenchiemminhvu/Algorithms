@@ -24,6 +24,9 @@ int main()
     tree.PrintLevelOrder();
     std::cout << std::endl;
 
+    tree.PrintHeightLevelOrder();
+    std::cout << std::endl;
+
     if (tree.Max())
     {
         std::cout << "Max: " << tree.Max()->data << std::endl;

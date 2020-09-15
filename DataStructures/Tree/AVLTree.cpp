@@ -8,9 +8,9 @@ int main()
     tree.Insert(4);
     tree.Insert(1);
     tree.Insert(3);
-    tree.Insert(19);
-    tree.Insert(15);
-    tree.Insert(21);
+    tree.Insert(8);
+    tree.Insert(7);
+    tree.Insert(6);
 
     tree.PrintLevelOrder();
     std::cout << std::endl;

@@ -4,7 +4,7 @@ int main()
 {
     BSTree<int> tree;
 
-    tree.Insert(10);
+    tree.Insert(1);
     tree.Insert(4);
     tree.Insert(2);
     tree.Insert(3);

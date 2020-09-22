@@ -257,25 +257,27 @@ protected:
         // left left
         if (balance > 1 && node->data < root->left->data)
         {
-
+            return RightRotateUtil(root);
         }
 
         // right right
         if (balance < -1 && node->data > root->right->data)
         {
-            
+            return LeftRotateUtil(root);
         }
 
         // left right
         if (balance > 1 && node->data > root->left->data)
         {
-            
+            root->left = LeftRotateUtil(root->left);
+            return RightRotateUtil(root);
         }
         
         // right left
         if (balance < -1 && node->data < root->right->data)
         {
-            
+            root->right = RightRotateUtil(root->right);
+            return LeftRotateUtil(root);
         }
 
         return root;
@@ -585,8 +587,10 @@ protected:
         l->right = root;
         root->left = lr;
 
-        root->height = std::max(GetHeightUtil(r->left), GetHeightUtil(r->right)) + 1;
-        l->height = std::max(GetHeightUtil(r->left), GetHeightUtil(r->right)) + 1;
+        root->height = std::max(GetHeightUtil(root->left), GetHeightUtil(root->right)) + 1;
+        l->height = std::max(GetHeightUtil(l->left), GetHeightUtil(l->right)) + 1;
+
+        return l;
     }
 
 public:

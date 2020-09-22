@@ -245,23 +245,35 @@ protected:
         {
             root->right = InsertUtil(root->right, node);
         }
+        else
+        {
+            return root;
+        }
 
         root->height = 1 + std::max(Height(root->left), Height(root->right));
 
         int balance = GetBalanceUtil(root);
-        if (true)
+
+        // left left
+        if (balance > 1 && node->data < root->left->data)
         {
 
         }
-        if (true)
+
+        // right right
+        if (balance < -1 && node->data > root->right->data)
         {
             
         }
-        if (true)
+
+        // left right
+        if (balance > 1 && node->data > root->left->data)
         {
             
         }
-        if (true)
+        
+        // right left
+        if (balance < -1 && node->data < root->right->data)
         {
             
         }
@@ -553,12 +565,28 @@ protected:
 
     TreeNode<T> * LeftRotateUtil(TreeNode<T> * root)
     {
-        return NULL;
+        TreeNode<T> * r = root->right;
+        TreeNode<T> * rl = r->left;
+
+        r->left = root;
+        root->right = rl;
+
+        root->height = std::max(GetHeightUtil(root->left), GetHeightUtil(root->right)) + 1;
+        r->height = std::max(GetHeightUtil(r->left), GetHeightUtil(r->right)) + 1;
+
+        return r;
     }
 
     TreeNode<T> * RightRotateUtil(TreeNode<T> * root)
     {
-        return NULL;
+        TreeNode<T> * l = root->left;
+        TreeNode<T> * lr = l->right;
+
+        l->right = root;
+        root->left = lr;
+
+        root->height = std::max(GetHeightUtil(r->left), GetHeightUtil(r->right)) + 1;
+        l->height = std::max(GetHeightUtil(r->left), GetHeightUtil(r->right)) + 1;
     }
 
 public:

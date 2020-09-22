@@ -318,6 +318,39 @@ protected:
             }
         }
 
+        if (!root)
+            return NULL;
+
+        root->height = 1 + std::max(Height(root->left), Height(root->right));
+
+        int balance = GetBalanceUtil(root);
+
+        // left left
+        if (balance > 1 && GetBalanceUtil(root->left) > 0)
+        {
+            return RightRotateUtil(root);
+        }
+
+        // right right
+        if (balance < 1 && GetBalanceUtil(root->right) < 0)
+        {
+            return LeftRotateUtil(root);
+        }
+
+        // left right
+        if (balance > 1 && GetBalanceUtil(root->left) < 0)
+        {
+            root->left = LeftRotateUtil(root->left);
+            return RightRotateUtil(root);
+        }
+
+        // right left
+        if (balance < 1 && GetBalanceUtil(root->right) > 0)
+        {
+            root->right = RightRotateUtil(root->right);
+            return LeftRotateUtil(root);
+        }
+
         return root;
     }
 

@@ -164,12 +164,24 @@ public:
 
     int Size()
     {
-        return 0;
+        return GetSizeUtil(root);
     }
 
     int Height()
     {
-        return 0;
+        return GetHeightUtil(root);
+    }
+
+    int Height(TreeNode<T> * node)
+    {
+        if (!node)
+            return 0;
+        return node->height;
+    }
+
+    int GetBalance(TreeNode<T> * node)
+    {
+        return GetBalanceUtil(node);
     }
 
     bool IsEmpty()
@@ -232,6 +244,26 @@ protected:
         else if (root->data < node->data)
         {
             root->right = InsertUtil(root->right, node);
+        }
+
+        root->height = 1 + std::max(Height(root->left), Height(root->right));
+
+        int balance = GetBalanceUtil(root);
+        if (true)
+        {
+
+        }
+        if (true)
+        {
+            
+        }
+        if (true)
+        {
+            
+        }
+        if (true)
+        {
+            
         }
 
         return root;
@@ -335,7 +367,11 @@ protected:
             curLevel--;
 
             std::cout << node->data << " ";
-
+            
+            if (!node)
+            {
+                continue;
+            }
             if (node->left)
             {
                 Q.push(node->left);
@@ -371,6 +407,10 @@ protected:
 
             std::cout << node->data << "(" << node->height <<") ";
 
+            if (!node)
+            {
+                continue;
+            }
             if (node->left)
             {
                 Q.push(node->left);
@@ -486,58 +526,44 @@ protected:
         root = NULL;
     }
 
-protected:
-    TreeNode<T> * root;
-};
-
-template <typename T>
-class AVLTree : public BSTree<T>
-{
-public:
-    AVLTree()
-        : root(NULL)
+    int GetSizeUtil(TreeNode<T> * root)
     {
+        if (!root)
+            return 0;
         
+        return 1 + GetSizeUtil(root->left) + GetSizeUtil(root->right);
     }
 
-    virtual ~AVLTree()
+    int GetHeightUtil(TreeNode<T> * root)
     {
+        if (!root)
+            return 0;
         
+        int lh = GetHeightUtil(root->left);
+        int rh = GetHeightUtil(root->right);
+        return std::max(lh, rh) + 1;
     }
 
-    virtual bool Insert(T value)
+    int GetBalanceUtil(TreeNode<T> * root)
     {
-        TreeNode<T> * node = CreateNode(value);
-        if (!node)
-            return false;
-        
-        root = InsertUtil(root, node);
-        return true;
+        if (!root)
+            return 0;
+        return (Height(root->left) - Height(root->right));
     }
 
-    virtual void Delete(T value)
-    {
-        root = DeleteUtil(root, value);
-    }
-
-protected:
-
-    virtual TreeNode<T> * CreateNode(T v)
-    {
-        TreeNode<T> * node = new TreeNode<T>(v);
-        return node;
-    }
-
-    virtual TreeNode<T> * InsertUtil(TreeNode<T> * root, TreeNode<T> * node)
+    TreeNode<T> * LeftRotateUtil(TreeNode<T> * root)
     {
         return NULL;
     }
 
-    virtual TreeNode<T> * DeleteUtil(TreeNode<T> * root, T value)
+    TreeNode<T> * RightRotateUtil(TreeNode<T> * root)
     {
-        
+        return NULL;
     }
 
+public:
+
+    TreeNode<T> * root;
 };
 
 #endif // __BINARY_SEARCH_TREE_H__

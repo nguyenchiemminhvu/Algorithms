@@ -52,7 +52,7 @@ public:
 
     void Insert(std::string key)
     {
-        root = InsertUtil(root, key);
+        InsertUtil(root, key);
     }
 
     bool Search(std::string key)
@@ -72,7 +72,8 @@ public:
 
     void Print()
     {
-        PrintUtil(root);
+        std::string temp;
+        PrintUtil(root, temp);
     }
 
 protected:
@@ -90,9 +91,20 @@ protected:
         return node;
     }
 
-    TrieNode * InsertUtil(TrieNode * root, std::string key)
+    void InsertUtil(TrieNode * root, std::string key)
     {
-        return NULL;
+        TrieNode * p = root;
+
+        for (char c : key)
+        {
+            int index = c - 'a';
+            if (!p->child_nodes[index])
+                p->child_nodes[index] = CreateNode();
+            
+            p = p->child_nodes[index];
+        }
+
+        p->isLeaf = true;
     }
 
     bool SearchUtil(TrieNode * root, std::string key)
@@ -102,17 +114,33 @@ protected:
 
     TrieNode * DeleteUtil(TrieNode * root, std::string key)
     {
-        return NULL;
+        return root;
     }
 
     TrieNode * ClearUtil(TrieNode * root)
     {
-        return NULL;
+        return root;
     }
 
-    void PrintUtil(TrieNode * root)
+    void PrintUtil(TrieNode * root, std::string &temp)
     {
+        if (!root)
+            return;
         
+        if (root->isLeaf)
+        {
+            std::cout << temp << std::endl;
+        }
+
+        for (int i = 0; i < ALPHABET_SIZE; i++)
+        {
+            if (root->child_nodes[i])
+            {
+                temp += ('a' + i);
+                PrintUtil(root->child_nodes[i], temp);
+                temp.pop_back();
+            }
+        }
     }
 
 protected:

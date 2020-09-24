@@ -9,6 +9,8 @@ int main()
     Trie T;
     T.Insert("cash");
     T.Insert("card");
+    T.Insert("captive");
+    T.Insert("capital");
     T.Insert("last");
     T.Insert("part");
     T.Insert("count");
@@ -20,16 +22,12 @@ int main()
         std::cout << "Found: program" << std::endl;
     }
     
-
     T.Print();
     std::cout << std::endl;
 
     T.Delete("cash");
     T.Delete("card");
-    T.Delete("last");
     T.Delete("part");
-    T.Delete("count");
-    T.Delete("program");
     T.Delete("application");
 
     T.Print();
@@ -45,6 +43,9 @@ int main()
     T.Insert("parallel");
     T.Insert("patient");
     T.Insert("passive");
+
+    T.Print();
+    std::cout << std::endl;
 
     std::vector<std::string> ss = T.GetAllCompletion("part");
     for (std::string s : ss)

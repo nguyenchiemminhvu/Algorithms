@@ -45,7 +45,13 @@ public:
 
     ~Trie()
     {
-
+        Clear();
+        
+        if (root)
+        {
+            delete root;
+            root = NULL;
+        }
     }
 
     bool IsEmpty()
@@ -171,6 +177,23 @@ protected:
 
     TrieNode * ClearUtil(TrieNode * root)
     {
+        if (!root)
+            return NULL;
+        
+        for (int i = 0; i < ALPHABET_SIZE; i++)
+        {
+            if (root->child_nodes[i])
+            {
+                root->child_nodes[i] = ClearUtil(root->child_nodes[i]);
+            }
+        }
+        
+        if (HasNoChild(root) && !root->isRoot)
+        {
+            delete root;
+            root = NULL;
+        }
+
         return root;
     }
 

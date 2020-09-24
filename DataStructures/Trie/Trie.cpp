@@ -1,5 +1,9 @@
 #include "Trie.h"
 
+#include <vector>
+#include <string>
+using namespace std;
+
 int main()
 {
     Trie T;
@@ -20,17 +24,33 @@ int main()
     T.Print();
     std::cout << std::endl;
 
+    T.Delete("cash");
+    T.Delete("card");
+    T.Delete("last");
+    T.Delete("part");
     T.Delete("count");
-    T.Delete("application");
     T.Delete("program");
+    T.Delete("application");
 
     T.Print();
     std::cout << std::endl;
 
-    T.Insert("hello");
+    T.Insert("password");
+    T.Insert("part");
+    T.Insert("party");
+    T.Insert("partition");
+    T.Insert("particular");
+    T.Insert("partner");
+    T.Insert("parent");
+    T.Insert("parallel");
+    T.Insert("patient");
+    T.Insert("passive");
 
-    T.Print();
-    std::cout << std::endl;
+    std::vector<std::string> ss = T.GetAllCompletion("part");
+    for (std::string s : ss)
+    {
+        std::cout << s << std::endl;
+    }
 
     return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef __TRIE_H__
 #define __TRIE_H__
 
+#include <string>
 #include <vector>
 #include <set>
 #include <stack>
@@ -76,6 +77,12 @@ public:
     {
         std::string temp;
         PrintUtil(root, temp);
+    }
+
+    std::vector<std::string> GetAllCompletion(std::string prefix)
+    {
+        std::vector<std::string> completion = GetAllCompletionUtil(root, prefix);
+        return completion;
     }
 
 protected:
@@ -186,6 +193,16 @@ protected:
                 temp.pop_back();
             }
         }
+    }
+
+    std::vector<std::string> GetAllCompletionUtil(TrieNode * root, std::string prefix)
+    {
+        std::vector<std::string> res;
+
+        if (!root)
+            return res;
+        
+        return res;
     }
 
     bool HasNoChild(TrieNode * root)

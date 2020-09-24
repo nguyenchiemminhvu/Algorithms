@@ -1,6 +1,7 @@
 #ifndef __TRIE_H__
 #define __TRIE_H__
 
+#include <map>
 #include <string>
 #include <vector>
 #include <set>
@@ -29,7 +30,7 @@ public:
 
 public:
 
-    TrieNode * child_nodes[ALPHABET_SIZE];
+    std::map<char, TrieNode *> child_nodes;
     bool isRoot;
     bool isLeaf;
 };
@@ -116,11 +117,10 @@ protected:
 
         for (char c : key)
         {
-            int index = c - 'a';
-            if (!p->child_nodes[index])
-                p->child_nodes[index] = CreateNode();
+            if (!p->child_nodes[c])
+                p->child_nodes[c] = CreateNode();
             
-            p = p->child_nodes[index];
+            p = p->child_nodes[c];
         }
 
         p->isLeaf = true;
@@ -135,11 +135,10 @@ protected:
         
         for (char c : key)
         {
-            int index = (c - 'a');
-            if (!p->child_nodes[index])
+            if (!p->child_nodes[c])
                 return false;
             
-            p = p->child_nodes[index];
+            p = p->child_nodes[c];
         }
 
         return p && p->isLeaf;
@@ -164,7 +163,7 @@ protected:
             return root;
         }
 
-        int index = key[depth] - 'a';
+        int index = key[depth];
         root->child_nodes[index] = DeleteUtil(root->child_nodes[index], key, depth + 1);
 
         if (HasNoChild(root) && !root->isLeaf && !root->isRoot)
@@ -181,11 +180,12 @@ protected:
         if (!root)
             return NULL;
         
-        for (int i = 0; i < ALPHABET_SIZE; i++)
+        for (auto iter = root->child_nodes.begin(); iter != root->child_nodes.end(); iter++)
         {
-            if (root->child_nodes[i])
+            char key = iter->first;
+            if (root->child_nodes[key])
             {
-                root->child_nodes[i] = ClearUtil(root->child_nodes[i]);
+                root->child_nodes[key] = ClearUtil(root->child_nodes[key]);
             }
         }
         
@@ -208,12 +208,13 @@ protected:
             std::cout << temp << std::endl;
         }
 
-        for (int i = 0; i < ALPHABET_SIZE; i++)
+        for (auto iter = root->child_nodes.begin(); iter != root->child_nodes.end(); iter++)
         {
-            if (root->child_nodes[i])
+            char key = iter->first;
+            if (root->child_nodes[key])
             {
-                temp += ('a' + i);
-                PrintUtil(root->child_nodes[i], temp);
+                temp += key;
+                PrintUtil(root->child_nodes[key], temp);
                 temp.pop_back();
             }
         }
@@ -227,11 +228,10 @@ protected:
         TrieNode * p = root;
         for (char c : prefix)
         {
-            int index = c - 'a';
-            if (!p->child_nodes[index])
+            if (!p->child_nodes[c])
                 return false;
             
-            p = p->child_nodes[index];
+            p = p->child_nodes[c];
         }
         
         bool isLast = HasNoChild(p);
@@ -266,12 +266,13 @@ protected:
             res.push_back(temp);
         }
 
-        for (int i = 0; i < ALPHABET_SIZE; i++)
+        for (auto iter = root->child_nodes.begin(); iter != root->child_nodes.end(); iter++)
         {
-            if (root->child_nodes[i])
+            char key = iter->first;
+            if (root->child_nodes[key])
             {
-                temp += ('a' + i);
-                GetCompletionPostfixAt(root->child_nodes[i], res, temp);
+                temp += key;
+                GetCompletionPostfixAt(root->child_nodes[key], res, temp);
                 temp.pop_back();
             }
         }
@@ -282,9 +283,10 @@ protected:
         if (!root)
             return true;
         
-        for (int i = 0; i < ALPHABET_SIZE; i++)
+        for (auto iter = root->child_nodes.begin(); iter != root->child_nodes.end(); iter++)
         {
-            if (root->child_nodes[i])
+            char key = iter->first;
+            if (root->child_nodes[key])
                 return false;
         }
         return true;

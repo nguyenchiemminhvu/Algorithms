@@ -109,7 +109,21 @@ protected:
 
     bool SearchUtil(TrieNode * root, std::string key)
     {
-        return false;
+        if (!root)
+            return false;
+        
+        TrieNode * p = root;
+        
+        for (char c : key)
+        {
+            int index = (c - 'a');
+            if (!p->child_nodes[index])
+                return false;
+            
+            p = p->child_nodes[index];
+        }
+
+        return p && p->isLeaf;
     }
 
     TrieNode * DeleteUtil(TrieNode * root, std::string key)

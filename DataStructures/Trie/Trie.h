@@ -93,6 +93,9 @@ protected:
 
     void InsertUtil(TrieNode * root, std::string key)
     {
+        if (!root)
+            return;
+        
         TrieNode * p = root;
 
         for (char c : key)

@@ -21,6 +21,13 @@ int main()
     std::cout << std::endl;
 
     T.Delete("count");
+    T.Delete("application");
+    T.Delete("program");
+
+    T.Print();
+    std::cout << std::endl;
+
+    T.Insert("hello");
 
     T.Print();
     std::cout << std::endl;

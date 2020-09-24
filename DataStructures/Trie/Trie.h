@@ -16,7 +16,7 @@ class TrieNode
 {
 public:
     TrieNode()
-        : isLeaf(false)
+        : isRoot(false), isLeaf(false)
     {
 
     }
@@ -29,6 +29,7 @@ public:
 public:
 
     TrieNode * child_nodes[ALPHABET_SIZE];
+    bool isRoot;
     bool isLeaf;
 };
 
@@ -38,6 +39,7 @@ public:
     Trie()
     {
         root = CreateNode();
+        root->isRoot = true;
     }
 
     ~Trie()
@@ -129,8 +131,34 @@ protected:
         return p && p->isLeaf;
     }
 
-    TrieNode * DeleteUtil(TrieNode * root, std::string key)
+    TrieNode * DeleteUtil(TrieNode * root, std::string key, int depth = 0)
     {
+        if (!root)
+            return NULL;
+        
+        if (depth == key.length())
+        {
+            if (root->isLeaf)
+                root->isLeaf = false;
+            
+            if (HasNoChild(root))
+            {
+                delete root;
+                root = NULL;
+            }
+
+            return root;
+        }
+
+        int index = key[depth] - 'a';
+        root->child_nodes[index] = DeleteUtil(root->child_nodes[index], key, depth + 1);
+
+        if (HasNoChild(root) && !root->isLeaf && !root->isRoot)
+        {
+            delete root;
+            root = NULL;
+        }
+
         return root;
     }
 
@@ -158,6 +186,19 @@ protected:
                 temp.pop_back();
             }
         }
+    }
+
+    bool HasNoChild(TrieNode * root)
+    {
+        if (!root)
+            return true;
+        
+        for (int i = 0; i < ALPHABET_SIZE; i++)
+        {
+            if (root->child_nodes[i])
+                return false;
+        }
+        return true;
     }
 
 protected:

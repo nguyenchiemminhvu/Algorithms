@@ -87,7 +87,8 @@ public:
 
     std::vector<std::string> GetAllCompletion(std::string prefix)
     {
-        std::vector<std::string> completion = GetAllCompletionUtil(root, prefix);
+        std::vector<std::string> completion;
+        GetAllCompletionUtil(root, prefix, completion);
         return completion;
     }
 
@@ -218,16 +219,62 @@ protected:
         }
     }
 
-    std::vector<std::string> GetAllCompletionUtil(TrieNode * root, std::string prefix)
+    bool GetAllCompletionUtil(TrieNode * root, std::string prefix, std::vector<std::string> &res)
     {
-        std::vector<std::string> res;
-
         if (!root)
-            return res;
+            return false;
 
+        TrieNode * p = root;
+        for (char c : prefix)
+        {
+            int index = c - 'a';
+            if (!p->child_nodes[index])
+                return false;
+            
+            p = p->child_nodes[index];
+        }
         
+        bool isLast = HasNoChild(p);
+        if (isLast && p->isLeaf)
+        {
+            res.push_back(prefix);
+            return false;
+        }
+
+        if (!isLast)
+        {
+            std::vector<std::string> postfixes;
+            std::string temp;
+            GetCompletionPostfixAt(p, postfixes, temp);
+
+            for (std::string postfix : postfixes)
+            {
+                res.push_back(prefix + postfix);
+            }
+        }
         
-        return res;
+        return true;
+    }
+
+    void GetCompletionPostfixAt(TrieNode * root, std::vector<std::string> &res, std::string &temp)
+    {
+        if (!root)
+            return;
+        
+        if (root->isLeaf)
+        {
+            res.push_back(temp);
+        }
+
+        for (int i = 0; i < ALPHABET_SIZE; i++)
+        {
+            if (root->child_nodes[i])
+            {
+                temp += ('a' + i);
+                GetCompletionPostfixAt(root->child_nodes[i], res, temp);
+                temp.pop_back();
+            }
+        }
     }
 
     bool HasNoChild(TrieNode * root)

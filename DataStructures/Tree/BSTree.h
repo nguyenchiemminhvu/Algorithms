@@ -11,20 +11,20 @@
 using namespace std;
 
 template <typename T>
-class TreeNode
+class BSTreeNode
 {
 public:
-    TreeNode()
+    BSTreeNode()
         : height(1), count(1), left(NULL), right(NULL)
     {
     }
 
-    TreeNode(T d)
+    BSTreeNode(T d)
         : data(d), height(1), count(1), left(NULL), right(NULL)
     {
     }
 
-    ~TreeNode()
+    ~BSTreeNode()
     {
         if (left)
         {
@@ -42,8 +42,8 @@ public:
 public:
 
     T data;
-    TreeNode<T> * left;
-    TreeNode<T> * right;
+    BSTreeNode<T> * left;
+    BSTreeNode<T> * right;
     int height;
     int count;
 };
@@ -71,7 +71,7 @@ public:
 
     virtual bool Insert(T value)
     {
-        TreeNode<T> * node = CreateNode(value);
+        BSTreeNode<T> * node = CreateNode(value);
         if (!node)
             return false;
         
@@ -79,12 +79,12 @@ public:
         return true;
     }
 
-    TreeNode<T> * Find(T value)
+    BSTreeNode<T> * Find(T value)
     {
         if (!root)
             return NULL;
         
-        TreeNode<T> * p = root;
+        BSTreeNode<T> * p = root;
         while (p && p->data != value)
         {
             if (p->data > value)
@@ -100,10 +100,10 @@ public:
         return p;
     }
 
-    TreeNode<T> * GetCloset(T value)
+    BSTreeNode<T> * GetCloset(T value)
     {
         int minDiff = INT_MAX;
-        TreeNode<T> * closet = NULL;
+        BSTreeNode<T> * closet = NULL;
         
         GetClosetUtil(root, value, minDiff, closet);
 
@@ -112,8 +112,8 @@ public:
 
     int MinDistance(T value1, T value2)
     {
-        TreeNode<T> * p1 = Find(value1);
-        TreeNode<T> * p2 = Find(value2);
+        BSTreeNode<T> * p1 = Find(value1);
+        BSTreeNode<T> * p2 = Find(value2);
 
         if (!p1 || !p2)
             return -1;
@@ -172,14 +172,14 @@ public:
         return GetHeightUtil(root);
     }
 
-    int Height(TreeNode<T> * node)
+    int Height(BSTreeNode<T> * node)
     {
         if (!node)
             return 0;
         return node->height;
     }
 
-    int GetBalance(TreeNode<T> * node)
+    int GetBalance(BSTreeNode<T> * node)
     {
         return GetBalanceUtil(node);
     }
@@ -194,38 +194,38 @@ public:
         ClearUtil(root);
     }
 
-    TreeNode<T> * Min()
+    BSTreeNode<T> * Min()
     {
         return GetMinUtil(root);
     }
 
-    TreeNode<T> * Max()
+    BSTreeNode<T> * Max()
     {
         return GetMaxUtil(root);
     }
 
 protected:
 
-    virtual TreeNode<T> * CreateNode(T v)
+    virtual BSTreeNode<T> * CreateNode(T v)
     {
-        TreeNode<T> * node = new TreeNode<T>(v);
+        BSTreeNode<T> * node = new BSTreeNode<T>(v);
         return node;
     }
 
-    TreeNode<T> * BuildTreeFromSortedArray(const std::vector<T> &v, int start, int end)
+    BSTreeNode<T> * BuildTreeFromSortedArray(const std::vector<T> &v, int start, int end)
     {
         if (start > end)
             return NULL;
         
         int mid = (start + end) / 2;
-        TreeNode<T> * node = CreateNode(v[mid]);
+        BSTreeNode<T> * node = CreateNode(v[mid]);
         node->left = BuildTreeFromSortedArray(v, start, mid - 1);
         node->right = BuildTreeFromSortedArray(v, mid + 1, end);
 
         return node;
     }
 
-    virtual TreeNode<T> * InsertUtil(TreeNode<T> * root, TreeNode<T> * node)
+    virtual BSTreeNode<T> * InsertUtil(BSTreeNode<T> * root, BSTreeNode<T> * node)
     {
         if (!root)
         {
@@ -283,7 +283,7 @@ protected:
         return root;
     }
 
-    virtual TreeNode<T> * DeleteUtil(TreeNode<T> * root, T value)
+    virtual BSTreeNode<T> * DeleteUtil(BSTreeNode<T> * root, T value)
     {
         if (!root)
             return root;
@@ -300,19 +300,19 @@ protected:
         {
             if (!root->left)
             {
-                TreeNode<T> * temp = root->right;
+                BSTreeNode<T> * temp = root->right;
                 delete root;
                 return temp;
             }
             else if (!root->right)
             {
-                TreeNode<T> * temp = root->left;
+                BSTreeNode<T> * temp = root->left;
                 delete root;
                 return temp;
             }
             else
             {
-                TreeNode<T> * temp = GetMinUtil(root->right);
+                BSTreeNode<T> * temp = GetMinUtil(root->right);
                 root->data = temp->data;
                 root->right = DeleteUtil(root->right, temp->data);
             }
@@ -354,7 +354,7 @@ protected:
         return root;
     }
 
-    TreeNode<T> * RemoveAllLeafUtil(TreeNode<T> * root)
+    BSTreeNode<T> * RemoveAllLeafUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return NULL;
@@ -371,7 +371,7 @@ protected:
         return root;
     }
 
-    void PrintPreOrderUtil(TreeNode<T> * root)
+    void PrintPreOrderUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return;
@@ -381,7 +381,7 @@ protected:
         PrintPreOrderUtil(root->right);
     }
 
-    void PrintInOrderUtil(TreeNode<T> * root)
+    void PrintInOrderUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return;
@@ -391,7 +391,7 @@ protected:
         PrintInOrderUtil(root->right);
     }
 
-    void PrintPostOrderUtil(TreeNode<T> * root)
+    void PrintPostOrderUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return;
@@ -401,15 +401,15 @@ protected:
         std::cout << root->data << " ";
     }
 
-    void PrintLevelOrderUtil(TreeNode<T> * root)
+    void PrintLevelOrderUtil(BSTreeNode<T> * root)
     {
-        std::queue<TreeNode<T> *> Q;
+        std::queue<BSTreeNode<T> *> Q;
         int curLevel = 1, nextLevel = 0;
         Q.push(root);
 
         while (!Q.empty())
         {
-            TreeNode<T> * node = Q.front();
+            BSTreeNode<T> * node = Q.front();
             Q.pop();
             curLevel--;
 
@@ -440,15 +440,15 @@ protected:
         }
     }
 
-    void PrintHeightLevelOrderUtil(TreeNode<T> * root)
+    void PrintHeightLevelOrderUtil(BSTreeNode<T> * root)
     {
-        std::queue<TreeNode<T> *> Q;
+        std::queue<BSTreeNode<T> *> Q;
         int curLevel = 1, nextLevel = 0;
         Q.push(root);
 
         while (!Q.empty())
         {
-            TreeNode<T> * node = Q.front();
+            BSTreeNode<T> * node = Q.front();
             Q.pop();
             curLevel--;
 
@@ -479,9 +479,9 @@ protected:
         }
     }
 
-    TreeNode<T> * GetMinUtil(TreeNode<T> * root)
+    BSTreeNode<T> * GetMinUtil(BSTreeNode<T> * root)
     {
-        TreeNode<T> * p = root;
+        BSTreeNode<T> * p = root;
         while (p && p->left)
         {
             p = p->left;
@@ -490,9 +490,9 @@ protected:
         return p;
     }
 
-    TreeNode<T> * GetMaxUtil(TreeNode<T> * root)
+    BSTreeNode<T> * GetMaxUtil(BSTreeNode<T> * root)
     {
-        TreeNode<T> * p = root;
+        BSTreeNode<T> * p = root;
         while (p && p->right)
         {
             p = p->right;
@@ -501,7 +501,7 @@ protected:
         return p;
     }
 
-    void GetClosetUtil(TreeNode<T> * root, T value, int &minDiff, TreeNode<T> *&closet)
+    void GetClosetUtil(BSTreeNode<T> * root, T value, int &minDiff, BSTreeNode<T> *&closet)
     {
         if (!root)
             return;
@@ -529,7 +529,7 @@ protected:
         }
     }
 
-    int MinDistanceUtil(TreeNode<T> * root, T value1, T value2)
+    int MinDistanceUtil(BSTreeNode<T> * root, T value1, T value2)
     {
         if (!root)
             return 0;
@@ -552,7 +552,7 @@ protected:
         return 0;
     }
 
-    int DistanceFromRoot(TreeNode<T> * root, int value)
+    int DistanceFromRoot(BSTreeNode<T> * root, int value)
     {
         if (root->data == value)
             return 0;
@@ -562,7 +562,7 @@ protected:
             return 1 + DistanceFromRoot(root->right, value);
     }
 
-    void ClearUtil(TreeNode<T> *&root)
+    void ClearUtil(BSTreeNode<T> *&root)
     {
         if (!root)
             return;
@@ -573,7 +573,7 @@ protected:
         root = NULL;
     }
 
-    int GetSizeUtil(TreeNode<T> * root)
+    int GetSizeUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return 0;
@@ -581,7 +581,7 @@ protected:
         return 1 + GetSizeUtil(root->left) + GetSizeUtil(root->right);
     }
 
-    int GetHeightUtil(TreeNode<T> * root)
+    int GetHeightUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return 0;
@@ -591,17 +591,17 @@ protected:
         return std::max(lh, rh) + 1;
     }
 
-    int GetBalanceUtil(TreeNode<T> * root)
+    int GetBalanceUtil(BSTreeNode<T> * root)
     {
         if (!root)
             return 0;
         return (Height(root->left) - Height(root->right));
     }
 
-    TreeNode<T> * LeftRotateUtil(TreeNode<T> * root)
+    BSTreeNode<T> * LeftRotateUtil(BSTreeNode<T> * root)
     {
-        TreeNode<T> * r = root->right;
-        TreeNode<T> * rl = r->left;
+        BSTreeNode<T> * r = root->right;
+        BSTreeNode<T> * rl = r->left;
 
         r->left = root;
         root->right = rl;
@@ -612,10 +612,10 @@ protected:
         return r;
     }
 
-    TreeNode<T> * RightRotateUtil(TreeNode<T> * root)
+    BSTreeNode<T> * RightRotateUtil(BSTreeNode<T> * root)
     {
-        TreeNode<T> * l = root->left;
-        TreeNode<T> * lr = l->right;
+        BSTreeNode<T> * l = root->left;
+        BSTreeNode<T> * lr = l->right;
 
         l->right = root;
         root->left = lr;
@@ -628,7 +628,7 @@ protected:
 
 public:
 
-    TreeNode<T> * root;
+    BSTreeNode<T> * root;
 };
 
 #endif // __BINARY_SEARCH_TREE_H__

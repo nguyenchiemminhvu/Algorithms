@@ -39,13 +39,13 @@ int main()
 
     std::cout << "Min distance between two nodes (3, 19): " << tree.MinDistance(3, 19) << std::endl;
 
-    TreeNode<int> * pFind = tree.Find(3);
+    BSTreeNode<int> * pFind = tree.Find(3);
     if (pFind)
     {
         std::cout << "Found " << pFind->data << std::endl;
     }
 
-    TreeNode<int> * pCloset = tree.GetCloset(16);
+    BSTreeNode<int> * pCloset = tree.GetCloset(16);
     if (pCloset)
     {
         std::cout << "Closet: " << pCloset->data << std::endl;

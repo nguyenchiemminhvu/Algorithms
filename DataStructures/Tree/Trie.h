@@ -12,8 +12,6 @@
 #include <iostream>
 using namespace std;
 
-#define ALPHABET_SIZE 26
-
 class TrieNode
 {
 public:
@@ -98,12 +96,7 @@ protected:
     TrieNode * CreateNode()
     {
         TrieNode * node = new TrieNode();
-        
         node->isLeaf = false;
-        for (int i = 0; i < ALPHABET_SIZE; i++)
-        {
-            node->child_nodes[i] = NULL;
-        }
 
         return node;
     }

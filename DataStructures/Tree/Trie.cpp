@@ -53,5 +53,7 @@ int main()
         std::cout << s << std::endl;
     }
 
+    T.Clear();
+
     return 0;
 }

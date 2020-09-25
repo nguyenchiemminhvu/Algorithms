@@ -53,7 +53,7 @@ public:
 
     ~TSTree()
     {
-
+        Clear();
     }
 
     bool IsEmpty()
@@ -73,17 +73,18 @@ public:
 
     void Delete(std::string word)
     {
-
+        DeleteUtil(root, word);
     }
 
     void Clear()
     {
-
+        ClearUtil(root);
     }
 
     void Print()
     {
-
+        std::string buffer;
+        PrintUtil(root, buffer);
     }
 
 protected:
@@ -119,7 +120,7 @@ protected:
 
     }
 
-    void PrintUtil(TSTreeNode * root)
+    void PrintUtil(TSTreeNode * root, std::string &buffer)
     {
 
     }

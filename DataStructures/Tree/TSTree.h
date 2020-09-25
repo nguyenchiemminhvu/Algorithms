@@ -1,0 +1,6 @@
+#ifndef __TERNARY_SEARCH_TREE_H__
+#define __TERNARY_SEARCH_TREE_H__
+
+
+
+#endif // __TERNARY_SEARCH_TREE_H__

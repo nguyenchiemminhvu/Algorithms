@@ -1,4 +1,4 @@
-#include "Tree.h"
+#include "BSTree.h"
 
 int main()
 {

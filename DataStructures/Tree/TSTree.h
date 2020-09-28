@@ -54,6 +54,17 @@ public:
         root = InsertUtil(root, s);
     }
 
+    void Insert(char * word)
+    {
+        root = InsertUtil(root, word);
+    }
+
+    bool Search(std::string word)
+    {
+        char * s = &s[0];
+        return SearchUtil(root, s);
+    }
+
     void Print()
     {
         char buffer[1024];
@@ -87,7 +98,7 @@ protected:
         }
         else
         {
-            if (*(s + 1))
+            if (*(s + 1) != '\0')
             {
                 root->mid = InsertUtil(root->mid, s + 1);
             }
@@ -98,6 +109,32 @@ protected:
         }
 
         return root;
+    }
+
+    bool SearchUtil(TSTreeNode * root, char * s)
+    {
+        while (root)
+        {
+            if (*s < root->key)
+            {
+                root = root->left;
+            }
+            else if (*s > root->key)
+            {
+                root = root->right;
+            }
+            else if (*s == root->key)
+            {
+                if (root->isLeaf && *(s + 1) == '\0')
+                {
+                    return true;
+                }
+                s++;
+                root = root->mid;
+            }
+        }
+
+        return false;
     }
 
     void PrintUtil(TSTreeNode * root, char * buffer, int depth)

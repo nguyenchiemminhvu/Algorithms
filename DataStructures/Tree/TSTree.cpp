@@ -19,10 +19,12 @@ int main()
     T.Print();
     std::cout << std::endl;
 
-    T.Clear();
+    if (T.Search("application"))
+    {
+        std::cout << "Found: application" << std::endl;
+    }
 
-    T.Print();
-    std::cout << std::endl;
+    T.Clear();
 
     return 0;
 }

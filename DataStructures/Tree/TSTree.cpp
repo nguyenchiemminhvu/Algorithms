@@ -17,6 +17,12 @@ int main()
     T.Insert("best");
 
     T.Print();
+    std::cout << std::endl;
+
+    T.Clear();
+
+    T.Print();
+    std::cout << std::endl;
 
     return 0;
 }

@@ -55,7 +55,7 @@ public:
 
     bool IsEmpty()
     {
-        return root == NULL;
+        return root == NULL || HasNoChild(root);
     }
 
     void Insert(std::string key)

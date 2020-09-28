@@ -58,7 +58,7 @@ public:
 
     bool IsEmpty()
     {
-        return !root;
+        return root == NULL;
     }
 
     bool Insert(std::string word)

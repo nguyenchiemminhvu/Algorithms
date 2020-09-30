@@ -2,6 +2,7 @@
 #define __HEAP_H__
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -43,11 +44,15 @@ public:
         std::cout << std::endl;
     }
 
+    void Sort()
+    {
+
+    }
+
     virtual T GetMin() = 0;
     virtual T GetMax() = 0;
     virtual void Push(T k) = 0;
     virtual void Pop() = 0;
-    virtual void Insert(T k) = 0;
     virtual void Delete(int i) = 0;
     virtual void Heapify() = 0;
 
@@ -89,11 +94,6 @@ public:
     }
 
     virtual void Pop()
-    {
-
-    }
-
-    virtual void Insert(T k)
     {
 
     }
@@ -145,11 +145,6 @@ public:
     }
 
     virtual void Pop()
-    {
-
-    }
-
-    virtual void Insert(T k)
     {
 
     }

@@ -34,6 +34,15 @@ public:
         return (2 * i) + 2;
     }
 
+    void Print()
+    {
+        for (int n : V)
+        {
+            std::cout << n << " ";
+        }
+        std::cout << std::endl;
+    }
+
     virtual T GetMin() = 0;
     virtual T GetMax() = 0;
     virtual void Push(T k) = 0;

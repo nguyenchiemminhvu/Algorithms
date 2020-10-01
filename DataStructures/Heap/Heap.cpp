@@ -24,5 +24,16 @@ int main()
     hh.Print();
     std::cout << hh.GetMax() << " " << hh.GetMin() << std::endl;
 
+    std::vector<int> v = { 90, 15, 10, 7, 12, 2, 7, 3 };
+    if (Heap<int>::IsMinHeap(v)
+    {
+        std::cout << "Is Min Heap" << std::endl;
+    }
+
+    if (Heap<int>::IsMaxHeap(v))
+    {
+        std::cout << "Is Max Heap" << std::endl;
+    }
+
     return 0;
 }

@@ -21,6 +21,34 @@ public:
 
     }
 
+    static bool IsMaxHeap(std::vector<int> v)
+    {
+        for (int i = 0; i <= ((v.size() - 2) / 2); i++)
+        {
+            if (v[2 * i + 1] > v[i])
+                return false;
+            
+            if (v[2 * i + 2] > v[i])
+                return false;
+        }
+
+        return true;
+    }
+
+    static bool IsMinHeap(std::vector<int> v)
+    {
+        for (int i = 0; i <= ((v.size() - 2) / 2); i++)
+        {
+            if (v[2 * i + 1] < v[i])
+                return false;
+            
+            if (v[2 * i + 2] < v[i])
+                return false;
+        }
+        
+        return true;
+    }
+
     int GetParentIdx(int i)
     {
         int p = (i - 1) / 2;
@@ -46,6 +74,11 @@ public:
             return p;
         
         return -1;
+    }
+
+    std::vector<T> GetHeapData()
+    {
+        return V;
     }
 
     void Print()

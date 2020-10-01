@@ -57,11 +57,6 @@ public:
         std::cout << std::endl;
     }
 
-    void Sort()
-    {
-
-    }
-
     virtual T GetMin() = 0;
     virtual T GetMax() = 0;
     virtual void Push(T k) = 0;

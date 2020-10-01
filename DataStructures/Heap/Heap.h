@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <limits.h>
 using namespace std;
 
 template <typename T>
@@ -20,19 +21,31 @@ public:
 
     }
 
-    int GetParent(int i)
+    int GetParentIdx(int i)
     {
-        return (i - 1) / 2;
+        int p = (i - 1) / 2;
+        if (p < V.size())
+            return p;
+
+        return -1;
     }
 
-    int GetLeftChild(int i)
+    int GetLeftChildIdx(int i)
     {
-        return (2 * i) + 1;
+        int p = (2 * i) + 1;
+        if (p < V.size())
+            return p;
+        
+        return -1;
     }
 
-    int GetRightChild(int i)
+    int GetRightChildIdx(int i)
     {
-        return (2 * i) + 2;
+        int p = (2 * i) + 2;
+        if (p < V.size())
+            return p;
+        
+        return -1;
     }
 
     void Print()
@@ -53,8 +66,8 @@ public:
     virtual T GetMax() = 0;
     virtual void Push(T k) = 0;
     virtual void Pop() = 0;
-    virtual void Delete(int i) = 0;
-    virtual void Heapify() = 0;
+    virtual void HeapifyUp(int i) = 0;
+    virtual void HeapifyDown(int i) = 0;
 
 protected:
 
@@ -66,6 +79,9 @@ template <typename T>
 class MinHeap : public Heap<T>
 {
     using Heap<T>::V;
+    using Heap<T>::GetParentIdx;
+    using Heap<T>::GetLeftChildIdx;
+    using Heap<T>::GetRightChildIdx;
     
 public:
     MinHeap()
@@ -80,32 +96,65 @@ public:
 
     virtual T GetMin()
     {
+        if (V.empty())
+            return INT_MAX;
+        
         return V[0];
     }
 
     virtual T GetMax()
     {
-        return V[V.size() - 1];
+        int res = V[V.size() / 2];
+        for (int i = V.size() / 2 + 1; i < V.size(); i++)
+        {
+            res = std::max(res, V[i]);
+        }
+
+        return res;
     }
 
     virtual void Push(T k)
     {
-
+        V.push_back(k);
+        HeapifyUp(V.size() - 1);
     }
 
     virtual void Pop()
     {
+        if (V.empty())
+            return;
+        
+        std::swap(V[0], V[V.size() - 1]);
+        V.pop_back();
 
+        HeapifyDown(0);
     }
 
-    virtual void Delete(int i)
+    virtual void HeapifyUp(int i)
     {
-
+        while (i && V[GetParentIdx(i)] > V[i])
+        {
+            std::swap(V[i], V[GetParentIdx(i)]);
+            i = GetParentIdx(i);
+        }
     }
 
-    virtual void Heapify()
+    virtual void HeapifyDown(int i)
     {
+        int leftIdx = GetLeftChildIdx(i);
+        int rightIdx = GetRightChildIdx(i);
 
+        int smallestIdx = i;
+        if (leftIdx != -1 && V[leftIdx] < V[i])
+            smallestIdx = leftIdx;
+        if (rightIdx != -1 && V[rightIdx] < V[smallestIdx])
+            smallestIdx = rightIdx;
+        
+        if (smallestIdx != i)
+        {
+            std::swap(V[i], V[smallestIdx]);
+            HeapifyDown(smallestIdx);
+        }
     }
 
 protected:
@@ -117,6 +166,9 @@ template <typename T>
 class MaxHeap : public Heap<T>
 {
     using Heap<T>::V;
+    using Heap<T>::GetParentIdx;
+    using Heap<T>::GetLeftChildIdx;
+    using Heap<T>::GetRightChildIdx;
 
 public:
     MaxHeap()
@@ -131,32 +183,65 @@ public:
 
     virtual T GetMin()
     {
-        return V[V.size() - 1];
+        int res = V[V.size() / 2];
+        for (int i = V.size() / 2 + 1; i < V.size(); i++)
+        {
+            res = std::min(res, V[i]);
+        }
+
+        return res;
     }
 
     virtual T GetMax()
     {
+        if (V.empty())
+            return INT_MIN;
+        
         return V[0];
     }
 
     virtual void Push(T k)
     {
-
+        V.push_back(k);
+        HeapifyUp(V.size() - 1);
     }
 
     virtual void Pop()
     {
-
-    }
-
-    virtual void Delete(int i)
-    {
-
-    }
-
-    virtual void Heapify()
-    {
+        if (V.empty())
+            return;
         
+        std::swap(V[0], V[V.size() - 1]);
+        V.pop_back();
+
+        HeapifyDown(0);
+    }
+
+    virtual void HeapifyUp(int i)
+    {
+        while (i != -1 && V[GetParentIdx(i)] < V[i])
+        {
+            std::swap(V[i], V[GetParentIdx(i)]);
+            i = GetParentIdx(i);
+        }
+    }
+
+    virtual void HeapifyDown(int i)
+    {
+        int leftIdx = GetLeftChildIdx(i);
+        int rightIdx = GetRightChildIdx(i);
+
+        int largestIdx = i;
+        if (leftIdx != -1 && V[leftIdx] > V[i])
+            largestIdx = leftIdx;
+        if (rightIdx != -1 && V[rightIdx] > V[largestIdx])
+            largestIdx = rightIdx;
+        
+        if (largestIdx != i)
+        {
+            std::swap(V[i], V[largestIdx]);
+            HeapifyDown(largestIdx);
+        }
     }
 
 protected:

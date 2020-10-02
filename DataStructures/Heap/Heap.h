@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <limits.h>
+#include <math.h>
 using namespace std;
 
 template <typename T>
@@ -88,6 +89,11 @@ public:
             return p;
         
         return -1;
+    }
+
+    int GetHeight()
+    {
+        return ceil(log2(V.size() + 1)) - 1;
     }
 
     std::vector<T> GetHeapData()

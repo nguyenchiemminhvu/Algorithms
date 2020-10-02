@@ -11,6 +11,8 @@ int main()
     h.Push(5);
     h.Push(4);
     h.Push(45);
+    h.Push(10);
+    h.Push(7);
     h.Print();
     std::cout << h.GetMin() << " " << h.GetMax() << std::endl;
 
@@ -21,8 +23,12 @@ int main()
     hh.Push(5);
     hh.Push(4);
     hh.Push(45);
+    hh.Push(10);
+    hh.Push(7);
     hh.Print();
     std::cout << hh.GetMax() << " " << hh.GetMin() << std::endl;
+
+    std::cout << "Height: " << h.GetHeight() << " " << hh.GetHeight() << std::endl;
 
     std::vector<int> v = { 90, 15, 10, 7, 12, 2, 7, 3 };
     Heap<int>::Sort(v);

@@ -23,7 +23,7 @@ public:
 
     }
 
-    ~Heap()
+    virtual ~Heap()
     {
 
     }
@@ -217,7 +217,7 @@ public:
             HeapifyDown(i);
     }
 
-    ~MinHeap()
+    virtual ~MinHeap()
     {
 
     }
@@ -312,7 +312,7 @@ public:
             HeapifyDown(i);
     }
 
-    ~MaxHeap()
+    virtual ~MaxHeap()
     {
 
     }

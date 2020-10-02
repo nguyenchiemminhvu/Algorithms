@@ -9,6 +9,12 @@
 using namespace std;
 
 template <typename T>
+class MinHeap;
+
+template <typename T>
+class MaxHeap;
+
+template <typename T>
 class Heap
 {
 public:
@@ -110,12 +116,59 @@ public:
         std::cout << std::endl;
     }
 
+    void PrintPreOrder()
+    {
+        PrintPreOrderUtil(0);
+    }
+
+    void PrintInOrder()
+    {
+        PrintInOrderUtil(0);
+    }
+
+    void PrintPostOrder()
+    {
+        PrintPostOrderUtil(0);
+    }
+
     virtual T GetMin() = 0;
     virtual T GetMax() = 0;
     virtual void Push(T k) = 0;
     virtual void Pop() = 0;
     virtual void HeapifyUp(int i) = 0;
     virtual void HeapifyDown(int i) = 0;
+
+protected:
+
+    void PrintPreOrderUtil(int i)
+    {
+        if (i >= V.size())
+            return;
+        
+        std::cout << V[i] << " ";
+        PrintPreOrderUtil(GetLeftChildIdx(i));
+        PrintPreOrderUtil(GetRightChildIdx(i));
+    }
+
+    void PrintInOrderUtil(int i)
+    {
+        if (i >= V.size())
+            return;
+        
+        PrintInOrderUtil(GetLeftChildIdx(i));
+        std::cout << V[i] << " ";
+        PrintInOrderUtil(GetRightChildIdx(i));
+    }
+
+    void PrintPostOrderUtil(int i)
+    {
+        if (i >= V.size())
+            return;
+        
+        PrintPostOrderUtil(GetLeftChildIdx(i));
+        PrintPostOrderUtil(GetRightChildIdx(i));
+        std::cout << V[i] << " ";
+    }
 
 protected:
 
@@ -154,6 +207,14 @@ public:
     MinHeap()
     {
 
+    }
+
+    MinHeap(MaxHeap<T> h)
+    {
+        V = h.GetHeapData();
+
+        for (int i = V.size() / 2 - 1; i >= 0; i--)
+            HeapifyDown(i);
     }
 
     ~MinHeap()
@@ -241,6 +302,14 @@ public:
     MaxHeap()
     {
 
+    }
+
+    MaxHeap(MinHeap<T> h)
+    {
+        V = h.GetHeapData();
+
+        for (int i = V.size() / 2 - 1; i >= 0; i--)
+            HeapifyDown(i);
     }
 
     ~MaxHeap()

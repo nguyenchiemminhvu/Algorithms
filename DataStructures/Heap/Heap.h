@@ -21,7 +21,7 @@ public:
 
     }
 
-    static bool IsMaxHeap(std::vector<int> v)
+    static bool IsMaxHeap(std::vector<T> v)
     {
         for (int i = 0; i <= ((v.size() - 2) / 2); i++)
         {
@@ -35,7 +35,7 @@ public:
         return true;
     }
 
-    static bool IsMinHeap(std::vector<int> v)
+    static bool IsMinHeap(std::vector<T> v)
     {
         for (int i = 0; i <= ((v.size() - 2) / 2); i++)
         {
@@ -47,6 +47,20 @@ public:
         }
         
         return true;
+    }
+
+    static void Sort(std::vector<T> & v)
+    {
+        for (int i = v.size() / 2 - 1; i >= 0; i--)
+        {
+            Heap<T>::Heapify(v, v.size(), i);
+        }
+
+        for (int i = v.size() - 1; i >= 0; i--)
+        {
+            std::swap(v[0], v[i]);
+            Heap<T>::Heapify(v, i, 0);
+        }
     }
 
     int GetParentIdx(int i)
@@ -100,6 +114,25 @@ public:
 protected:
 
     std::vector<T> V;
+
+private:
+
+    static void Heapify(std::vector<T> & v, int n, int i)
+    {
+        int largest = i;
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+        if (l < n && v[i] < v[l])
+            largest = l;
+        if (r < n && v[largest] < v[r])
+            largest = r;
+        
+        if (largest != i)
+        {
+            std::swap(v[i], v[largest]);
+            Heap<T>::Heapify(v, n, largest);
+        }
+    }
 
 };
 

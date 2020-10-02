@@ -25,15 +25,12 @@ int main()
     std::cout << hh.GetMax() << " " << hh.GetMin() << std::endl;
 
     std::vector<int> v = { 90, 15, 10, 7, 12, 2, 7, 3 };
-    if (Heap<int>::IsMinHeap(v)
+    Heap<int>::Sort(v);
+    for (int n : v)
     {
-        std::cout << "Is Min Heap" << std::endl;
+        std::cout << n << " ";
     }
-
-    if (Heap<int>::IsMaxHeap(v))
-    {
-        std::cout << "Is Max Heap" << std::endl;
-    }
+    std::cout << std::endl;
 
     return 0;
 }

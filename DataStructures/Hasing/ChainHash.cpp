@@ -29,6 +29,16 @@ int main()
         std::cout << "Not found" << std::endl;
     }
     
+    ChainHash<std::string> hh(255);
+    hh.Insert("abc");
+    hh.Insert("def");
+    hh.Insert("ghi");
+    hh.Insert("klm");
+    hh.Insert("empty");
+    hh.Insert("element");
+    hh.Insert("anniversary");
+    
+    hh.Print();
     
     return 0;
 }

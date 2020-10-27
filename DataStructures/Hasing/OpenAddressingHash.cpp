@@ -2,7 +2,7 @@
 
 int main()
 {
-    OAHash<int> h;
+    OAHash<int> h(20);
 
     return 0;
 }

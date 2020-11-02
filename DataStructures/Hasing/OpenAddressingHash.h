@@ -85,8 +85,7 @@ public:
         int index = Hash(k);
         while (table[index] && table[index]->key != k && table[index]->key != -1)
         {
-            index++;
-            index %= capacity;
+            index = ReHash(index, cType);
         }
 
         if (table[index] == NULL || table[index]->key == -1)
@@ -120,6 +119,30 @@ public:
                 std::cout << table[i]->key << ": " << table[i]->value << std::endl;
             }
         }
+    }
+
+private:
+
+    int ReHash(int index, CollisionHandleType t)
+    {
+        switch (t)
+        {
+        case CollisionHandleType::LINEAR:
+            index++;
+            index %= capacity;
+            break;
+        
+        case CollisionHandleType::DOUBLE:
+            break;
+
+        case CollisionHandleType::QUADRATIC:
+            break;
+        
+        default:
+            break;
+        }
+
+        return index;
     }
 
 private:

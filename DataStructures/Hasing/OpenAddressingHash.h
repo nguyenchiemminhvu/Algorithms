@@ -53,7 +53,7 @@ public:
         for (int i = 0; i < capacity; i++)
         {
             if (table[i])
-                delete[] table[i];
+                delete table[i];
         }
     }
 
@@ -83,7 +83,7 @@ public:
         OAHashNode<T> *temp = new OAHashNode<T>(k, v);
         
         int index = Hash(k);
-        while (table[index] && table[index]->key != -1)
+        while (table[index] && table[index]->key != k && table[index]->key != -1)
         {
             index++;
             index %= capacity;

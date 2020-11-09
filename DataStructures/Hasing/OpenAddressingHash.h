@@ -114,14 +114,9 @@ public:
         }
     }
 
-    bool Search(T value)
+    void Delete(int k)
     {
-        return false;
-    }
-
-    void Delete(T value)
-    {
-
+        
     }
 
     void Print()

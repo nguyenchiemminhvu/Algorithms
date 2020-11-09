@@ -13,10 +13,15 @@ int main()
 
     h.Print();
 
+    std::cout << std::endl;
     if (h.Get(3))
     {
-        std::cout << h.Get(3)->value << std::endl;
+        std::cout << "Found: " << h.Get(3)->value << std::endl;
     }
+
+    std::cout << std::endl;
+    h.Delete(3);
+    h.Print();
 
     return 0;
 }

@@ -227,7 +227,20 @@ private:
 
     OAHashNode<T> * GetUtilDouble(int k)
     {
-        return NULL;
+        OAHashNode<T> * res = NULL;
+
+        int index1 = Hash(k);
+        int index2 = Hash2(k);
+        int i = 0;
+        for ( ; (index1 + i * index2) % capacity != k ; i++)
+        {
+            if (table[(index1 + i * index2) % capacity]->key == -1)
+            {
+                return NULL;
+            }
+        }
+
+        return table[(index1 + i * index2) % capacity];
     }
 
     OAHashNode<T> * GetUtilQuadratic(int k)

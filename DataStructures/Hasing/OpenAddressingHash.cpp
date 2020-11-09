@@ -2,7 +2,7 @@
 
 int main()
 {
-    OAHash<std::string> h(4, OAHash<std::string>::CollisionHandleType::LINEAR);
+    OAHash<std::string> h(4, OAHash<std::string>::CollisionHandleType::DOUBLE);
 
     h.Insert(0, "abc");
     h.Insert(2, "def");
@@ -19,9 +19,9 @@ int main()
         std::cout << "Found: " << h.Get(3)->value << std::endl;
     }
 
-    std::cout << std::endl;
-    h.Delete(3);
-    h.Print();
+    // std::cout << std::endl;
+    // h.Delete(3);
+    // h.Print();
 
     std::cout << std::endl;
     h.Insert(3, "ncmv");

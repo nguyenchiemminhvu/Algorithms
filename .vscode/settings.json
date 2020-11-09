@@ -50,6 +50,7 @@
         "deque": "cpp",
         "queue": "cpp",
         "list": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "ctime": "cpp"
     }
 }

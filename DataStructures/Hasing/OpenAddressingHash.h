@@ -135,6 +135,7 @@ public:
     {
         for (int i = 0; i < capacity; i++)
         {
+            std::cout << i << " -> ";
             if (table[i] && table[i]->key != -1)
             {
                 std::cout << table[i]->key << ": " << table[i]->value << std::endl;
@@ -184,12 +185,31 @@ private:
     {
         int index = Hash(k);
         
+        if (!table[index] || (table[index] && table[index]->key != -1))
+        {
+            int index2 = Hash2(k);
+
+            for (int i = 1; ; i++)
+            {
+                int newIndex = (index + i * index2) % capacity;
+                if (!table[newIndex] || (table[newIndex] && table[newIndex]->key == -1))
+                {
+                    table[newIndex] = node;
+                    size++;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            table[index] = node;
+        }
     }
 
     void InsertQuadraticHash(int k, OAHashNode<T> * node)
     {
         int index = Hash(k);
-        
+
     }
 
     int ReHash(int index, CollisionHandleType t)

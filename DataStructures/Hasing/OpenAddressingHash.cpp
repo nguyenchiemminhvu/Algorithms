@@ -23,5 +23,9 @@ int main()
     h.Delete(3);
     h.Print();
 
+    std::cout << std::endl;
+    h.Insert(3, "ncmv");
+    h.Print();
+
     return 0;
 }

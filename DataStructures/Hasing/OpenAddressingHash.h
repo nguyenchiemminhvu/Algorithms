@@ -112,11 +112,24 @@ public:
 
             index = ReHash(index, cType);
         }
+
+        return NULL;
     }
 
     void Delete(int k)
     {
-        
+        int index = Hash(k);
+
+        while (table[index])
+        {
+            if (table[index]->key == k)
+            {
+                table[index] = dummy;
+                size--;
+            }
+
+            index = ReHash(index, cType);
+        }
     }
 
     void Print()

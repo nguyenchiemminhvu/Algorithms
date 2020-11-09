@@ -151,22 +151,23 @@ private:
         if (table[index] == NULL || table[index]->key == -1)
         {
             size++;
-            table[index] = node;
         }
+        
+        table[index] = node;
     }
 
     void InsertDoubleHash(int k, OAHashNode<T> * node)
     {
         int index = Hash(k);
-        
-        if (!table[index] || (table[index] && table[index]->key != -1))
+
+        if (table[index] && table[index]->key != -1)
         {
             int index2 = Hash2(k);
-
-            for (int i = 1; ; i++)
+            for (int i = 0; ; i++)
             {
                 int newIndex = (index + i * index2) % capacity;
-                if (!table[newIndex] || (table[newIndex] && table[newIndex]->key == -1))
+                std::cout << newIndex << std::endl;
+                if (!table[newIndex] || table[newIndex]->key == -1)
                 {
                     table[newIndex] = node;
                     size++;
@@ -177,6 +178,7 @@ private:
         else
         {
             table[index] = node;
+            size++;
         }
     }
 
@@ -297,10 +299,8 @@ private:
     {
         int cur = capacity - 1;
         while (!IsPrime(cur))
-        {
             cur--;
-        }
-
+        
         PRIME = cur;
     }
 

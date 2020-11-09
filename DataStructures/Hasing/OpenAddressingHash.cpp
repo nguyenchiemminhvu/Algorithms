@@ -2,7 +2,7 @@
 
 int main()
 {
-    OAHash<std::string> h(4, OAHash<std::string>::CollisionHandleType::DOUBLE);
+    OAHash<std::string> h(7, OAHash<std::string>::CollisionHandleType::DOUBLE);
 
     h.Insert(0, "abc");
     h.Insert(2, "def");

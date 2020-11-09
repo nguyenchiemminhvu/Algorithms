@@ -19,9 +19,9 @@ int main()
         std::cout << "Found: " << h.Get(3)->value << std::endl;
     }
 
-    // std::cout << std::endl;
-    // h.Delete(3);
-    // h.Print();
+    std::cout << std::endl;
+    h.Delete(3);
+    h.Print();
 
     std::cout << std::endl;
     h.Insert(3, "ncmv");

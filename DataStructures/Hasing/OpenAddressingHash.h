@@ -108,7 +108,6 @@ public:
     {
         for (int i = 0; i < capacity; i++)
         {
-            std::cout << i << " -> ";
             if (table[i] && table[i]->key != -1)
             {
                 std::cout << table[i]->key << ": " << table[i]->value << std::endl;
@@ -166,7 +165,6 @@ private:
             for (int i = 0; ; i++)
             {
                 int newIndex = (index + i * index2) % capacity;
-                std::cout << newIndex << std::endl;
                 if (!table[newIndex] || table[newIndex]->key == -1)
                 {
                     table[newIndex] = node;
@@ -278,6 +276,7 @@ private:
             {
                 table[index] = dummy;
                 size--;
+                break;
             }
 
             index++;
@@ -287,7 +286,17 @@ private:
 
     void DeleteUtilDouble(int k)
     {
-
+        int index1 = Hash(k);
+        int index2 = Hash2(k);
+        for (int i = 0 ; ; i++)
+        {
+            if (table[(index1 + i * index2) % capacity]->key == k)
+            {
+                table[(index1 + i * index2) % capacity] = dummy;
+                size--;
+                break;
+            }
+        }
     }
 
     void DeleteUtilQuadratic(int k)

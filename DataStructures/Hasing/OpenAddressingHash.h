@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 template <typename T>
 class OAHashNode
@@ -40,6 +42,8 @@ public:
         : capacity(c), size(0), cType(t)
     {
         table.resize(capacity);
+        FindPRIME();
+
         for (int i = 0; i < capacity; i++)
         {
             table[i] = NULL;
@@ -72,27 +76,22 @@ public:
         return k % capacity;
     }
 
+    int Hash2(int k)
+    {
+        return (PRIME - (k % PRIME));
+    }
+
     void Insert(int k, T v)
     {
         if (isFull())
         {
             capacity *= 2;
             table.resize(capacity);
+            FindPRIME();
         }
         
         OAHashNode<T> *temp = new OAHashNode<T>(k, v);
-        
-        int index = Hash(k);
-        while (table[index] && table[index]->key != k && table[index]->key != -1)
-        {
-            index = ReHash(index, cType);
-        }
-
-        if (table[index] == NULL || table[index]->key == -1)
-        {
-            size++;
-            table[index] = temp;
-        }
+        InsertUtil(k, temp, cType);
     }
 
     OAHashNode<T> * Get(int k)
@@ -145,6 +144,54 @@ public:
 
 private:
 
+    void InsertUtil(int k, OAHashNode<T> * node, CollisionHandleType type)
+    {
+        switch (type)
+        {
+        case CollisionHandleType::LINEAR:
+            InsertHash(k, node);
+            break;
+        
+        case CollisionHandleType::DOUBLE:
+            InsertDoubleHash(k, node);
+            break;
+
+        case CollisionHandleType::QUADRATIC:
+            InsertQuadraticHash(k, node);
+            break;
+        
+        default:
+            break;
+        }
+    }
+
+    void InsertHash(int k, OAHashNode<T> * node)
+    {
+        int index = Hash(k);
+        while (table[index] && table[index]->key != k && table[index]->key != -1)
+        {
+            index = ReHash(index, cType);
+        }
+
+        if (table[index] == NULL || table[index]->key == -1)
+        {
+            size++;
+            table[index] = node;
+        }
+    }
+
+    void InsertDoubleHash(int k, OAHashNode<T> * node)
+    {
+        int index = Hash(k);
+        
+    }
+
+    void InsertQuadraticHash(int k, OAHashNode<T> * node)
+    {
+        int index = Hash(k);
+        
+    }
+
     int ReHash(int index, CollisionHandleType t)
     {
         switch (t)
@@ -167,10 +214,34 @@ private:
         return index;
     }
 
+    void FindPRIME()
+    {
+        int cur = capacity - 1;
+        while (!IsPrime(cur))
+        {
+            cur--;
+        }
+
+        PRIME = cur;
+    }
+
+    bool IsPrime(int n)
+    {
+        int t = sqrt(n);
+        for (int i = 2; i <= t; i++)
+        {
+            if (n % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+
 private:
 
     int capacity;
     int size;
+    int PRIME;
     CollisionHandleType cType;
     std::vector<OAHashNode<T> *> table;
     OAHashNode<T> * dummy;

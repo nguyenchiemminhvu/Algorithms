@@ -96,39 +96,12 @@ public:
 
     OAHashNode<T> * Get(int k)
     {
-        int index = Hash(k);
-
-        while (table[index])
-        {
-            int count = 0;
-            if (count++ > capacity)
-                return NULL;
-
-            if (table[index]->key == k)
-            {
-                return table[index];
-            }
-
-            index = ReHash(index, cType);
-        }
-
-        return NULL;
+        return GetUtil(k, cType);
     }
 
     void Delete(int k)
     {
-        int index = Hash(k);
-
-        while (table[index])
-        {
-            if (table[index]->key == k)
-            {
-                table[index] = dummy;
-                size--;
-            }
-
-            index = ReHash(index, cType);
-        }
+        DeleteUtil(k, cType);
     }
 
     void Print()
@@ -171,7 +144,8 @@ private:
         int index = Hash(k);
         while (table[index] && table[index]->key != k && table[index]->key != -1)
         {
-            index = ReHash(index, cType);
+            index++;
+            index %= capacity;
         }
 
         if (table[index] == NULL || table[index]->key == -1)
@@ -212,26 +186,98 @@ private:
 
     }
 
-    int ReHash(int index, CollisionHandleType t)
+    OAHashNode<T> * GetUtil(int k, CollisionHandleType t)
     {
         switch (t)
         {
         case CollisionHandleType::LINEAR:
+            return GetUtilHash(k);
+        
+        case CollisionHandleType::DOUBLE:
+            return GetUtilDouble(k);
+
+        case CollisionHandleType::QUADRATIC:
+            return GetUtilQuadratic(k);
+        }
+
+        return NULL;
+    }
+
+    OAHashNode<T> * GetUtilHash(int k)
+    {
+        int index = Hash(k);
+
+        while (table[index])
+        {
+            int count = 0;
+            if (count++ > capacity)
+                return NULL;
+
+            if (table[index]->key == k)
+            {
+                return table[index];
+            }
+
             index++;
             index %= capacity;
+        }
+
+        return NULL;
+    }
+
+    OAHashNode<T> * GetUtilDouble(int k)
+    {
+        return NULL;
+    }
+
+    OAHashNode<T> * GetUtilQuadratic(int k)
+    {
+        return NULL;
+    }
+
+    void DeleteUtil(int k, CollisionHandleType t)
+    {
+        switch (t)
+        {
+        case CollisionHandleType::LINEAR:
+            DeleteUtilHash(k);
             break;
         
         case CollisionHandleType::DOUBLE:
+            DeleteUtilDouble(k);
             break;
 
         case CollisionHandleType::QUADRATIC:
-            break;
-        
-        default:
+            DeleteUtilQuadratic(k);
             break;
         }
+    }
 
-        return index;
+    void DeleteUtilHash(int k)
+    {
+        int index = Hash(k);
+
+        while (table[index])
+        {
+            if (table[index]->key == k)
+            {
+                table[index] = dummy;
+                size--;
+            }
+
+            index++;
+            index %= capacity;
+        }
+    }
+
+    void DeleteUtilDouble(int k)
+    {
+
+    }
+
+    void DeleteUtilQuadratic(int k)
+    {
+
     }
 
     void FindPRIME()

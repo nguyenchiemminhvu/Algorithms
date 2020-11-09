@@ -89,9 +89,29 @@ public:
         }
 
         if (table[index] == NULL || table[index]->key == -1)
+        {
             size++;
-        
-        table[index] = temp;
+            table[index] = temp;
+        }
+    }
+
+    OAHashNode<T> * Get(int k)
+    {
+        int index = Hash(k);
+
+        while (table[index])
+        {
+            int count = 0;
+            if (count++ > capacity)
+                return NULL;
+
+            if (table[index]->key == k)
+            {
+                return table[index];
+            }
+
+            index = ReHash(index, cType);
+        }
     }
 
     bool Search(T value)
@@ -104,16 +124,10 @@ public:
 
     }
 
-    T Get(int key)
-    {
-        return NULL;
-    }
-
     void Print()
     {
         for (int i = 0; i < capacity; i++)
         {
-            std::cout << i << " -> ";
             if (table[i] && table[i]->key != -1)
             {
                 std::cout << table[i]->key << ": " << table[i]->value << std::endl;

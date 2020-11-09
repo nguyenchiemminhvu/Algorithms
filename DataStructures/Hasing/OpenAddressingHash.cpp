@@ -13,5 +13,10 @@ int main()
 
     h.Print();
 
+    if (h.Get(3))
+    {
+        std::cout << h.Get(3)->value << std::endl;
+    }
+
     return 0;
 }

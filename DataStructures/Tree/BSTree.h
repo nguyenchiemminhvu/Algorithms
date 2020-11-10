@@ -162,6 +162,11 @@ public:
         PrintHeightLevelOrderUtil(root);
     }
 
+    void PrintVerticalOrder()
+    {
+        PrintVerticalOrderUtil(root);
+    }
+
     int Size()
     {
         return GetSizeUtil(root);
@@ -477,6 +482,10 @@ protected:
                 std::cout << std::endl;
             }
         }
+    }
+
+    void PrintVerticalOrderUtil(BSTreeNode<T> * root)
+    {
     }
 
     BSTreeNode<T> * GetMinUtil(BSTreeNode<T> * root)

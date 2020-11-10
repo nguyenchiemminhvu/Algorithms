@@ -264,13 +264,13 @@ private:
 
     void DeleteUtilDouble(int k)
     {
-        int index1 = Hash(k);
-        int index2 = Hash2(k);
+        int index = Hash(k);
+        int step = Hash2(k);
         for (int i = 0 ; ; i++)
         {
-            if (table[(index1 + i * index2) % capacity]->key == k)
+            if (table[(index + i * step) % capacity]->key == k)
             {
-                table[(index1 + i * index2) % capacity] = dummy;
+                table[(index + i * step) % capacity] = dummy;
                 size--;
                 break;
             }

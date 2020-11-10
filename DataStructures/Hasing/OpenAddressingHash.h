@@ -33,8 +33,7 @@ public:
     enum CollisionHandleType
     {
         LINEAR,
-        DOUBLE,
-        QUADRATIC
+        DOUBLE
     };
 
 public:
@@ -128,10 +127,6 @@ private:
         case CollisionHandleType::DOUBLE:
             InsertDoubleHash(k, node);
             break;
-
-        case CollisionHandleType::QUADRATIC:
-            InsertQuadraticHash(k, node);
-            break;
         
         default:
             break;
@@ -180,12 +175,6 @@ private:
         }
     }
 
-    void InsertQuadraticHash(int k, OAHashNode<T> * node)
-    {
-        int index = Hash(k);
-
-    }
-
     OAHashNode<T> * GetUtil(int k, CollisionHandleType t)
     {
         switch (t)
@@ -195,9 +184,6 @@ private:
         
         case CollisionHandleType::DOUBLE:
             return GetUtilDouble(k);
-
-        case CollisionHandleType::QUADRATIC:
-            return GetUtilQuadratic(k);
         }
 
         return NULL;
@@ -229,23 +215,19 @@ private:
     {
         OAHashNode<T> * res = NULL;
 
-        int index1 = Hash(k);
-        int index2 = Hash2(k);
+        int index = Hash(k);
+        int step = Hash2(k);
         int i = 0;
-        for ( ; (index1 + i * index2) % capacity != k ; i++)
+        for ( ; (index + i * step) % capacity != k ; i++)
         {
-            if (table[(index1 + i * index2) % capacity]->key == -1)
+            int newIndex = (index + i * step) % capacity;
+            if (table[newIndex]->key == -1)
             {
                 return NULL;
             }
         }
 
-        return table[(index1 + i * index2) % capacity];
-    }
-
-    OAHashNode<T> * GetUtilQuadratic(int k)
-    {
-        return NULL;
+        return table[(index + i * step) % capacity];
     }
 
     void DeleteUtil(int k, CollisionHandleType t)
@@ -258,10 +240,6 @@ private:
         
         case CollisionHandleType::DOUBLE:
             DeleteUtilDouble(k);
-            break;
-
-        case CollisionHandleType::QUADRATIC:
-            DeleteUtilQuadratic(k);
             break;
         }
     }
@@ -297,11 +275,6 @@ private:
                 break;
             }
         }
-    }
-
-    void DeleteUtilQuadratic(int k)
-    {
-
     }
 
     void FindPRIME()

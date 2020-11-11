@@ -5,6 +5,7 @@
 #include <set>
 #include <stack>
 #include <queue>
+#include <map>
 #include <limits.h>
 #include <algorithm>
 #include <iostream>
@@ -486,6 +487,28 @@ protected:
 
     void PrintVerticalOrderUtil(BSTreeNode<T> * root)
     {
+        std::map<int, std::vector<T>> m;
+        GetVerticalOrder(root, 0, m);
+
+        typename std::map<int, std::vector<T>>::iterator iter;
+        for (iter = m.begin(); iter != m.end(); iter++)
+        {
+            for (int i = 0; i < iter->second.size(); i++)
+            {
+                std::cout << iter->second[i] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    void GetVerticalOrder(BSTreeNode<T> * root, int order, std::map<int, std::vector<T>> &m)
+    {
+        if (!root)
+            return;
+        
+        m[order].push_back(root->data);
+        GetVerticalOrder(root->left, order - 1, m);
+        GetVerticalOrder(root->right, order + 1, m);
     }
 
     BSTreeNode<T> * GetMinUtil(BSTreeNode<T> * root)

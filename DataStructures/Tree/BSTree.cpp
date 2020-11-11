@@ -55,5 +55,8 @@ int main()
     tree.PrintHeightLevelOrder();
     std::cout << std::endl;
 
+    tree.PrintVerticalOrder();
+    std::cout << std::endl;
+
     return 0;
 }

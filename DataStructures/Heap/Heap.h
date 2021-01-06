@@ -73,7 +73,7 @@ public:
     int GetParentIdx(int i)
     {
         int p = (i - 1) / 2;
-        if (p < V.size())
+        if (p >= 0 && p < V.size())
             return p;
 
         return -1;
@@ -82,7 +82,7 @@ public:
     int GetLeftChildIdx(int i)
     {
         int p = (2 * i) + 1;
-        if (p < V.size())
+        if (p >= 0 && p < V.size())
             return p;
         
         return -1;
@@ -91,7 +91,7 @@ public:
     int GetRightChildIdx(int i)
     {
         int p = (2 * i) + 2;
-        if (p < V.size())
+        if (p >= 0 && p < V.size())
             return p;
         
         return -1;

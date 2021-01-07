@@ -1,15 +1,17 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+#include <iostream>
 #include <vector>
 #include <list>
 #include <map>
+#include <queue>
 
 class Graph
 {
 protected:
     int num_vertices;
-    std::map<int, std::vector<std::pair<int, int>> G;
+    std::map<int, std::vector<std::pair<int, int>>> G;
 
 public:
     Graph(int n)
@@ -33,7 +35,28 @@ public:
 
     void BFS(int from)
     {
+        std::vector<bool> visited(num_vertices, false);
 
+        std::queue<int> Q;
+        Q.push(from);
+        visited[from] = true;
+
+        while (!Q.empty())
+        {
+            int u = Q.front();
+            std::cout << u << " ";
+            Q.pop();
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                if (!visited[v])
+                {
+                    Q.push(v);
+                    visited[v] = true;
+                }
+            }
+        }
     }
 
     void DFS(int from)

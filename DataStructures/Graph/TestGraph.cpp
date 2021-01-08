@@ -10,7 +10,6 @@ int main()
     ug.AddEdge(3, 4);
     ug.AddEdge(4, 0);
 
-    ug.BFS(0);
-
+    
     return 0;
 }

@@ -61,7 +61,24 @@ public:
 
     void DFS(int from)
     {
+        std::vector<bool> visited(num_vertices, false);
+        DFS(from, visited);
+    }
 
+private:
+
+    void DFS(int from, std::vector<bool> &visited)
+    {
+        std::cout << from << " ";
+        visited[from] = true;
+        for (std::pair<int, int> p : G[from])
+        {
+            int v = p.first;
+            if (!visited[v])
+            {
+                DFS(v, visited);
+            }
+        }
     }
 };
 

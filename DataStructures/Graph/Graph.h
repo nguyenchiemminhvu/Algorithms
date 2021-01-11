@@ -76,7 +76,7 @@ public:
             for (std::pair<int, int> p : G[u])
             {
                 int v = p.first;
-                if (!visited[v])
+                if (!visited[v] && p.second)
                 {
                     Q.push(v);
                     visited[v] = true;
@@ -100,7 +100,7 @@ private:
         for (std::pair<int, int> p : G[from])
         {
             int v = p.first;
-            if (!visited[v])
+            if (!visited[v] && p.second)
             {
                 DFS(v, visited);
             }

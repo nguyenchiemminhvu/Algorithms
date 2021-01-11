@@ -2,6 +2,7 @@
 #define __GRAPH_H__
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <list>
 #include <map>
@@ -14,8 +15,8 @@ protected:
     std::map<int, std::vector<std::pair<int, int>>> G;
 
 public:
-    Graph(int n)
-        : num_vertices(n)
+    Graph()
+        : num_vertices(0)
     {
 
     }
@@ -27,10 +28,35 @@ public:
 
     void AddEdge(int u, int v, int w = 1)
     {
-        if (u < 0 || u >= num_vertices || v < 0 || v >= num_vertices)
-            return;
+        num_vertices = std::max(num_vertices, std::max(u, v) + 1);
         
         G[u].push_back(std::pair<int, int>(v, w));
+    }
+
+    int FindMotherVertex()
+    {
+        std::vector<bool> visited(num_vertices, false);
+        
+        int last_vertex = 0;
+        for (int i = 0; i < num_vertices; i++)
+        {
+            if (!visited[i])
+            {
+                DFS(i, visited);
+                last_vertex = i;
+            }
+        }
+
+        std::fill(visited.begin(), visited.end(), false);
+        DFS(last_vertex, visited);
+
+        int check = true;
+        for (bool b : visited)
+        {
+            check &= b;
+        }
+
+        return check ? last_vertex : -1;
     }
 
     void BFS(int from)

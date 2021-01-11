@@ -2,14 +2,17 @@
 
 int main()
 {
-    Graph ug(5);
+    Graph ug;
     ug.AddEdge(0, 1);
-    ug.AddEdge(0, 3);
-    ug.AddEdge(1, 2);
-    ug.AddEdge(2, 3);
-    ug.AddEdge(3, 4);
-    ug.AddEdge(4, 0);
+    ug.AddEdge(0, 2);
+    ug.AddEdge(1, 3);
+    ug.AddEdge(4, 1);
+    ug.AddEdge(6, 4);
+    ug.AddEdge(5, 6);
+    ug.AddEdge(5, 2);
+    ug.AddEdge(6, 0);
 
-    
+    std::cout << ug.FindMotherVertex() << std::endl;
+
     return 0;
 }

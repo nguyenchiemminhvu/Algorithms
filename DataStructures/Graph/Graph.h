@@ -135,9 +135,10 @@ public:
     int CountAllPossiblePaths(int from, int to)
     {
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
-            return;
+            return 0;
         
-        
+        std::vector<bool> visited(num_vertices, false);
+        return CountAllPossiblePathsUtil(from, to, visited);
     }
 
 private:
@@ -157,6 +158,31 @@ private:
                 DFS(v, visited);
             }
         }
+    }
+
+    int CountAllPossiblePathsUtil(int from, int to, std::vector<bool> &visited)
+    {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return 0;
+        
+        if (from == to)
+            return 1;
+
+        int count = 0;
+        for (std::pair<int, int> p : G[from])
+        {
+            int v = p.first;
+            int w = p.second;
+
+            if (!visited[v] && w)
+            {
+                visited[v] = true;
+                count += CountAllPossiblePathsUtil(v, to, visited);
+                visited[v] = false;
+            }
+        }
+
+        return count;
     }
 };
 

@@ -141,6 +141,44 @@ public:
         return CountAllPossiblePathsUtil(from, to, visited);
     }
 
+    void BuildLevelOfEachNode(int from)
+    {
+        if (from < 0 || from >= num_vertices)
+            return;
+        
+        std::vector<int> levels(num_vertices, 0);
+        std::vector<bool> visited(num_vertices, false);
+
+        std::queue<int> Q;
+        Q.push(from);
+        levels[from] = 0;
+        visited[from] = true;
+
+        while (!Q.empty())
+        {
+            int u = Q.front();
+            visited[u] = true;
+            Q.pop();
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+
+                if (!visited[v] && w)
+                {
+                    Q.push(v);
+                    levels[v] = levels[u] + 1;
+                }
+            }
+        }
+
+        for (int i = 0; i < num_vertices; i++)
+        {
+            std::cout << i << " " << levels[i] << std::endl;
+        }
+    }
+
 private:
 
     void DFS(int from, std::vector<bool> &visited)

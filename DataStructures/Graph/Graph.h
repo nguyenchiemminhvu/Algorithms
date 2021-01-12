@@ -141,6 +141,22 @@ public:
         return CountAllPossiblePathsUtil(from, to, visited);
     }
 
+    void PrintAllPathDFS(int from, int to)
+    {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return;
+        
+
+    }
+
+    void PrintAllPathBFS(int from, int to)
+    {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return;
+        
+
+    }
+
     void BuildLevelOfEachNode(int from)
     {
         if (from < 0 || from >= num_vertices)

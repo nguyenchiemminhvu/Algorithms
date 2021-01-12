@@ -12,7 +12,7 @@ int main()
     ug.AddEdge(5, 2);
     ug.AddEdge(6, 0);
 
-    std::cout << ug.FindMotherVertex() << std::endl;
+    ug.IterativeDFS(5);
 
     return 0;
 }

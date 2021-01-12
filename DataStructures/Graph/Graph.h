@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <stack>
 #include <queue>
 
 class Graph
@@ -61,6 +62,9 @@ public:
 
     void BFS(int from)
     {
+        if (from < 0 || from >= num_vertices)
+            return;
+        
         std::vector<bool> visited(num_vertices, false);
 
         std::queue<int> Q;
@@ -87,14 +91,62 @@ public:
 
     void DFS(int from)
     {
+        if (from < 0 || from >= num_vertices)
+            return;
+        
         std::vector<bool> visited(num_vertices, false);
         DFS(from, visited);
+    }
+
+    void IterativeDFS(int from)
+    {
+        if (from < 0 || from >= num_vertices)
+            return;
+        
+        std::vector<bool> visited(num_vertices, false);
+
+        std::stack<int> S;
+        S.push(from);
+
+        while (!S.empty())
+        {
+            int u = S.top();
+            S.pop();
+
+            if (!visited[u])
+            {
+                std::cout << u << " ";
+                visited[u] = true;
+            }
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+
+                if (!visited[v] && w)
+                {
+                    S.push(v);
+                }
+            }
+        }
+    }
+
+    int CountAllPossiblePaths(int from, int to)
+    {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return;
+        
+        
     }
 
 private:
 
     void DFS(int from, std::vector<bool> &visited)
     {
+        if (from < 0 || from >= num_vertices)
+            return;
+        
         std::cout << from << " ";
         visited[from] = true;
         for (std::pair<int, int> p : G[from])

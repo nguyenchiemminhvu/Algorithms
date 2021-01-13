@@ -146,7 +146,10 @@ public:
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
             return;
         
+        std::vector<bool> visited(num_vertices, false);
+        std::vector<int> path;
 
+        PrintAllPathDFSUtil(from, to, visited, path);
     }
 
     void PrintAllPathBFS(int from, int to)
@@ -238,6 +241,38 @@ private:
 
         return count;
     }
+
+    void PrintAllPathDFSUtil(int from, int to, std::vector<bool> &visited, std::vector<int> &path)
+    {
+        visited[from] = true;
+        path.push_back(from);
+
+        if (from == to)
+        {
+            for (int v : path)
+            {
+                std::cout << v << " ";
+            }
+            std::cout << std::endl;
+        }
+        else
+        {
+            for (std::pair<int, int> p : G[from])
+            {
+                int v = p.first;
+                int w = p.second;
+
+                if (!visited[v] && w)
+                {
+                    PrintAllPathDFSUtil(v, to, visited, path);
+                }
+            }
+        }
+
+        path.pop_back();
+        visited[from] = false;
+    }
+
 };
 
 #endif // __GRAPH_H__

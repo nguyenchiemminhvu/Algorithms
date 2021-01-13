@@ -157,7 +157,40 @@ public:
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
             return;
         
+        std::queue<std::vector<int>> QPath;
 
+        std::vector<bool> visited(num_vertices, false);
+        std::vector<int> path;
+        path.push_back(from);
+        visited[from] = true;
+
+        QPath.push(path);
+
+        while (!QPath.empty())
+        {
+            path = QPath.front();
+            QPath.pop();
+
+            int last = path.back();
+            if (path.back() == to)
+            {
+                for (int v : path)
+                    std::cout << v << " ";
+                std::cout << std::endl;
+            }
+
+            for (std::pair<int, int> p : G[last])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (!visited[v] && w)
+                {
+                    std::vector<int> newPath(path.begin(), path.end());
+                    newPath.push_back(v);
+                    QPath.push(newPath);
+                }
+            }
+        }
     }
 
     void BuildLevelOfEachNode(int from)

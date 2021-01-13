@@ -11,6 +11,7 @@ int main()
     ug.AddEdge(2, 1);
     
     ug.PrintAllPathDFS(2, 3);
+    ug.PrintAllPathBFS(2, 3);
 
     return 0;
 }

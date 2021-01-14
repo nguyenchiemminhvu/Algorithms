@@ -141,6 +141,42 @@ public:
         return CountAllPossiblePathsUtil(from, to, visited);
     }
 
+    int MinEdgePath(int from, int to)
+    {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return 0;
+        
+        std::queue<int> Q;
+
+        std::vector<int> dist(num_vertices, 0);
+        std::vector<bool> visited(num_vertices, false);
+        Q.push(from);
+
+        while (!Q.empty())
+        {
+            int u = Q.front();
+            visited[u] = true;
+            Q.pop();
+
+            if (u == to)
+                break;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (!visited[v] && w)
+                {
+                    Q.push(v);
+                    visited[v] = true;
+                    dist[v] = dist[u] + 1;
+                }
+            }
+        }
+
+        return dist[to];
+    }
+
     void PrintAllPathDFS(int from, int to)
     {
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)

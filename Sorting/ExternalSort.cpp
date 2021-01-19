@@ -117,19 +117,60 @@ namespace FileManager
     }
 }
 
-void SortDataInTempFiles(int curTempFileIdx)
+int SplitFiles(std::string str_file_input, long long int ll_byte_limit)
+{
+    std::fstream fs;
+    FileManager::OpenFile(fs, str_file_input, std::ios_base::in);
+
+    size_t bytes;
+    int curTempFileIdx = 0;
+    int curTempFileSize = 0;
+
+    std::fstream fs_temp;
+    std::string line;
+    std::vector<std::string> lines;
+
+    while ((bytes = FileManager::ReadLine(fs, line, ll_byte_limit)) != 0)
+    {
+        curTempFileSize += bytes;
+        if (curTempFileSize > ll_byte_limit)
+        {
+            MergeSort<std::string>::Sort(lines);
+            for (const std::string &s : lines)
+            {
+                FileManager::AppendFileData(fs_temp, TEMP_FILE_NAME + STR(curTempFileIdx), s);
+            }
+
+            lines.clear();
+            curTempFileSize = bytes;
+            curTempFileIdx++;
+        }
+
+        lines.push_back(line);
+    }
+
+    if (!lines.empty())
+    {
+        MergeSort<std::string>::Sort(lines);
+        for (const std::string &s : lines)
+        {
+            FileManager::AppendFileData(fs_temp, TEMP_FILE_NAME + STR(curTempFileIdx), s);
+        }
+    }
+
+    FileManager::CloseFile(fs);
+
+    return curTempFileIdx + 1;
+}
+
+void MergeFiles(int num_temp_files, std::string output_file_name)
 {
     
 }
 
-void MergeTempFiles(int curTempFileIdx, std::string output_file_name)
+void ClearTempFiles(int num_temp_files)
 {
-
-}
-
-void ClearTempFiles(int curTempFileIdx)
-{
-    for (int i = 0; i < curTempFileIdx; i++)
+    for (int i = 0; i < num_temp_files; i++)
     {
         std::remove(std::string(TEMP_FILE_NAME + STR(i)).c_str());
     }
@@ -145,39 +186,15 @@ int main(int argc, char **argv)
     std::string str_byte_limit(argv[3]);
     long long int ll_byte_limit = std::stoll(str_byte_limit);
 
-    std::fstream fs;
-    FileManager::OpenFile(fs, str_file_input, std::ios_base::in);
-
-    std::fstream fs_temp;
-    std::string line;
-    size_t bytes;
-    int curTempFileIdx = 0;
-    int curTempFileSize = 0;
-    while ((bytes = FileManager::ReadLine(fs, line, ll_byte_limit)) != 0)
-    {
-        curTempFileSize += bytes;
-        if (curTempFileSize > ll_byte_limit)
-        {
-            curTempFileSize = bytes;
-            curTempFileIdx++;
-        }
-
-        FileManager::AppendFileData(fs_temp, TEMP_FILE_NAME + STR(curTempFileIdx), line);
-    }
-
-    FileManager::CloseFile(fs);
+    int num_temp_files = SplitFiles(str_file_input, ll_byte_limit);
 
     system("pause");
 
-    SortDataInTempFiles(curTempFileIdx);
+    MergeFiles(num_temp_files, str_file_output);
 
     system("pause");
 
-    MergeTempFiles(curTempFileIdx, str_file_output);
-
-    system("pause");
-
-    ClearTempFiles(curTempFileSize);
+    ClearTempFiles(num_temp_files);
 
     return 0;
 }

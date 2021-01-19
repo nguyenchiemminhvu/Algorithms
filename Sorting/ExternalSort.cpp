@@ -4,7 +4,8 @@
 #include <queue>
 using namespace std;
 
-#define TEMP_FILE_NAME "temp_file"
+#define TEMP_FILE_NAME std::string("temp_file")
+#define STR(x) std::to_string((x))
 
 void OpenFile(std::fstream &fs, std::string file_name, std::ios_base::openmode om)
 {
@@ -27,11 +28,29 @@ size_t ReadLine(std::fstream &fs, std::string &line, long long int limited_bytes
     return line.length();
 }
 
+void AppendFileData(std::fstream &fs, std::string file_name, std::string data)
+{
+    fs.open(file_name, std::ios_base::out | std::ios_base::app);
+    if (!fs.is_open())
+        return;
+
+    fs << data << std::endl;
+    fs.close();
+}
+
 void CloseFile(std::fstream &fs)
 {
     if (fs.is_open())
     {
         fs.close();
+    }
+}
+
+void ClearTempFiles(int curTempFileSize)
+{
+    for (int i = 0; i < curTempFileSize; i++)
+    {
+        std::remove(std::string(TEMP_FILE_NAME + STR(i)).c_str());
     }
 }
 
@@ -52,12 +71,22 @@ int main(int argc, char **argv)
     size_t bytes;
     int curTempFileIdx = 0;
     int curTempFileSize = 0;
+    std::fstream fs_temp;
     while ((bytes = ReadLine(fs, line, ll_byte_limit)) != 0)
     {
-        std::cout << bytes << " " << line << std::endl;
+        curTempFileSize += bytes;
+        if (curTempFileSize > ll_byte_limit)
+        {
+            curTempFileSize = bytes;
+            curTempFileIdx++;
+        }
+
+        AppendFileData(fs_temp, TEMP_FILE_NAME + STR(curTempFileIdx), line);
     }
 
     CloseFile(fs);
+    system("pause");
+    ClearTempFiles(curTempFileSize);
 
     return 0;
 }

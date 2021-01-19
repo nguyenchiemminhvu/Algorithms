@@ -51,6 +51,7 @@
         "queue": "cpp",
         "list": "cpp",
         "stack": "cpp",
-        "ctime": "cpp"
+        "ctime": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -10,6 +10,7 @@ int main()
     ug.AddEdge(2, 3);
     ug.AddEdge(3, 0);
     ug.AddEdge(3, 2);
+    ug.AddEdge(3, 5);
     ug.AddEdge(3, 6);
     ug.AddEdge(3, 7);
     ug.AddEdge(4, 5);

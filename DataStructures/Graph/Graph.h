@@ -299,9 +299,42 @@ private:
         }
     }
 
-    void BFSWithDistance(int from, int dist, std::vector<bool> &visted)
+    void BFSWithDistance(int from, int dist, std::vector<bool> &visited)
     {
-        
+        if (from < 0 || from >= num_vertices)
+            return;
+
+        std::queue<int> Q;
+        Q.push(from);
+        visited[from] = true;
+
+        int curLevel = 1;
+        int nextLevel = 0;
+
+        while (!Q.empty() && dist)
+        {
+            int u = Q.front();
+            Q.pop();
+            curLevel--;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                if (!visited[v] && p.second)
+                {
+                    Q.push(v);
+                    visited[v] = true;
+                    nextLevel++;
+                }
+            }
+
+            if (curLevel == 0)
+            {
+                curLevel = nextLevel;
+                nextLevel = 0;
+                dist--;
+            }
+        }
     }
 
     int CountAllPossiblePathsUtil(int from, int to, std::vector<bool> &visited)

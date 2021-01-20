@@ -219,6 +219,19 @@ void ClearTempFiles(int num_temp_files)
     }
 }
 
+void ExternalSort(std::string str_file_input, std::string str_file_output, long long int ll_byte_limit)
+{
+    int num_temp_files = SplitFiles(str_file_input, ll_byte_limit);
+
+    system("pause");
+
+    MergeFiles(num_temp_files, str_file_output, ll_byte_limit);
+
+    system("pause");
+
+    ClearTempFiles(num_temp_files);
+}
+
 int main(int argc, char **argv)
 {
     if (argc != 4)
@@ -229,15 +242,7 @@ int main(int argc, char **argv)
     std::string str_byte_limit(argv[3]);
     long long int ll_byte_limit = std::stoll(str_byte_limit);
 
-    int num_temp_files = SplitFiles(str_file_input, ll_byte_limit);
-
-    system("pause");
-
-    MergeFiles(num_temp_files, str_file_output, ll_byte_limit);
-
-    system("pause");
-
-    ClearTempFiles(num_temp_files);
+    ExternalSort(str_file_input, str_file_output, ll_byte_limit);
 
     return 0;
 }

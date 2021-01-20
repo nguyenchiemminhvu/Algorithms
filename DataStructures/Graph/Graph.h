@@ -177,6 +177,19 @@ public:
         return dist[to];
     }
 
+    int CountNodesInDistance(int from, int dist)
+    {
+        std::vector<bool> visited(num_vertices, false);
+        BFSWithDistance(from, dist, visited);
+
+        int count = 0;
+        for (bool b : visited)
+        {
+            count += (int)b;
+        }
+        return count;
+    }
+
     void PrintAllPathDFS(int from, int to)
     {
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
@@ -284,6 +297,11 @@ private:
                 DFS(v, visited);
             }
         }
+    }
+
+    void BFSWithDistance(int from, int dist, std::vector<bool> &visted)
+    {
+        
     }
 
     int CountAllPossiblePathsUtil(int from, int to, std::vector<bool> &visited)

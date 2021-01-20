@@ -163,9 +163,52 @@ int SplitFiles(std::string str_file_input, long long int ll_byte_limit)
     return curTempFileIdx + 1;
 }
 
-void MergeFiles(int num_temp_files, std::string output_file_name)
+void MergeFiles(int num_temp_files, std::string output_file_name, long long int ll_byte_limit)
 {
-    
+    using PSI = std::pair<std::string, int>;
+
+    std::vector<std::fstream> fs_in(num_temp_files);
+    for (int i = 0; i < num_temp_files; i++)
+    {
+        FileManager::OpenFile(fs_in[i], TEMP_FILE_NAME + STR(i), std::ios_base::in);
+        if (!fs_in[i].is_open())
+        {
+            std::cout << "Can not open file: " << TEMP_FILE_NAME + STR(i) << std::endl;
+            return;
+        }
+    }
+
+    std::fstream fs_out;
+    FileManager::OpenFile(fs_out, output_file_name, std::ios_base::out | std::ios_base::app);
+    if (fs_out.is_open())
+    {
+        fs_out.close();
+        std::remove(output_file_name.c_str());
+    }
+
+    std::priority_queue<PSI, std::vector<PSI>, std::greater<PSI>> PQ;
+    for (int i = 0; i < num_temp_files; i++)
+    {
+        std::string line;
+        FileManager::ReadLine(fs_in[i], line, ll_byte_limit);
+        PQ.push( { line, i } );
+    }
+
+    while (!PQ.empty())
+    {
+        PSI cur = PQ.top();
+        PQ.pop();
+
+        FileManager::AppendFileData(fs_out, output_file_name, cur.first);
+
+        int fileIdx = cur.second;
+        std::string line;
+        size_t nextByte = FileManager::ReadLine(fs_in[fileIdx], line, ll_byte_limit);
+        if (nextByte)
+        {
+            PQ.push( { line, fileIdx } );
+        }
+    }
 }
 
 void ClearTempFiles(int num_temp_files)
@@ -190,7 +233,7 @@ int main(int argc, char **argv)
 
     system("pause");
 
-    MergeFiles(num_temp_files, str_file_output);
+    MergeFiles(num_temp_files, str_file_output, ll_byte_limit);
 
     system("pause");
 

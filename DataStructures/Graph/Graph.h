@@ -132,6 +132,17 @@ public:
         }
     }
 
+    bool HasCycle()
+    {
+        for (int i = 0; i < num_vertices; i++)
+        {
+            std::vector<bool> visited(num_vertices, false);
+            if (IsCyclicUtil(i, visited))
+                return true;
+        }
+        return false;
+    }
+
     int CountAllPossiblePaths(int from, int to)
     {
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
@@ -335,6 +346,26 @@ private:
                 dist--;
             }
         }
+    }
+
+    bool IsCyclicUtil(int from, std::vector<bool> &visited)
+    {
+        visited[from] = true;
+        for (std::pair<int, int> p : G[from])
+        {
+            int v = p.first;
+            int w = p.second;
+            if (visited[v])
+            {
+                return true;
+            }
+            else if (!visited[v] && w)
+            {
+                return IsCyclicUtil(v, visited);
+            }
+        }
+
+        return false;
     }
 
     int CountAllPossiblePathsUtil(int from, int to, std::vector<bool> &visited)

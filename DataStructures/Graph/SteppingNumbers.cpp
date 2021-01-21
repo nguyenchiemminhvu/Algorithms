@@ -17,9 +17,49 @@ Output : 10, 12
 #include <map>
 using namespace std;
 
+void BFS_Stepping(int from, int to, int num)
+{
+    std::queue<int> Q;
+    Q.push(num);
+
+    while (!Q.empty())
+    {
+        int step = Q.front();
+        Q.pop();
+
+        if (step >= from && step <= to)
+            std::cout << step << " ";
+        
+        if (num == 0 || step > to)
+            continue;
+        
+        int lastDigit = step % 10;
+        int stepA = step * 10 + lastDigit + 1;
+        int stepB = step * 10 + lastDigit - 1;
+
+        if (lastDigit == 0)
+        {
+            Q.push(stepA);
+        }
+        else if (lastDigit == 9)
+        {
+            Q.push(stepB);
+        }
+        else
+        {
+            Q.push(stepA);
+            Q.push(stepB);
+        }
+        
+    }
+}
+
 void ListSteppingNumbers(int from, int to)
 {
-    
+    for (int i = 0; i <= 9; i++)
+    {
+        BFS_Stepping(from, to, i);
+    }
 }
 
 int main()

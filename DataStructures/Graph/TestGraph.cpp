@@ -32,11 +32,7 @@ int main()
     ug.AddEdge(8, 6, 6);
     ug.AddEdge(8, 7, 7);
 
-    std::vector<int> dist = ug.ShortestDistanceAllVertices(0);
-    for (int i = 0; i < dist.size(); i++)
-    {
-        std::cout << dist[i] << " ";
-    }
+    std::cout << ug.ShortestDistance(0, 4) << std::endl;
 
     return 0;
 }

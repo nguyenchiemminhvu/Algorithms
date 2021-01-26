@@ -320,7 +320,7 @@ public:
 
     int ShortestDistance(int from, int to)
     {
-           
+        return -1;
     }
 
 private:

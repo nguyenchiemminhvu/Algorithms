@@ -350,6 +350,56 @@ public:
         return INT_MAX;
     }
 
+    void ShortestPath(int from, int to)
+    {
+        std::vector<int> dist(num_vertices, INT_MAX);
+        dist[from] = 0;
+
+        std::vector<bool> visited(num_vertices, false);
+        std::vector<int> parents(num_vertices, -1);
+
+        for (int count = 0; count < num_vertices; count++)
+        {
+            int u = DijsktraNextVertex(dist, visited);
+            visited[u] = true;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+
+                if (!visited[v] && w && dist[u] != INT_MAX && dist[u] + w < dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                    parents[v] = u;
+                }
+            }
+        }
+
+        std::stack<int> S;
+        int temp = to;
+        while (parents[temp] != -1)
+        {
+            S.push(temp);
+            temp = parents[temp];
+        }
+        
+        // if there is a path, add node "from"
+        if (!S.empty())
+        {
+            S.push(from);
+        }
+
+        while (!S.empty())
+        {
+            int node = S.top();
+            S.pop();
+
+            std::cout << node << (node != to ? " -> " : "");
+        }
+        std::cout << std::endl;
+    }
+
 private:
 
     void DFS(int from, std::vector<bool> &visited)

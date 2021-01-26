@@ -320,7 +320,34 @@ public:
 
     int ShortestDistance(int from, int to)
     {
-        return -1;
+        std::vector<int> dist(num_vertices, INT_MAX);
+        dist[from] = 0;
+
+        std::vector<bool> visited(num_vertices, false);
+
+        for (int count = 0; count < num_vertices; count++)
+        {
+            int u = DijsktraNextVertex(dist, visited);
+            visited[u] = true;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+
+                if (!visited[v] && dist[u] != INT_MAX && w && dist[u] + w <= dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                }
+
+                if (visited[to])
+                {
+                    return dist[to];
+                }
+            }
+        }
+
+        return INT_MAX;
     }
 
 private:

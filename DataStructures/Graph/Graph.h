@@ -8,6 +8,7 @@
 #include <map>
 #include <stack>
 #include <queue>
+#include <limits.h>
 
 class Graph
 {
@@ -291,6 +292,37 @@ public:
         }
     }
 
+    std::vector<int> ShortestDistanceAllVertices(int from)
+    {
+        std::vector<int> dist(num_vertices, INT_MAX);
+        dist[from] = 0;
+
+        std::vector<bool> visited(num_vertices, false);
+
+        for (int count = 0; count < num_vertices; count++)
+        {
+            int u = DijsktraNextVertex(dist, visited);
+            visited[u] = true;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (!visited[v] && w && dist[u] != INT_MAX && dist[u] + w < dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    int ShortestDistance(int from, int to)
+    {
+           
+    }
+
 private:
 
     void DFS(int from, std::vector<bool> &visited)
@@ -424,6 +456,22 @@ private:
         visited[from] = false;
     }
 
+    int DijsktraNextVertex(const std::vector<int> &dist, const std::vector<bool> &visited)
+    {
+        int minDist = INT_MAX;
+        int minIdx = -1;
+
+        for (int u = 0; u < num_vertices; u++)
+        {
+            if (!visited[u] && dist[u] <= minDist)
+            {
+                minDist = dist[u];
+                minIdx = u;
+            }
+        }
+
+        return minIdx;
+    }
 };
 
 #endif // __GRAPH_H__

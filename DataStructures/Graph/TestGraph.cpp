@@ -32,7 +32,7 @@ int main()
     ug.AddEdge(8, 6, 6);
     ug.AddEdge(8, 7, 7);
 
-   ug.ShortestPath(0, 4);
+   ug.MinimumSpanningTree();
 
     return 0;
 }

@@ -218,6 +218,15 @@ public:
         return count;
     }
 
+    int CountTriangles()
+    {
+        int res = 0;
+
+        
+
+        return res;
+    }
+
     void PrintAllPathDFS(int from, int to)
     {
         if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)

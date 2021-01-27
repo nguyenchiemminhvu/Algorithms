@@ -35,6 +35,22 @@ public:
         G[u].push_back(std::pair<int, int>(v, w));
     }
 
+    std::vector<std::vector<int>> ConvertToMatrix()
+    {
+        std::vector<std::vector<int>> res(num_vertices, std::vector<int>(num_vertices, 0));
+        for (int u = 0; u < num_vertices; u++)
+        {
+            for (const std::pair<int, int> &p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+                res[u][v] = w;
+            }
+        }
+
+        return res;
+    }
+
     int FindMotherVertex()
     {
         std::vector<bool> visited(num_vertices, false);

@@ -222,9 +222,30 @@ public:
     {
         int res = 0;
 
-        
+        for (int u = 0; u < num_vertices; u++)
+        {
+            for (const std::pair<int, int> &p1 : G[u])
+            {
+                int v1 = p1.first;
+                int w1 = p1.second;
+                for (const std::pair<int, int> &p2 : G[v1])
+                {
+                    int v2 = p2.first;
+                    int w2 = p2.second;
+                    for (const std::pair<int, int> &p3 : G[v2])
+                    {
+                        int v3 = p3.first;
+                        int w3 = p3.second;
+                        if (v3 == u)
+                        {
+                            res++;
+                        }
+                    }
+                }
+            }
+        }
 
-        return res;
+        return res / 3;
     }
 
     void PrintAllPathDFS(int from, int to)
@@ -319,6 +340,9 @@ public:
 
     std::vector<int> ShortestDistanceAllVertices(int from)
     {
+        if (from < 0 || from >= num_vertices)
+            return {};
+        
         std::vector<int> dist(num_vertices, INT_MAX);
         dist[from] = 0;
 
@@ -345,6 +369,9 @@ public:
 
     int ShortestDistance(int from, int to)
     {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return 0;
+        
         std::vector<int> dist(num_vertices, INT_MAX);
         dist[from] = 0;
 
@@ -377,6 +404,9 @@ public:
 
     void ShortestPath(int from, int to)
     {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return;
+        
         std::vector<int> dist(num_vertices, INT_MAX);
         dist[from] = 0;
 
@@ -516,6 +546,9 @@ private:
 
     bool IsCyclicUtil(int from, std::vector<bool> &visited)
     {
+        if (from < 0 || from >= num_vertices)
+            return false;
+        
         visited[from] = true;
         for (std::pair<int, int> p : G[from])
         {
@@ -561,6 +594,9 @@ private:
 
     void PrintAllPathDFSUtil(int from, int to, std::vector<bool> &visited, std::vector<int> &path)
     {
+        if (from < 0 || from >= num_vertices || to < 0 || to >= num_vertices)
+            return;
+        
         visited[from] = true;
         path.push_back(from);
 

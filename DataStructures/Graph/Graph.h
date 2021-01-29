@@ -28,6 +28,11 @@ public:
 
     }
 
+    int GetNumVertices()
+    {
+        return num_vertices;
+    }
+
     void AddEdge(int u, int v, int w = 1)
     {
         num_vertices = std::max(num_vertices, std::max(u, v) + 1);
@@ -485,6 +490,45 @@ public:
         {
             std::cout << parents[i] << " - " << i << std::endl;
         }
+    }
+
+    std::vector<int> ColoringAllVertices()
+    {
+        std::vector<int> res(num_vertices, -1);
+        res[0] = 0;
+
+        std::vector<bool> available(num_vertices, true);
+
+        for (int u = 1; u < num_vertices; u++)
+        {
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (res[v] != -1)
+                    available[res[v]] = false;
+            }
+
+            int color_code = 0;
+            for (color_code = 0; color_code < num_vertices; color_code++)
+            {
+                if (available[color_code])
+                {
+                    break;
+                }
+            }
+            res[u] = color_code;
+
+            for (std::pair<int, int> p : G[u])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (res[v] != -1)
+                    available[res[v]] = true;
+            }
+        }
+
+        return res;
     }
 
 private:

@@ -9,7 +9,11 @@ int main()
     ug.AddEdge(2, 1);
     ug.AddEdge(3, 2);
 
-    std::cout << ug.CountTriangles() << std::endl;
+    std::vector<int> color_codes = ug.ColoringAllVertices();
+    for (int i = 0; i < ug.GetNumVertices(); i++)
+    {
+        std::cout << i << " " << color_codes[i] << std::endl;
+    }
 
     return 0;
 }

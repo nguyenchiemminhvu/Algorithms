@@ -531,6 +531,24 @@ public:
         return res;
     }
 
+    void HamiltonianCycle()
+    {
+        std::vector<int> path;
+        path.push_back(0);
+
+        std::vector<bool> visited(num_vertices, false);
+        visited[0] = true;
+
+        if (FindHamiltonianCycle(1, path, visited))
+        {
+            for (int u = 0; u < num_vertices; u++)
+            {
+                std::cout << path[u] << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
 private:
 
     void DFS(int from, std::vector<bool> &visited)
@@ -685,6 +703,11 @@ private:
         }
 
         return minIdx;
+    }
+
+    bool FindHamiltonianCycle(int from, std::vector<int> &path, std::vector<bool> &visited)
+    {
+        return false;
     }
 };
 

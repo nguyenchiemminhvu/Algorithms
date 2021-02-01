@@ -547,6 +547,11 @@ public:
             }
             std::cout << std::endl;
         }
+        else
+        {
+            std::cout << "Not found Hamiltonian Cycle" << std::endl;
+        }
+        
     }
 
 private:
@@ -705,8 +710,50 @@ private:
         return minIdx;
     }
 
+    void PrintPath(const std::vector<int> & path)
+    {
+        for (int v : path)
+        {
+            std::cout << v << " ";
+        }
+        std::cout << std::endl;
+    }
+
     bool FindHamiltonianCycle(int from, std::vector<int> &path, std::vector<bool> &visited)
     {
+        if (path.size() == num_vertices)
+        {
+            int first = path.front();
+            int last = path.back();
+            for (std::pair<int, int> p : G[last])
+            {
+                int v = p.first;
+                int w = p.second;
+                if (v == first && w)
+                {
+                    return true;
+                }
+            }
+        }
+
+        for (std::pair<int, int> p : G[from])
+        {
+            int v = p.first;
+            int w = p.second;
+
+            if (!visited[v] && w)
+            {
+                visited[v] = true;
+                path.push_back(v);
+
+                if (FindHamiltonianCycle(v, path, visited))
+                    return true;
+
+                path.pop_back();
+                visited[v] = false;
+            }
+        }
+
         return false;
     }
 };

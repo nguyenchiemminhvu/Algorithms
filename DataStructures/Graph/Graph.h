@@ -551,6 +551,10 @@ public:
         {
             std::cout << "Not found Hamiltonian Cycle" << std::endl;
         }
+    }
+
+    void TravellingSaleman()
+    {
         
     }
 

@@ -471,6 +471,11 @@ public:
         RefreshLEnd();
     }
 
+    void QuickSort()
+    {
+        
+    }
+
     void Reverse()
     {
         LEnd = L;

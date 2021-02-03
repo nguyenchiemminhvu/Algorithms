@@ -553,11 +553,6 @@ public:
         }
     }
 
-    void TravellingSaleman()
-    {
-        
-    }
-
 private:
 
     void DFS(int from, std::vector<bool> &visited)

@@ -16,7 +16,5 @@ int main()
     ug.AddEdge(3, 1, 25);
     ug.AddEdge(3, 2, 30);
 
-    ug.TravellingSaleman();
-
     return 0;
 }

@@ -473,7 +473,10 @@ public:
 
     void QuickSort()
     {
-        
+        ListNode<T> * tail = LEnd;
+        L = QuickSortUtil(L, tail);
+
+        RefreshLEnd();
     }
 
     void Reverse()
@@ -657,6 +660,94 @@ private:
         LB = pSlow;
         if (prevSlow)
             prevSlow->next = NULL;
+    }
+
+    ListNode<T> * QuickSortUtil(ListNode<T> * root, ListNode<T> * tail)
+    {
+        if (!root || root == tail)
+            return root;
+        
+        ListNode<T> * newRoot = NULL;
+        ListNode<T> * newTail = NULL;
+        
+        ListNode<T> * pivot = QuickSortPartition(root, tail, newRoot, newTail);
+        if (newRoot != pivot)
+        {
+            ListNode<T> * pEnd = newRoot;
+            while (pEnd->next != pivot)
+            {
+                pEnd = pEnd->next;
+            }
+            pEnd->next = NULL;
+
+            newRoot = QuickSortUtil(newRoot, pEnd);
+
+            pEnd = GetTailUtil(newRoot);
+            pEnd->next = pivot;
+        }
+
+        pivot->next = QuickSortUtil(pivot->next, newTail);
+
+        return newRoot;
+    }
+
+    ListNode<T> * QuickSortPartition(   ListNode<T> * root, ListNode<T> * tail, 
+                                        ListNode<T> *& newRoot, ListNode<T> *& newTail)
+    {
+        ListNode<T> * prev = NULL;
+        ListNode<T> * cur = root;
+        ListNode<T> * pivot = tail;
+        ListNode<T> * pEnd = pivot;
+
+        while (cur != pivot)
+        {
+            if (cur->value < pivot->value)
+            {
+                if (!newRoot)
+                {
+                    newRoot = cur;
+                }
+
+                prev = cur;
+                cur = cur->next;
+            }
+            else
+            {
+                if (prev)
+                {
+                    prev->next = cur->next;
+                }
+
+                ListNode<T> * temp = cur->next;
+                cur->next = NULL;
+                pEnd->next = cur;
+                pEnd = cur;
+                cur = temp;
+            }
+        }
+
+        if (!newRoot)
+        {
+            newRoot = pivot;
+        }
+
+        newTail = pEnd;
+
+        return pivot;
+    }
+
+    ListNode<T> * GetTailUtil(ListNode<T> * root)
+    {
+        if (!root)
+            return root;
+        
+        ListNode<T> * p = root;
+        while (p->next)
+        {
+            p = p->next;
+        }
+
+        return p;
     }
 
     void Reverse(ListNode<T> *&LL)

@@ -13,7 +13,10 @@ public:
     UnionFind(int n)
     {
         parents.resize(n);
-        std::fill(parents.begin(), parents.end(), std::pair<int, int>(-1, 0));
+        for (int i = 0; i < n; i++)
+        {
+            parents[i] = std::pair<int, int>(i, 0);
+        }
     }
 
     ~UnionFind()

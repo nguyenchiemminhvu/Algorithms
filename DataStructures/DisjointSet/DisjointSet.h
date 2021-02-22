@@ -1,17 +1,17 @@
-#ifndef __UNION_FIND_H__
-#define __UNION_FIND_H__
+#ifndef __DISJOINT_SET_H__
+#define __DISJOINT_SET_H__
 
 #include <vector>
 using namespace std;
 
-class UnionFind
+class DisjointSet
 {
     std::vector<int> parents;
     std::vector<int> size;
 
 public:
     
-    UnionFind(int n)
+    DisjointSet(int n)
     {
         parents.resize(n);
         size.resize(n);
@@ -22,7 +22,7 @@ public:
         }
     }
 
-    ~UnionFind()
+    ~DisjointSet()
     {
 
     }
@@ -55,4 +55,4 @@ public:
     }
 };
 
-#endif
+#endif // __DISJOINT_SET_H__

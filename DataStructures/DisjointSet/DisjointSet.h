@@ -55,6 +55,11 @@ public:
         return temp;
     }
 
+    bool IsSameSet(int x, int y)
+    {
+        return Find(x) == Find(y);
+    }
+
     int CountConnectedComponents()
     {
         std::set<int> S;

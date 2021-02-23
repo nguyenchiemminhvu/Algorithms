@@ -2,6 +2,7 @@
 #define __DISJOINT_SET_H__
 
 #include <vector>
+#include <set>
 using namespace std;
 
 class DisjointSet
@@ -52,6 +53,18 @@ public:
         
         parents[i] = temp;
         return temp;
+    }
+
+    int CountConnectedComponents()
+    {
+        std::set<int> S;
+
+        for (int i = 0; i < parents.size(); i++)
+        {
+            S.insert(parents[i]);
+        }
+
+        return S.size();
     }
 };
 

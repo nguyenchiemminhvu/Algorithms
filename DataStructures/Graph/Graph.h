@@ -1,6 +1,7 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+#include "DisjointSet.h"
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -13,12 +14,14 @@
 class Graph
 {
 protected:
+    bool undirected;
     int num_vertices;
     std::map<int, std::vector<std::pair<int, int>>> G;
+    std::vector<std::vector<int>> edges;
 
 public:
-    Graph()
-        : num_vertices(0)
+    Graph(bool u = false)
+        : num_vertices(0), undirected(u)
     {
 
     }
@@ -38,6 +41,12 @@ public:
         num_vertices = std::max(num_vertices, std::max(u, v) + 1);
         
         G[u].push_back(std::pair<int, int>(v, w));
+        if (undirected)
+        {
+            G[v].push_back(std::pair<int, int>(v, w));
+
+            edges.push_back( { u, v, w } );
+        }
     }
 
     std::vector<std::vector<int>> ConvertToMatrix()
@@ -460,7 +469,7 @@ public:
         std::cout << std::endl;
     }
 
-    void MinimumSpanningTree()
+    void MinimumSpanningTree_Prim()
     {
         std::vector<int> dist(num_vertices, INT_MAX);
         dist[0] = 0;
@@ -489,6 +498,44 @@ public:
         for (int i = 1; i < num_vertices; i++)
         {
             std::cout << parents[i] << " - " << i << std::endl;
+        }
+    }
+
+    void MinimumSpanningTree_Kruskals()
+    {
+        DisjointSet DS(num_vertices);
+
+        std::sort
+        (
+            edges.begin(), 
+            edges.end(),
+            [](const std::vector<int> &e1, const std::vector<int> &e2) -> bool
+            {
+                return e1[2] < e2[2];
+            }
+        );
+
+        std::vector<std::vector<int>> MST;
+        for (const std::vector<int> &e : edges)
+        {
+            int u = e[0];
+            int v = e[1];
+            int w = e[2];
+
+            if (DS.Find(u) != DS.Find(v))
+            {
+                MST.push_back(e);
+                DS.Union(u, v);
+            }
+        }
+
+        for (const std::vector<int> &e : MST)
+        {
+            int u = e[0];
+            int v = e[1];
+            int w = e[2];
+
+            std::cout << u << " " << v << " " << w << std::endl;
         }
     }
 

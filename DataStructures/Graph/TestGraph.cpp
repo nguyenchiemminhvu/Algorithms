@@ -15,9 +15,7 @@ int main()
     ug.AddEdge(4, 6, 9);
     ug.AddEdge(5, 6, 11);
 
-    ug.MinimumSpanningTree_Prim();
-    std::cout << std::endl;
-    ug.MinimumSpanningTree_Kruskals();
+    ug.MinimumSpanningTree();
 
     return 0;
 }

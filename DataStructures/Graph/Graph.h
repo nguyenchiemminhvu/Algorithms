@@ -469,6 +469,19 @@ public:
         std::cout << std::endl;
     }
 
+    void MinimumSpanningTree()
+    {
+        if (undirected)
+        {
+            MinimumSpanningTree_Kruskals();
+        }
+        else
+        {
+            MinimumSpanningTree_Prim();
+        }
+        
+    }
+
     void MinimumSpanningTree_Prim()
     {
         std::vector<int> dist(num_vertices, INT_MAX);

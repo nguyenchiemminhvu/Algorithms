@@ -82,6 +82,58 @@ public:
         return res;
     }
 
+    std::vector<size_t> RabinKarpSearch(std::string text, std::string pattern)
+    {
+        std::vector<size_t> res;
+
+        int TOTAL_CHARS = 256;
+        int prime = 101;
+
+        int hashT = 0;
+        int hashP = 0;
+        int H = 1;
+
+        for (int i = 0; i < pattern.length() - 1; i++)
+        {
+            H = (H * TOTAL_CHARS) % prime;
+        }
+
+        for (int i = 0; i < pattern.length(); i++)
+        {
+            hashP = (hashP * TOTAL_CHARS + pattern[i]) % prime;
+            hashT = (hashT * TOTAL_CHARS + text[i]) % prime;
+        }
+
+        for (int i = 0; i < text.length() - pattern.length(); i++)
+        {
+            if (hashP == hashT)
+            {
+                int j = 0;
+                for (j = 0; j < pattern.length(); j++)
+                {
+                    if (text[j] != pattern[j])
+                        break;
+                }
+
+                if (j == pattern.length())
+                {
+                    res.push_back(i);
+                }
+            }
+
+            if (i < text.length() - pattern.length())
+            {
+                hashT = (TOTAL_CHARS * (hashT - text[i] * H) + text[i + pattern.length()]) % prime;
+                if (hashT < 0)
+                {
+                    hashT += prime;
+                }
+            }
+        }
+
+        return res;
+    }
+
     std::vector<size_t> FiniteAutomataSearch(std::string text, std::string pattern)
     {
         std::vector<size_t> res;

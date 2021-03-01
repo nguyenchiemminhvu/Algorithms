@@ -22,5 +22,11 @@ int main()
         std::cout << "found at index: " << idx << std::endl;
     }
 
+    res = PS.RabinKarpSearch(text, pattern);
+    for (int idx : res)
+    {
+        std::cout << "found at index: " << idx << std::endl;
+    }
+
     return 0;
 }

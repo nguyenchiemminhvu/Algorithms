@@ -46,6 +46,38 @@ public:
     {
         std::vector<size_t> res;
 
+        std::vector<int> match;
+        KMP_BuildMatchTable(pattern, match);
+
+        int i = 0;
+        int j = 0;
+        while (i < text.length())
+        {
+            if (text[i] == pattern[j])
+            {
+                i++;
+                j++;
+            }
+
+            if (j == pattern.length())
+            {
+                res.push_back(i - j);
+                j = match[j - 1];
+            }
+            else if (i < text.length() && text[i] != pattern[j])
+            {
+                if (j != 0)
+                {
+                    j = match[j - 1];
+                }
+                else
+                {
+                    i++;
+                }
+                
+            }
+        }
+
         return res;
     }
 
@@ -68,6 +100,41 @@ public:
         std::vector<size_t> res;
 
         return res;
+    }
+
+private:
+
+    void KMP_BuildMatchTable(std::string pattern, std::vector<int> &match)
+    {
+        match.clear();
+        match.resize(pattern.length());
+        std::fill(match.begin(), match.end(), 0);
+
+        int i = 1;
+        int len = 0;
+        while (i < match.size())
+        {
+            if (pattern[i] != pattern[len])
+            {
+                if (len != 0)
+                {
+                    len = match[i - 1];
+                }
+                else
+                {
+                    match[i] = 0;
+                    i++;
+                }
+                
+            }
+            else
+            {
+                i++;
+                len++;
+                match[i] = len;
+            }
+            
+        }
     }
 };
 

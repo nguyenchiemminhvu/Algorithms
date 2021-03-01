@@ -8,7 +8,15 @@ int main()
     std::string pattern = "AABA";
 
     PatternSearching PS;
-    std::vector<size_t> res = PS.NaiveSearch(text, pattern);
+    std::vector<size_t> res;
+
+    res = PS.NaiveSearch(text, pattern);
+    for (int idx : res)
+    {
+        std::cout << "found at index: " << idx << std::endl;
+    }
+
+    res = PS.KMPSearch(text, pattern);
     for (int idx : res)
     {
         std::cout << "found at index: " << idx << std::endl;

@@ -64,7 +64,8 @@ public:
                 res.push_back(i - j);
                 j = match[j - 1];
             }
-            else if (i < text.length() && text[i] != pattern[j])
+            
+            if (i < text.length() && text[i] != pattern[j])
             {
                 if (j != 0)
                 {

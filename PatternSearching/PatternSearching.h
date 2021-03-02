@@ -134,13 +134,6 @@ public:
         return res;
     }
 
-    std::vector<size_t> FiniteAutomataSearch(std::string text, std::string pattern)
-    {
-        std::vector<size_t> res;
-
-        return res;
-    }
-
     std::vector<size_t> BMA_BadCharacterSearch(std::string text, std::string pattern)
     {
         std::vector<size_t> res;

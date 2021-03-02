@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -138,6 +139,33 @@ public:
     {
         std::vector<size_t> res;
 
+        std::vector<int> BadChars(256, -1);
+        BMA_BuildBadCharacters(pattern, BadChars);
+
+        int i = 0;
+        while (i <= (text.length() -  pattern.length()))
+        {
+            int j = pattern.length() - 1;
+            while (j >= 0 && text[i + j] == pattern[j])
+            {
+                j--;
+            }
+
+            if (j < 0)
+            {
+                res.push_back(i);
+                if (i + pattern.length() < text.length())
+                    i += pattern.length() - BadChars[text[i + pattern.length()]];
+                else
+                    i++;
+            }
+            else
+            {
+                i += std::max(1, j - BadChars[text[i + j]]);
+            }
+            
+        }
+
         return res;
     }
 
@@ -180,6 +208,14 @@ private:
                 match[i] = len;
             }
             
+        }
+    }
+
+    void BMA_BuildBadCharacters(std::string pattern, std::vector<int> &BadChars)
+    {
+        for (int i = 0; i < pattern.length(); i++)
+        {
+            BadChars[pattern[i]] = i;
         }
     }
 };

@@ -173,6 +173,16 @@ public:
     {
         std::vector<size_t> res;
 
+        std::vector<int> GoodSuffix(pattern.length() + 1, 0);
+        BMA_BuildFullGoodSuffix(pattern, GoodSuffix);
+        BMA_BuildPartialGoodSuffix(pattern, GoodSuffix);
+
+        int i = 0;
+        while (i <= (text.length() - pattern.length()))
+        {
+            
+        }
+
         return res;
     }
 
@@ -217,6 +227,16 @@ private:
         {
             BadChars[pattern[i]] = i;
         }
+    }
+
+    void BMA_BuildFullGoodSuffix(std::string pattern, std::vector<int> &GoodSuffix)
+    {
+
+    }
+
+    void BMA_BuildPartialGoodSuffix(std::string pattern, std::vector<int> &GoodSuffix)
+    {
+
     }
 };
 

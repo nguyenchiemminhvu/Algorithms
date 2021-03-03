@@ -40,7 +40,5 @@ int main()
         std::cout << "found at index: " << idx << std::endl;
     }
 
-    
-
     return 0;
 }

@@ -34,5 +34,13 @@ int main()
         std::cout << "found at index: " << idx << std::endl;
     }
 
+    res = PS.BMA_GoodSuffixSearch(text, pattern);
+    for (int idx : res)
+    {
+        std::cout << "found at index: " << idx << std::endl;
+    }
+
+    
+
     return 0;
 }

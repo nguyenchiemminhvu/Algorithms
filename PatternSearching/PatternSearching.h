@@ -172,14 +172,28 @@ public:
     std::vector<size_t> BMA_GoodSuffixSearch(std::string text, std::string pattern)
     {
         std::vector<size_t> res;
-
+        
         std::vector<int> GoodSuffix(pattern.length() + 1, 0);
-        BMA_BuildFullGoodSuffix(pattern, GoodSuffix);
-        BMA_BuildPartialGoodSuffix(pattern, GoodSuffix);
+        std::vector<int> bpos = BMA_BuildFullGoodSuffix(pattern, GoodSuffix);
+        BMA_BuildPartialGoodSuffix(pattern, bpos, GoodSuffix);
 
         int i = 0;
+        int j = 0;
         while (i <= (text.length() - pattern.length()))
         {
+            j = pattern.length() - 1;
+            while (j >= 0 && pattern[j] == text[i + j])
+                j--;
+            
+            if (j < 0)
+            {
+                res.push_back(i);
+                i += GoodSuffix[0];
+            }
+            else
+            {
+                i += GoodSuffix[j + 1];
+            }
             
         }
 
@@ -229,14 +243,46 @@ private:
         }
     }
 
-    void BMA_BuildFullGoodSuffix(std::string pattern, std::vector<int> &GoodSuffix)
+    std::vector<int> BMA_BuildFullGoodSuffix(std::string pattern, std::vector<int> &GoodSuffix)
     {
+        std::vector<int> bpos(pattern.length() + 1, 0);
+        bpos[pattern.length()] = pattern.length() + 1;
 
+        int i = pattern.length();
+        int j = pattern.length() + 1;
+
+        while (i > 0)
+        {
+            while (j <= pattern.length() && pattern[i - 1] != pattern[j - 1])
+            {
+                if (GoodSuffix[j] == 0)
+                {
+                    GoodSuffix[j] = j - i;
+                }
+                j = bpos[j];
+            }
+
+            i--;
+            j--;
+            bpos[i] = j;
+        }
+
+        return bpos;
     }
 
-    void BMA_BuildPartialGoodSuffix(std::string pattern, std::vector<int> &GoodSuffix)
+    void BMA_BuildPartialGoodSuffix(std::string pattern, const std::vector<int> &bpos, std::vector<int> &GoodSuffix)
     {
-
+        int j = bpos[0];
+        for (int i = 0; i <= pattern.length(); i++)
+        {
+            if (GoodSuffix[i] == 0)
+            {
+                GoodSuffix[i] = j;
+            }
+            
+            if (i == j)
+                j = bpos[j];
+        }
     }
 };
 

@@ -200,6 +200,61 @@ public:
         return res;
     }
 
+    void CheckPalindromeStream(const std::string &s)
+    {
+        if (s.empty())
+            return;
+        
+        std::cout << "YES" << std::endl;
+        if (s.length() == 1)
+            return;
+        
+        int prime = 103;
+        int TOTAL_CHARS = 256;
+
+        int HashLeft = s[0] % prime;
+        int HashRight = s[1] % prime;
+        int H = 1;
+
+        for (int i = 1; i < s.length(); i++)
+        {
+            if (HashLeft == HashRight)
+            {
+                int j;
+                for (j = 0; j < i / 2; j++)
+                {
+                    if (s[j] != s[i - j])
+                    {
+                        break;
+                    }
+                }
+                if (j == i / 2)
+                    std::cout << "YES" << std::endl;
+                else
+                    std::cout << "NO" << std::endl;
+            }
+            else
+            {
+                std::cout << "NO" << std::endl;
+            }
+
+            // Calculate Hash value for the next iteration
+            if (i != s.length() - 1)
+            {
+                if (i & 1)
+                {
+                    HashRight = TOTAL_CHARS * (HashRight + prime - s[(i + 1) / 2] * H) % prime + s[i + 1] % prime;
+                }
+                else
+                {
+                    H = (H * TOTAL_CHARS) % prime;
+                    HashLeft = (HashLeft + H * s[i / 2]) % prime;
+                    HashRight = (HashRight * TOTAL_CHARS + s[i + 1]) % prime;                    
+                }
+            }
+        }
+    }
+
 private:
 
     void KMP_BuildMatchTable(std::string pattern, std::vector<int> &match)

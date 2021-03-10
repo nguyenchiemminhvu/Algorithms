@@ -200,6 +200,20 @@ public:
         return res;
     }
 
+    std::vector<size_t> STLSearch(std::string text, std::string pattern)
+    {
+        std::vector<size_t> res;
+
+        size_t found = text.find(pattern);
+        while (found != std::string::npos)
+        {
+            res.push_back(found);
+            found = text.find(pattern, found + 1);
+        }
+
+        return res;
+    }
+
     void CheckPalindromeStream(const std::string &s)
     {
         if (s.empty())

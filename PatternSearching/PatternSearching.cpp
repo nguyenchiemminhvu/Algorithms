@@ -40,6 +40,12 @@ int main()
         std::cout << "found at index: " << idx << std::endl;
     }
 
+    res = PS.STLSearch(text, pattern);
+    for (int idx : res)
+    {
+        std::cout << "found at index: " << idx << std::endl;
+    }
+
     PS.CheckPalindromeStream("aabaacaabaa");
 
     return 0;

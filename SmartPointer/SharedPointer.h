@@ -26,11 +26,11 @@ public:
     SharedPointer(const SharedPointer<T> &that)
     {
         this->m_ptr = that.m_ptr;
-        int * that_ref_counter = that.m_ref_counter.load(std::memory_order::memory_order_acquire);
+        int * that_ref_counter = that.m_ref_counter.load(std::memory_order::memory_order_acq_rel);
         this->m_ref_counter.store(that_ref_counter);
         if (that.m_ptr)
         {
-            int * this_ref_counter = this->m_ref_counter.load(std::memory_order::memory_order_release);
+            int * this_ref_counter = this->m_ref_counter.load(std::memory_order::memory_order_relaxed);
             (*this_ref_counter)++;
         }
     }
@@ -40,11 +40,11 @@ public:
         clean_up();
         
         this->m_ptr = that.m_ptr;
-        int * that_ref_counter = that.m_ref_counter.load(std::memory_order::memory_order_acquire);
+        int * that_ref_counter = that.m_ref_counter.load(std::memory_order::memory_order_acq_rel);
         this->m_ref_counter.store(that_ref_counter);
         if (that.m_ptr)
         {
-            int * this_ref_counter = this->m_ref_counter.load(std::memory_order::memory_order_release);
+            int * this_ref_counter = this->m_ref_counter.load(std::memory_order::memory_order_relaxed);
             (*this_ref_counter)++;
         }
     }
@@ -56,7 +56,7 @@ public:
 
     int ref_count()
     {
-        int * this_ref_counter = m_ref_counter.load(std::memory_order::memory_order_acq_rel);
+        int * this_ref_counter = m_ref_counter.load(std::memory_order::memory_order_relaxed);
         return this_ref_counter ? *this_ref_counter : 0;
     }
 

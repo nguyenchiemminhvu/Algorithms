@@ -59,6 +59,9 @@
         "atomic": "cpp",
         "bit": "cpp",
         "clocale": "cpp",
-        "compare": "cpp"
+        "compare": "cpp",
+        "mutex": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp"
     }
 }

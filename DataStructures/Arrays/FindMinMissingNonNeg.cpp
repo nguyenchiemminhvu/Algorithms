@@ -26,7 +26,6 @@ int FindMissingNonNeg(int * arr, int n)
 
     for (int i = 0; i < n; i++)
     {
-        cout << (arr[i] - 1) % n << " " << endl;
         arr[(arr[i] - 1) % n] += n;
     }
 

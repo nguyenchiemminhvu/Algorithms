@@ -29,6 +29,7 @@ the output sequence.
 #include <iostream>
 #include <algorithm>
 #include <cstring>
+#include <climits>
 using namespace std;
 
 void PrintArray(int *arr, int n)
